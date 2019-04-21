@@ -1,0 +1,15 @@
+#!/bin/bash
+cd ~/Projects/fnd-apps
+gulp stop-services
+nohup gulp start-services </dev/null >~/Config/Scripts/fnd-apps/start-services.log 2>&1 &
+
+echo -n "Waiting for services to start on 2002...";
+while ! nc -z localhost 2002 </dev/null
+do
+  echo -n '.';
+  sleep 2; 
+done
+
+echo "Services have started starting the karma server";
+
+karma start ~/Config/Scripts/fnd-apps/karma.conf.approval.js "$@"

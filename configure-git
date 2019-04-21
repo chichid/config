@@ -1,0 +1,3 @@
+git config --global user.email "rachid.el.habbari@oracle.com"
+git config --global core.excludesfile ~/Config/.gitignore_global
+git config --global alias.mergedev '!git fetch origin developer; git merge origin/developer -Xignore-all-space'
