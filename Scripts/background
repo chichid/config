@@ -1,0 +1,22 @@
+#!/bin/bash
+while true
+do
+
+#######################
+# Calendar always open
+#######################
+if ! pgrep -x "Calendar" > /dev/null
+then
+  open -a Calendar --hide &
+fi
+
+#######################
+# CPU Throttle
+#######################
+~/Bin/throttle --kill
+~/Bin/throttle &
+
+######################
+sleep 60 
+
+done

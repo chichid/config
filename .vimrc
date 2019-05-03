@@ -1,4 +1,4 @@
-"""""""""""""
+""""""""""""
 " Core
 """"""""""""""
 execute pathogen#infect()
@@ -6,7 +6,6 @@ execute pathogen#infect()
 """""""""""
 " General
 """"""""""""
-filetype plugin indent on
 syntax on
 set nocompatible
 set backspace=indent,eol,start
@@ -32,11 +31,15 @@ set laststatus=0
 """""""""""""""
 " Indent
 """""""""""""""
+filetype plugin indent on
 set tabstop=2
 set expandtab
 set shiftwidth=2
 set autoindent
+set cindent
 set smartindent
+set matchtime=0
+let delimitMate_expand_cr = 1
 autocmd VimEnter * DetectIndent
 
 """""""""""""""
@@ -57,11 +60,40 @@ nnoremap > >>
 vnoremap > >gv
 vnoremap < <gv
 
-""""""""""""""
-" Ctrl-p 
-""""""""""""""
+""""""""""""""""""""""
+" Easy Escape
+""""""""""""""""""""""
+let g:easyescape_chars = { "j": 1, "k": 1 }
+let g:easyescape_timeout = 100 
+cnoremap jk <ESC>
+cnoremap kj <ESC>
 
 """"""""""""""
+" Theme
+""""""""""""""
+set cursorline
+colorscheme default
+
+highlight LineNr cterm=NONE ctermbg=0 ctermfg=241
+highlight StatusLine ctermbg=0
+highlight CursorLine cterm=NONE ctermbg=8 
+highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
+highlight VertSplit ctermfg=0 ctermbg=0
+highlight MatchParen term=NONE ctermbg=LightGrey ctermfg=0
+highlight Visual term=NONE ctermbg=11 ctermfg=0
+highlight EndOfBuffer ctermfg=0
+highlight Search term=NONE cterm=NONE ctermfg=0
+highlight NERDTreeClosable ctermfg=11 
+
+highlight Statement ctermfg=11
+highlight Identifier ctermfg=6
+highlight String ctermfg=10
+highlight Character ctermfg=10
+highlight Number ctermfg=10 
+highlight Boolean ctermfg=10 
+highlight Float ctermfg=10
+
+"""""""""""""
 " NERDTree
 """"""""""""""
 let g:NERDTreeMinimalUI = 1
@@ -106,27 +138,4 @@ function! MyNERDTreeCloseNode()
 	endif
 endfunction
 
-""""""""""""""
-" Theme
-""""""""""""""
-set cursorline
-
-highlight LineNr cterm=NONE ctermbg=0 ctermfg=241
-highlight StatusLine ctermbg=0
-highlight CursorLine cterm=NONE ctermbg=8 
-highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
-highlight VertSplit ctermfg=0 ctermbg=0
-highlight MatchParen term=NONE ctermbg=LightGrey ctermfg=0
-highlight Visual term=NONE ctermbg=11 ctermfg=0
-highlight EndOfBuffer ctermfg=0
-highlight Search term=NONE cterm=NONE ctermfg=0
-highlight NERDTreeClosable ctermfg=11 
-
-highlight Statement ctermfg=11
-highlight Identifier ctermfg=6
-highlight String ctermfg=10
-highlight Character ctermfg=10
-highlight Number ctermfg=10 
-highlight Boolean ctermfg=10 
-highlight Float ctermfg=10
 
