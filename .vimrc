@@ -48,7 +48,7 @@ autocmd VimEnter * DetectIndent
 nmap q :qa<CR>
 nnoremap <silent> t gt
 nnoremap <silent> T gT
-nnoremap <silent> <BS> i<BS><ESC> 
+nnoremap <BS> i<BS><ESC> 
 noremap <silent> <CR> :nohlsearch<CR>
 nnoremap \ i<CR><ESC>
 nnoremap <BAR> o<ESC><UP>
@@ -65,12 +65,21 @@ nnoremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode
 nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""
-" Easy Escape
+" Escape
 """"""""""""""""""""""
 let g:easyescape_chars = { "j": 1, "k": 1 }
 let g:easyescape_timeout = 100 
+set timeoutlen=10 ttimeoutlen=0
 cnoremap jk <ESC>
 cnoremap kj <ESC>
+
+""""""""""""""""""""""
+" Auto Reload .vimrc
+""""""""""""""""""""""
+augroup autoreloadvimrc
+    au!
+    autocmd bufwritepost .vimrc source ~/.vimrc
+augroup END
 
 """"""""""""""
 " Theme
