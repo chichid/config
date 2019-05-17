@@ -2,6 +2,8 @@
   "dependencies": {
     "coc-java": "^1.3.0",
     "coc-json": "^1.0.17",
-    "java": "^0.11.0"
+    "coc-snippets": "^2.0.10",
+    "java": "^0.11.0",
+    "java-snippets": "https://github.com/tushortz/vscode-Java-Snippets#master"
   }
 }

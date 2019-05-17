@@ -29,6 +29,12 @@ set smartcase
 set laststatus=0
 
 """""""""""""""
+" AutoComplete 
+"""""""""""""""
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabClosePreviewOnPopupClose = 1
+
+"""""""""""""""
 " Indent
 """""""""""""""
 filetype plugin indent on
@@ -36,19 +42,19 @@ set tabstop=2
 set expandtab
 set shiftwidth=2
 set autoindent
-set cindent
 set smartindent
 set matchtime=0
+
 let delimitMate_expand_cr = 1
 autocmd VimEnter * DetectIndent
 
-"""""""""""""""
+""""""""""""""
 " Keyboard Mapping
 """""""""""""""
 nmap q :qa<CR>
 nnoremap <silent> t gt
 nnoremap <silent> T gT
-nnoremap <BS> i<BS><ESC> 
+nnoremap <BS> i<BS><ESC><ESC> 
 noremap <silent> <CR> :nohlsearch<CR>
 nnoremap \ i<CR><ESC>
 nnoremap <BAR> o<ESC><UP>
@@ -73,14 +79,6 @@ set timeoutlen=10 ttimeoutlen=0
 cnoremap jk <ESC>
 cnoremap kj <ESC>
 
-""""""""""""""""""""""
-" Auto Reload .vimrc
-""""""""""""""""""""""
-augroup autoreloadvimrc
-    au!
-    autocmd bufwritepost .vimrc source ~/.vimrc
-augroup END
-
 """"""""""""""
 " Theme
 """"""""""""""
@@ -98,6 +96,9 @@ highlight EndOfBuffer ctermfg=0
 highlight Search term=NONE cterm=NONE ctermfg=0
 highlight NERDTreeClosable ctermfg=11 
 highlight Directory ctermfg=231
+highlight Pmenu ctermfg=7 ctermbg=0
+highlight PmenuSbar ctermbg=8
+highlight PmenuThumb ctermbg=7
 
 highlight Statement ctermfg=11
 highlight Identifier ctermfg=6
@@ -134,7 +135,6 @@ function! MyNERDTreeOpenDir()
 	for child in g:NERDTreeFileNode.GetRootForTab().children
 		if has_key(child, "path") && child.path.isDirectory !=# 1 && child.isVisible() ==# 1
 			call child.putCursorHere(0, 0)
-			call timer_start(1, { tid -> execute("normal go") })
 			break
 		endif
 	endfor

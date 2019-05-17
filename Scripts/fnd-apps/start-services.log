@@ -1,30 +1,64 @@
-[10:09:34] Failed to load external module @babel/register
-[10:09:34] Requiring external module babel-register
+[11:57:09] Failed to load external module @babel/register
+[11:57:09] Requiring external module babel-register
 jenkins host: false
-available addresses: 10.156.45.169
-considered localhost address: 10.156.45.169
-[10:09:34] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
-[10:09:34] Starting 'start-services:fnd-apps'...
-[10:09:34] Starting 'start-services:approvals-test'...
-[10:09:34] Starting 'start-services:fnd-approvals'...
+available addresses: 10.156.45.22
+considered localhost address: 10.156.45.22
+[11:57:09] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
+[11:57:09] Starting 'start-services:fnd-apps'...
+[11:57:09] Starting 'start-services:approvals-test'...
+[11:57:09] Starting 'start-services:fnd-approvals'...
 file doesn't exist - /Users/relhabba/Projects/fnd-apps/fnd-approvals/tests/config.json
-[10:09:34] Finished 'start-services:fnd-apps' after 78 ms
-[10:09:34] Finished 'start-services:approvals-test' after 1.63 ms
-[10:09:34] Finished 'start-services:fnd-approvals' after 1.61 ms
-[10:09:34] Starting 'start-services'...
-[10:09:34] Finished 'start-services' after 26 μs
+[11:57:09] Finished 'start-services:fnd-apps' after 26 ms
+[11:57:09] Finished 'start-services:approvals-test' after 1.46 ms
+[11:57:09] Finished 'start-services:fnd-approvals' after 1.5 ms
+[11:57:09] Starting 'start-services'...
+[11:57:09] Finished 'start-services' after 34 μs
+Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
+Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
+Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
+Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
+profileoptions service listening on host: 0.0.0.0 port: 2003
+worklist service listening on host: 0.0.0.0 port: 2020
+notifications service listening on host: 0.0.0.0 port: 1948
 No sslConfFile file provided trying defaults
 Mock Server listening on host: 0.0.0.0 port: 2002 path: /approvals/
-Fri, 17 May 2019 14:09:40 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
-profileoptions service listening on host: 0.0.0.0 port: 2003
-Fri, 17 May 2019 14:09:40 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
-Fri, 17 May 2019 14:09:40 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
-worklist service listening on host: 0.0.0.0 port: 2020
-sslport is not defined
-Translations listening on port 2052
-Fri, 17 May 2019 14:09:40 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
-notifications service listening on host: 0.0.0.0 port: 1948
 navigatordata service listening on host: 0.0.0.0 port: 1889
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
+//localhost:2002/approvals/countries
+Requiring file at ./resources/rest/countries/countries_properties.js
+Requiring file at ./resources/rest/countries/default.json
 //localhost:2002/approvals/countries
 Requiring file at ./resources/rest/countries/countries_properties.js
 Requiring file at ./resources/rest/countries/default.json

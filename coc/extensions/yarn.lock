@@ -436,6 +436,20 @@ coc-json@^1.0.17:
     vscode-languageserver "^5.3.0-next.6"
     vscode-uri "^1.0.6"
 
+coc-snippets@^2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/coc-snippets/-/coc-snippets-2.0.10.tgz#557c86027eb7d1e545290da675ccff17e7b5fe63"
+  integrity sha512-1/XuDOD7KpJDxeGiUQZvC6KfNXZOKaBw45ZSgjYPm+olxynx8RoT5Sn+Ar/o6KGpoNQraYEUtATndumdkhA+MA==
+  dependencies:
+    jsonc-parser "^2.0.3"
+    pify "^4.0.1"
+    tslib "^1.9.3"
+    uuid "^3.3.2"
+    vscode-languageserver "^5.3.0-next.1"
+    vscode-languageserver-protocol "^3.15.0-next.1"
+    vscode-uri "^1.0.6"
+    which "^1.3.1"
+
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
@@ -1388,6 +1402,10 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
+
+"java-snippets@https://github.com/tushortz/vscode-Java-Snippets#master":
+  version "0.0.1"
+  resolved "https://github.com/tushortz/vscode-Java-Snippets#8f37f1fc290c3d375872491a0f5fd7f2e802554b"
 
 java@^0.11.0:
   version "0.11.0"
@@ -2350,6 +2368,11 @@ pify@^3.0.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
   integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
 
+pify@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
+  integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
+
 pinkie-promise@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pinkie-promise/-/pinkie-promise-2.0.1.tgz#2135d6dfa7a358c069ac9b178776288228450ffa"
@@ -3240,7 +3263,7 @@ vscode-languageserver-types@^3.14.0:
   resolved "https://registry.yarnpkg.com/vscode-languageserver-types/-/vscode-languageserver-types-3.14.0.tgz#d3b5952246d30e5241592b6dde8280e03942e743"
   integrity sha512-lTmS6AlAlMHOvPQemVwo3CezxBp0sNB95KNPkqp3Nxd5VFEnuG1ByM0zlRWos0zjO3ZWtkvhal0COgiV1xIA4A==
 
-vscode-languageserver@^5.3.0-next.6:
+vscode-languageserver@^5.3.0-next.1, vscode-languageserver@^5.3.0-next.6:
   version "5.3.0-next.6"
   resolved "https://registry.yarnpkg.com/vscode-languageserver/-/vscode-languageserver-5.3.0-next.6.tgz#33befcc3af7d615e1bdcd6ce5ffd017861df5f60"
   integrity sha512-7DtEBFc0bkcIaKhhx5Q4ZvIkJ1PAtX0pqTnI6QyA14yLL1TfqSSoNRczamb9khpGbLyN5oje7kBJD1kiOvsM+Q==
