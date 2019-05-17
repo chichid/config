@@ -46,11 +46,10 @@ autocmd VimEnter * DetectIndent
 " Keyboard Mapping
 """""""""""""""
 nmap q :qa<CR>
+nnoremap <silent> t gt
+nnoremap <silent> T gT
 nnoremap <silent> <BS> i<BS><ESC> 
 noremap <silent> <CR> :nohlsearch<CR>
-nnoremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode()<CR>" : "<RIGHT>"
-nnoremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode()<CR>" : "<LEFT>"
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 nnoremap \ i<CR><ESC>
 nnoremap <BAR> o<ESC><UP>
 nnoremap <S-RIGHT> $
@@ -59,6 +58,11 @@ nnoremap < <<
 nnoremap > >>
 vnoremap > >gv
 vnoremap < <gv
+noremap  <silent> ? :NERDTreeClose<CR>:FZF --reverse<CR>  
+nnoremap <silent> <expr> / g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : "/"
+nnoremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode()<CR>" : "<RIGHT>"
+nnoremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode()<CR>" : "<LEFT>"
+nnoremap <silent> <C-n> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""
 " Easy Escape
@@ -71,8 +75,8 @@ cnoremap kj <ESC>
 """"""""""""""
 " Theme
 """"""""""""""
-set cursorline
 colorscheme default
+set cursorline
 
 highlight LineNr cterm=NONE ctermbg=0 ctermfg=241
 highlight StatusLine ctermbg=0
@@ -84,6 +88,7 @@ highlight Visual term=NONE ctermbg=11 ctermfg=0
 highlight EndOfBuffer ctermfg=0
 highlight Search term=NONE cterm=NONE ctermfg=0
 highlight NERDTreeClosable ctermfg=11 
+highlight Directory ctermfg=231
 
 highlight Statement ctermfg=11
 highlight Identifier ctermfg=6
@@ -93,12 +98,22 @@ highlight Number ctermfg=10
 highlight Boolean ctermfg=10 
 highlight Float ctermfg=10
 
+highlight StorageClass ctermfg=11
+highlight Include ctermfg=11
+
+"""""""""""""""""""""""
+" FZF
+"""""""""""""""""""""""
+let g:fzf_layout = { 'left': '~40%' }
+let $FZF_DEFAULT_COMMAND = 'fd --type f'
+
 """""""""""""
 " NERDTree
 """"""""""""""
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrowExpandable = '▹'
 let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeMapHelp = 'H'
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | call MyNERDTreeOpenDir() | endif

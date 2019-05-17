@@ -4,6 +4,7 @@ window.vbInitConfig = {
 	}
 };
 
+
 var allCCALoaders = [];
 var commonTestFiles = [];
 // var TEST_REGEXP = /(-test)\.js$/i
@@ -62,9 +63,8 @@ require.config({
 Promise.all([
 	requirePromise(allCCALoaders, 'CCA Loaders'),
 	requirePromise(commonTestFiles, 'Common Test Files')
-]).then(() => {
-	console.log('All resources have been loaded starting karma...');
-	window.__karma__.start();
+]).finally(() => {
+  setTimeout( () => window.__karma__.start(), 1000);
 });
 
 function requirePromise(deps, resource) {
@@ -121,7 +121,7 @@ QUnit.testStart(function( details ) {
 });
 
 QUnit.testDone(function( details ) {	
-  var testMessage = details.module + "-" + details.name;
+  var testMessage = details.module + "-" + details.name; 
   
   var statusColor, statusText;
   statusColor = Colors.bg.Green;

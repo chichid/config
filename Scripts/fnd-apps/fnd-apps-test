@@ -1,7 +1,7 @@
 #!/bin/bash
 cd ~/Projects/fnd-apps
 gulp stop-services
-nohup gulp start-services </dev/null >~/Config/Scripts/fnd-apps/start-services.log 2>&1 &
+nohup gulp start-services </dev/null >~/.config/Scripts/fnd-apps/start-services.log 2>&1 &
 
 echo -n "Waiting for services to start on 2002...";
 while ! nc -z localhost 2002 </dev/null
@@ -12,4 +12,15 @@ done
 
 echo "Services have started starting the karma server";
 
-karma start ~/Config/Scripts/fnd-apps/karma.conf.approval.js "$@"
+cp ~/.config/Scripts/fnd-apps/qunit-test-main.js ~/Projects/fnd-apps/fnd-approvals/tests
+cp ~/.config/Scripts/fnd-apps/karma.conf.js ~/Projects/fnd-apps/fnd-approvals/
+
+function cleanup {
+  git checkout -- fnd-approvals/karma.conf.js
+  git checkout -- fnd-approvals/tests/qunit-test-main.js
+}
+
+trap cleanup EXIT
+gulp test:unit --hostname=localhost --browsers=ChromeDebugger "$@"
+
+# ./node_modules/.bin/karma start ~/.config/Scripts/fnd-apps/karma.conf.approval.js "$@"
