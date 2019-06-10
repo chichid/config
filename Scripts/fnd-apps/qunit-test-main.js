@@ -1,10 +1,11 @@
 window.vbInitConfig = {
 	SERVICE_WORKER_CONFIG: {
-		disabled: true
-	}
+		disabled: true,
+	},
+	LOG: { mode: 'simple', emoji: 'off' },
 };
 
-
+var TRANSLATION_OVERRIDE_PATH = '/resources/translations/nls/oracle.apps.fnd.applcore.vbcs.flows.approvals';
 var allCCALoaders = [];
 var commonTestFiles = [];
 // var TEST_REGEXP = /(-test)\.js$/i
@@ -30,11 +31,13 @@ function isAddTestFile(testSuiteFile) {
 		// If no packages are defined then execute all the test suites.
 		testFile = true;
 	}
+	
 	// console.log('Run Tests in Test suite: ' + testSuiteFile + " : " + testFile);
 	return testFile;
 }
 
-Object.keys(window.__karma__.files).forEach(function(file) {
+Object.keys(window.__karma__.files)
+  .forEach(function(file) {
 	if (file.endsWith('loader.js') && file.indexOf('/js/jet-composites') >= 0) {
 		console.log('Adding CCA Loader ' + file);
 		allCCALoaders.push(file);
@@ -45,7 +48,8 @@ Object.keys(window.__karma__.files).forEach(function(file) {
 	}
 });
 
-allCCALoaders = allCCALoaders.map(loader => loader.replace('/base/src/js/jet-composites', 'oj-approvals').replace('.js', ''));
+allCCALoaders = allCCALoaders.map(loader => loader.replace('/base/src/js/jet-composites', 'oj-approvals')
+	.replace('.js', ''));
 
 require.config({
 	// Karma serves files under /base, which is the basePath from your config file
@@ -56,13 +60,41 @@ require.config({
 		'app-flow': '/base/tests/fixture/app-flow',
 		underscore: '/base/node_modules/underscore/underscore',
 		pouchdb: '/base/node_modules/@oracle/oraclejet/dist/js/libs/opt/min/pouchdb-browser-6.3.4',
-		'oj-dynamic': 'https://static-stage.oracle.com/cdn/jet/packs/oj-dynamic/6.0.0-alpha.1.1'
-	}
+		'oj-dynamic': 'https://static-stage.oracle.com/cdn/jet/packs/oj-dynamic/6.0.0-alpha.1.1',
+	},
+	config: {
+		ojL10n: {
+			merge: {
+				'oj-approvals/common-utils/resources/nls/oj-common-utils-strings': TRANSLATION_OVERRIDE_PATH,
+				'oj-approvals/stepflow-editor/resources/nls/oj-fnd-approvals-stepflow-editor-strings': TRANSLATION_OVERRIDE_PATH,
+				'oj-approvals/rule-editor/resources/nls/oj-approvals-rule-editor-strings': TRANSLATION_OVERRIDE_PATH,
+				'oj-approvals/rule-action-editor/resources/nls/oj-approvals-rule-action-editor-strings': TRANSLATION_OVERRIDE_PATH,
+				'oj-approvals/rule-condition-editor/resources/nls/oj-approvals-rule-condition-editor-strings': TRANSLATION_OVERRIDE_PATH,
+			},
+		},
+	},
 });
+
+if (false) {
+require([], function () {
+	require(allCCALoaders, () => {
+	}, error => console.log(error));
+	require(commonTestFiles, () => {
+	}, error => console.log(error));
+
+	setTimeout(function () {
+		require.config({
+			// deps: testFilesToInclude,
+			callback: window.__karma__.start, // we have to kickoff qunit, as it is asynchronous
+		});
+	}, 20000);
+});
+}
 
 Promise.all([
 	requirePromise(allCCALoaders, 'CCA Loaders'),
-	requirePromise(commonTestFiles, 'Common Test Files')
+	requirePromise(commonTestFiles, 'Common Test Files'),
+	requirePromise(['/test-utils/report.js'], 'Mocha Report.js')
 ]).finally(() => {
   setTimeout( () => window.__karma__.start(), 1000);
 });
@@ -82,62 +114,3 @@ function requirePromise(deps, resource) {
 		}
 	));
 }
-
-const Colors = {
-  Reset: "\x1b[0m",
-  Bright: "\x1b[1m",
-  Dim: "\x1b[2m",
-  Underscore: "\x1b[4m",
-  Blink: "\x1b[5m",
-  Reverse: "\x1b[7m",
-  Hidden: "\x1b[8m",
-  fg: {
-   Black: "\x1b[30m",
-   Red: "\x1b[31m",
-   Green: "\x1b[32m",
-   Yellow: "\x1b[33m",
-   Blue: "\x1b[34m",
-   Magenta: "\x1b[35m",
-   Cyan: "\x1b[36m",
-   White: "\x1b[37m",
-   Crimson: "\x1b[38m" //القرمزي
-  },
-  bg: {
-   Black: "\x1b[40m",
-   Red: "\x1b[41m",
-   Green: "\x1b[42m",
-   Yellow: "\x1b[43m",
-   Blue: "\x1b[44m",
-   Magenta: "\x1b[45m",
-   Cyan: "\x1b[46m",
-   White: "\x1b[47m",
-   Crimson: "\x1b[48m"
-  }
-};
-
-QUnit.testStart(function( details ) {
-  var message = Colors.bg.White + Colors.Bright + ' NOW TESTING ' + '\x1b[49m' + ' ' + details.module + "-" + details.name;
-  console.info(message + Colors.Reset);
-});
-
-QUnit.testDone(function( details ) {	
-  var testMessage = details.module + "-" + details.name; 
-  
-  var statusColor, statusText;
-  statusColor = Colors.bg.Green;
-  statusText =   "  PASSED  ";
- 
-  if (details.failed > 0) {
-    statusColor = Colors.bg.Red;
-    statusText = "  FAILED  ";
-  } else if (details.skipped) {
-    statusColor = Colors.bg.White;
-    statusText = "  SKIPPED ";
-  } else if (details.todo) {
-    statusColor = Color.bg.Yellow;
-    statusText = "   TODO   ";
-  }
-
-  var message = statusColor + ' ' + '\x1b[1m' + statusText + ' ' + '\x1b[49m' + ' ' + testMessage;
-  console.info(message + Colors.Reset);
-});

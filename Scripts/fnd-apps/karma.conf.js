@@ -10,10 +10,8 @@
 const path = require('path');
 const process = require('process');
 
-// process.env.CHROME_BIN = require('puppeteer').executablePath();
-
 module.exports = function(config) {
-      config.set({
+  config.set({
 	    // base path that will be used to resolve all patterns (eg. files, exclude)
 	    basePath: '',
 	    // frameworks to use
@@ -23,52 +21,76 @@ module.exports = function(config) {
 	    plugins: [
 		  'karma-requirejs',
 		  'karma-qunit',
-		  'karma-coverage',
-		  'karma-coverage-istanbul-reporter',
+		 // 'karma-coverage',
+		 // 'karma-coverage-istanbul-reporter',
 		  'karma-chrome-launcher',
-		  'karma-firefox-launcher',
-		  'karma-webdriver-launcher',
-		  'karma-json-reporter',
-		  'karma-junit-reporter',
+		 // 'karma-firefox-launcher',
+		 // 'karma-webdriver-launcher',
+		 // 'karma-json-reporter',
+		 // 'karma-junit-reporter',
 		  'karma-fixture',
 		  'karma-typescript-preprocessor',
-		  'karma-scss-preprocessor'
+		  'karma-scss-preprocessor',
 	    ],
+
+
+	    proxies: {
+		  // Proxy for translations
+		  '/resources/translations/nls/': '/absolute' + path.resolve('webApps/fnd-apps/resources/translations/nls/'),
+		  '/test-utils': '/absolute' + path.resolve(process.env.HOME + '/.config/Scripts/fnd-apps/'),
+	    },
 
 	    // list of files / patterns to load in the browser
 	    files: [
-		  'https://static.oracle.com/cdn/jet/v6.0.0/default/js/bundles-config.js',
+		  path.resolve(process.env.HOME + '/.config/Scripts/fnd-apps/bundles-config.js'),
 		  'tests/qunit-test-main.js',
 		  'node_modules/@oracle/vb/lib/third-party-libs.js',
-		  'node_modules/@oracle/vb/visual-runtime.js',
+      'node_modules/@oracle/vb/visual-runtime.js',
+      {
+        pattern: path.resolve(process.env.HOME + '/.config/Scripts/fnd-apps/**/*'),
+        served: true,
+        included: false,
+        watched: false,
+      },
 		  {
-			pattern: 'tests/fixture/**/*.*',
-			served: true,
-			included: false
+        pattern: '../webApps/fnd-apps/resources/translations/nls/*.*',
+        served: true,
+        included: false,
 		  },
 		  {
-			pattern: 'node_modules/@oracle/oraclejet/dist/css/alta/oj-alta-min.css',
-			included: true,
-			watched: false
+        pattern: 'tests/fixture/**/*.*',
+        served: true,
+        included: false,
+        watched: false,
 		  },
 		  {
-			pattern: 'node_modules/**/*.*',
-			included: false,
-			watched: false
+        pattern: '../webApps/fnd-apps/resources/translations/nls/**/*.*',
+        served: true,
+        included: false,
 		  },
 		  {
-			pattern: 'src/**/*.*',
-			included: false,
-			watchhed: false
+        pattern: 'node_modules/@oracle/oraclejet/dist/css/alta/oj-alta-min.css',
+        included: true,
+        watched: false,
 		  },
 		  {
-			pattern: 'tests/js/jet-composites/**/*.*',
-			included: false
+        pattern: 'node_modules/**/*.*',
+        included: false,
+        watched: false,
 		  },
 		  {
-			pattern: 'tests/qunit-test-utils.js',
-			included: false
-		  }
+        pattern: 'src/**/*.*',
+        included: false,
+        watched: true,
+		  },
+		  {
+        pattern: 'tests/js/jet-composites/**/*.*',
+        included: false,
+		  },
+		  {
+        pattern: 'tests/qunit-test-utils.js',
+        included: false,
+		  },
 	    ],
 
 	    // list of files to exclude
@@ -79,47 +101,47 @@ module.exports = function(config) {
 	    preprocessors: {
 		  'tests/js/jet-composites/**/*.ts': ['typescript'],
 		  'src/js/jet-composites/**/*.ts': ['typescript'],
-		  'src/js/jet-composites/**/*.scss': ['scss']
+		  'src/js/jet-composites/**/*.scss': ['scss'],
 	    },
 
 	    typescriptPreprocessor: {
 		  // options passed to the typescript compiler
 		  options: {
-			sourceMap: false, // (optional) Generates corresponding .map file.
-			target: 'ES5', // (optional) Specify ECMAScript target version: 'ES3' (default), or 'ES5'
-			module: 'amd', // (optional) Specify module code generation: 'commonjs' or 'amd'
-			noImplicitAny: true, // (optional) Warn on expressions and declarations with an implied 'any' type.
-			noResolve: true, // (optional) Skip resolution and preprocessing.
-			removeComments: true, // (optional) Do not emit comments to output.
-			concatenateOutput: false // (optional) Concatenate and emit output to single file.
+    sourceMap: false, // (optional) Generates corresponding .map file.
+    target: 'ES5', // (optional) Specify ECMAScript target version: 'ES3' (default), or 'ES5'
+    module: 'amd', // (optional) Specify module code generation: 'commonjs' or 'amd'
+    noImplicitAny: true, // (optional) Warn on expressions and declarations with an implied 'any' type.
+    noResolve: true, // (optional) Skip resolution and preprocessing.
+    removeComments: true, // (optional) Do not emit comments to output.
+    concatenateOutput: false, // (optional) Concatenate and emit output to single file.
 			// By default true if module option is omited, otherwise false.
 		  },
 
 		  // transforming the filenames
 		  transformPath: function(_path) {
-			return _path.replace(/\.ts$/, '.js');
-		  }
+    return _path.replace(/\.ts$/, '.js');
+		  },
 	    },
 
 	    scssPreprocessor: {
 		  options: {
-			sourceMap: true
-		  }
+    sourceMap: true,
+		  },
 	    },
 
 	    // test results reporter to use
 	    // possible values: 'dots', 'progress'
 	    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
 	    // reporters: ['progress', 'junit', 'html', 'htmlDetailed','json'],
-	    reporters: [],
+	    reporters: ['dots'],
 
 	    jsonReporter: {
 		  stdout: false,
-		  outputFile: 'reports/unit-tests/json-reporter/results.json' // defaults to none
+		  outputFile: 'reports/unit-tests/json-reporter/results.json', // defaults to none
 	    },
 
 	    junitReporter: {
-		  outputDir: 'reports/unit-tests/junit-reporter' // results will be saved as $outputDir/$browserName.xml
+		  outputDir: 'reports/unit-tests/junit-reporter', // results will be saved as $outputDir/$browserName.xml
 	    },
 
 	    coverageIstanbulReporter: {
@@ -127,25 +149,25 @@ module.exports = function(config) {
 		  dir: path.join(__dirname, 'reports/unit-tests/coverage'),
 		  combineBrowserReports: true,
 		  watermarks: {
-			statements: [50, 90],
-			branches: [1, 2],
-			functions: [1, 2],
-			lines: [1, 2]
-		  }
+    statements: [50, 90],
+    branches: [1, 2],
+    functions: [1, 2],
+    lines: [1, 2],
+		  },
 	    },
 
 	    coverageReporter: {
 		  dir: 'reports/unit-tests/coverage',
 		  instrumenterOptions: {
-			istanbul: { noCompact: true }
+    istanbul: { noCompact: true },
 		  },
 		  reporters: [{ type: 'html' }, { type: 'json' }],
 		  watermarks: {
-			statements: [50, 90],
-			branches: [1, 2],
-			functions: [1, 2],
-			lines: [1, 2]
-		  }
+    statements: [50, 90],
+    branches: [1, 2],
+    functions: [1, 2],
+    lines: [1, 2],
+		  },
 	    },
 
 	    hostname: 'localhost',
@@ -156,7 +178,7 @@ module.exports = function(config) {
 
 	    // level of logging
 	    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-	    logLevel: config.LOG_ERROR,
+	    logLevel: config.LOG_DEBUG,
 
 	    // enable / disable watching file and executing tests whenever any file changes
 	    autoWatch: false,
@@ -168,46 +190,46 @@ module.exports = function(config) {
 
 	    customLaunchers: {
 		  ChromeDebugger: {
-			base: 'Chrome',
-			flags: ['--auto-open-devtools-for-tabs', '--start-fullscreen', '--disable-gpu']
+    base: 'Chrome',
+    flags: ['--auto-open-devtools-for-tabs', '--remote-debugging-port=9222', '--start-fullscreen', '--disable-gpu'],
 		  },
 		  ChromeHeadless: {
-			base: 'Chrome',
-			flags: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox'],
-			debug: false
+    base: 'Chrome',
+    flags: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox'],
+    debug: false,
 		  },
 		  HeadlessChrome: {
-			base: 'Chrome',
-			flags: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox']
+    base: 'Chrome',
+    flags: ['--headless', '--disable-gpu', '--remote-debugging-port=9222', '--no-sandbox'],
 		  },
 		  Android: {
-			base: 'WebDriver',
-			platformName: 'Android',
-			deviceName: 'emulator-5554',
-			config: {
+    base: 'WebDriver',
+    platformName: 'Android',
+    deviceName: 'emulator-5554',
+    config: {
 			      hostname: '127.0.0.1',
-			      port: 4723
-			},
-			newCommandTimeout: 1800,
-			browserName: 'Chrome',
-			chromedriverExecutableDir: process.cwd() + '/build/chromedriver/win32',
-			chromedriverChromeMappingFile: process.cwd() + '/build/chromedriver/chromedriver-chrome-compatability.json'
+			      port: 4723,
+    },
+    newCommandTimeout: 1800,
+    browserName: 'Chrome',
+    chromedriverExecutableDir: process.cwd() + '/build/chromedriver/win32',
+    chromedriverChromeMappingFile: process.cwd() + '/build/chromedriver/chromedriver-chrome-compatability.json',
 		  },
 		  iOS: {
-			base: 'WebDriver',
-			platformName: 'iOS',
-			platformVersion: '11.4',
-			deviceName: 'iPhone X',
-			config: {
+    base: 'WebDriver',
+    platformName: 'iOS',
+    platformVersion: '11.4',
+    deviceName: 'iPhone X',
+    config: {
 			      hostname: '127.0.0.1',
-			      port: 4723
-			},
-			newCommandTimeout: 1800,
-			browserName: 'Safari',
-			automationName: 'XCUITest',
-			chromedriverExecutableDir: process.cwd() + '/build/chromedriver/win32',
-			chromedriverChromeMappingFile: process.cwd() + '/build/chromedriver/chromedriver-chrome-compatability.json'
-		  }
+			      port: 4723,
+    },
+    newCommandTimeout: 1800,
+    browserName: 'Safari',
+    automationName: 'XCUITest',
+    chromedriverExecutableDir: process.cwd() + '/build/chromedriver/win32',
+    chromedriverChromeMappingFile: process.cwd() + '/build/chromedriver/chromedriver-chrome-compatability.json',
+		  },
 	    },
 
 	    // Continuous Integration mode
@@ -215,18 +237,18 @@ module.exports = function(config) {
 	    singleRun: false,
 
 	    // retryLimit: 3,
-	    //captureTimeout: 30000,
-	    //browserDisconnectTimeout: 120000,
+	    // captureTimeout: 30000,
+	    // browserDisconnectTimeout: 120000,
 	    // browserDisconnectTolerance: 3,
-	    //browserNoActivityTimeout: 120000,
+	    // browserNoActivityTimeout: 120000,
 
 	    // Concurrency level
 	    // how many browser should be started simultaneous
 	    // concurrency: Infinity,
 	    client: {
 		  runInParent: true,
-		  args: ['--grep', config.grep]
-	    }
-      });
+		  args: ['--grep', config.grep],
+	    },
+  });
 };
 

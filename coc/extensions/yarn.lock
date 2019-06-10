@@ -436,10 +436,10 @@ coc-json@^1.0.17:
     vscode-languageserver "^5.3.0-next.6"
     vscode-uri "^1.0.6"
 
-coc-snippets@^2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/coc-snippets/-/coc-snippets-2.0.10.tgz#557c86027eb7d1e545290da675ccff17e7b5fe63"
-  integrity sha512-1/XuDOD7KpJDxeGiUQZvC6KfNXZOKaBw45ZSgjYPm+olxynx8RoT5Sn+Ar/o6KGpoNQraYEUtATndumdkhA+MA==
+coc-snippets@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.yarnpkg.com/coc-snippets/-/coc-snippets-2.0.15.tgz#8872e8fc125891cbcc4dea304063c0f7d5a44764"
+  integrity sha512-YjW+nSx8M95UIL90NQFAXjmogR8vDjJxc2+jloiKMKn+ckLxdwdnagCxVVH6Kbe8KQM7iLmWbVYJwjXdt4iGSg==
   dependencies:
     jsonc-parser "^2.0.3"
     pify "^4.0.1"

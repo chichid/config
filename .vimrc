@@ -27,6 +27,7 @@ set history=1000
 set ignorecase
 set smartcase
 set laststatus=0
+set mouse=a
 
 """""""""""""""
 " AutoComplete 

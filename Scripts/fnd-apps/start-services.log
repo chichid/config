@@ -1,25 +1,25 @@
-[11:57:09] Failed to load external module @babel/register
-[11:57:09] Requiring external module babel-register
+[21:34:20] Failed to load external module @babel/register
+[21:34:20] Requiring external module babel-register
 jenkins host: false
-available addresses: 10.156.45.22
-considered localhost address: 10.156.45.22
-[11:57:09] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
-[11:57:09] Starting 'start-services:fnd-apps'...
-[11:57:09] Starting 'start-services:approvals-test'...
-[11:57:09] Starting 'start-services:fnd-approvals'...
+available addresses: 192.168.2.30
+considered localhost address: 192.168.2.30
+[21:34:21] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
+[21:34:21] Starting 'start-services:fnd-apps'...
+[21:34:21] Starting 'start-services:approvals-test'...
+[21:34:21] Starting 'start-services:fnd-approvals'...
 file doesn't exist - /Users/relhabba/Projects/fnd-apps/fnd-approvals/tests/config.json
-[11:57:09] Finished 'start-services:fnd-apps' after 26 ms
-[11:57:09] Finished 'start-services:approvals-test' after 1.46 ms
-[11:57:09] Finished 'start-services:fnd-approvals' after 1.5 ms
-[11:57:09] Starting 'start-services'...
-[11:57:09] Finished 'start-services' after 34 μs
-Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
-Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
-Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
-Thu, 23 May 2019 15:57:09 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
+[21:34:21] Finished 'start-services:fnd-apps' after 30 ms
+[21:34:21] Finished 'start-services:approvals-test' after 1.49 ms
+[21:34:21] Finished 'start-services:fnd-approvals' after 1.47 ms
+[21:34:21] Starting 'start-services'...
+[21:34:21] Finished 'start-services' after 24 μs
+Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
+Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
+Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
 profileoptions service listening on host: 0.0.0.0 port: 2003
-worklist service listening on host: 0.0.0.0 port: 2020
 notifications service listening on host: 0.0.0.0 port: 1948
+Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
+worklist service listening on host: 0.0.0.0 port: 2020
 No sslConfFile file provided trying defaults
 Mock Server listening on host: 0.0.0.0 port: 2002 path: /approvals/
 navigatordata service listening on host: 0.0.0.0 port: 1889

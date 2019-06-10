@@ -19,5 +19,6 @@ alias ll="ls -lG"
 alias f="fzf --height 40% --reverse --preview 'file {}' --preview-window down:1"
 alias vim='/usr/local/Cellar/macvim/8.1-155/bin/vim'
 alias gradle='gradle -Dhttp.proxyHost=$proxy_host -Dhttp.proxyPort=$proxy_port -Dhttps.proxyHost=$proxy_host -Dhttps.proxyPort=$proxy_port'
+alias remote-copy='rsync -av -e ssh --exclude="*/node_modules*"'
 
 export PATH="$HOME/.cargo/bin:$PATH"
