@@ -1,0 +1,34 @@
+#!/bin/bash
+alias gulp='cpulimit --limit 50 -i gulp'
+shopt -s expand_aliases
+source ~/.bash_profile
+cd ~/Projects/fnd-apps
+gulp stop-services
+nohup gulp start-services --hostname=localhost </dev/null >~/.config/Scripts/fnd-apps/start-services.log 2>&1 &
+
+echo -n "Waiting for services to start on 2002...";
+while ! nc -z localhost 2002 </dev/null
+do
+  echo -n '.';
+  sleep 2; 
+done
+
+echo "Services have started starting the karma server";
+
+cp ~/.config/Scripts/fnd-apps/karma.conf.js ~/Projects/fnd-apps/fnd-approvals/
+git update-index --assume-unchanged fnd-approvals/karma.conf.js
+
+cp ~/.config/Scripts/fnd-apps/qunit-test-main.js ~/Projects/fnd-apps/fnd-approvals/tests
+git update-index --assume-unchanged fnd-approvals/tests/qunit-test-main.js
+
+function cleanup {
+  cp ~/Projects/fnd-apps/fnd-approvals/tests/qunit-test-main.js ~/.config/Scripts/fnd-apps/qunit-test-main.js 
+  cp ~/Projects/fnd-apps/fnd-approvals/karma.conf.js ~/.config/Scripts/fnd-apps/karma.conf.js 
+  git checkout -- fnd-approvals/karma.conf.js.
+  git checkout -- fnd-approvals/tests/qunit-test-main.js
+}
+
+trap cleanup EXIT
+gulp test:unit --hostname=localhost --browsers=ChromeDebugger "$@"
+
+# ./node_modules/.bin/karma start ~/.config/Scripts/fnd-apps/karma.conf.approval.js "$@"

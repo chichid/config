@@ -1,67 +1,77 @@
-[21:34:20] Failed to load external module @babel/register
-[21:34:20] Requiring external module babel-register
-jenkins host: false
-available addresses: 192.168.2.30
-considered localhost address: 192.168.2.30
-[21:34:21] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
-[21:34:21] Starting 'start-services:fnd-apps'...
-[21:34:21] Starting 'start-services:approvals-test'...
-[21:34:21] Starting 'start-services:fnd-approvals'...
+[12:46:49] Failed to load external module @babel/register
+[12:46:49] Requiring external module babel-register
+jenkins host: undefined
+available addresses: 10.156.44.236
+considered localhost address: localhost
+[12:46:49] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
+[12:46:49] Starting 'start-services:fnd-apps'...
+[12:46:50] Starting 'start-services:approvals-test'...
+[12:46:50] Starting 'start-services:fnd-approvals'...
 file doesn't exist - /Users/relhabba/Projects/fnd-apps/fnd-approvals/tests/config.json
-[21:34:21] Finished 'start-services:fnd-apps' after 30 ms
-[21:34:21] Finished 'start-services:approvals-test' after 1.49 ms
-[21:34:21] Finished 'start-services:fnd-approvals' after 1.47 ms
-[21:34:21] Starting 'start-services'...
-[21:34:21] Finished 'start-services' after 24 μs
-Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
-Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
-Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
+[12:46:50] Finished 'start-services:fnd-apps' after 129 ms
+[12:46:50] Finished 'start-services:approvals-test' after 2.71 ms
+[12:46:50] Finished 'start-services:fnd-approvals' after 2.73 ms
+[12:46:50] Starting 'start-services'...
+[12:46:50] Finished 'start-services' after 24 μs
+No sslConfFile file provided trying defaults
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2002
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
+Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
+Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
 profileoptions service listening on host: 0.0.0.0 port: 2003
 notifications service listening on host: 0.0.0.0 port: 1948
-Tue, 11 Jun 2019 01:34:21 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
-worklist service listening on host: 0.0.0.0 port: 2020
+Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
 No sslConfFile file provided trying defaults
-Mock Server listening on host: 0.0.0.0 port: 2002 path: /approvals/
+No sslConfFile file provided trying defaults
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2005
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+worklist service listening on host: 0.0.0.0 port: 2020
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2004
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
 navigatordata service listening on host: 0.0.0.0 port: 1889
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json
-//localhost:2002/approvals/countries
-Requiring file at ./resources/rest/countries/countries_properties.js
-Requiring file at ./resources/rest/countries/default.json

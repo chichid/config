@@ -1,0 +1,1 @@
+nslookup my.oracle.com | awk '/Address: / {print "http://"$2}' | xargs open -a "Google Chrome"

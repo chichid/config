@@ -34,6 +34,7 @@ set mouse=a
 """""""""""""""
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabClosePreviewOnPopupClose = 1
+let g:coc_start_at_start = 0
 
 """""""""""""""
 " Indent
@@ -52,19 +53,24 @@ autocmd VimEnter * DetectIndent
 """"""""""""""
 " Keyboard Mapping
 """""""""""""""
-nmap q :qa<CR>
-nnoremap <silent> t gt
-nnoremap <silent> T gT
 nnoremap <BS> i<BS><ESC><ESC> 
 noremap <silent> <CR> :nohlsearch<CR>
 nnoremap \ i<CR><ESC>
 nnoremap <BAR> o<ESC><UP>
+
+nmap q :qa<CR>
+nnoremap <silent> t gt
+nnoremap <silent> T gT
 nnoremap <S-RIGHT> $
 nnoremap <S-LEFT> 0
+nnoremap <C-k> <C-y>
+nnoremap <C-j> <C-e>
+
 nnoremap < <<
 nnoremap > >>
 vnoremap > >gv
 vnoremap < <gv
+
 noremap  <silent> ? :NERDTreeClose<CR>:FZF --reverse<CR>  
 nnoremap <silent> <expr> / g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : "/"
 nnoremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode()<CR>" : "<RIGHT>"
@@ -83,34 +89,36 @@ cnoremap kj <ESC>
 """"""""""""""
 " Theme
 """"""""""""""
-colorscheme default
+set termguicolors     
+let ayucolor="dark" 
+colorscheme ayu
 set cursorline
 
-highlight LineNr cterm=NONE ctermbg=0 ctermfg=241
-highlight StatusLine ctermbg=0
-highlight CursorLine cterm=NONE ctermbg=8 
-highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
-highlight VertSplit ctermfg=0 ctermbg=0
-highlight MatchParen term=NONE ctermbg=LightGrey ctermfg=0
-highlight Visual term=NONE ctermbg=11 ctermfg=0
-highlight EndOfBuffer ctermfg=0
-highlight Search term=NONE cterm=NONE ctermfg=0
-highlight NERDTreeClosable ctermfg=11 
-highlight Directory ctermfg=231
-highlight Pmenu ctermfg=7 ctermbg=0
-highlight PmenuSbar ctermbg=8
-highlight PmenuThumb ctermbg=7
+"highlight LineNr cterm=NONE ctermfg=241
+"highlight StatusLine ctermbg=0
+"highlight CursorLine cterm=NONE ctermbg=8 
+"highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
+"highlight VertSplit ctermfg=0 ctermbg=0
+"highlight MatchParen term=NONE ctermbg=LightGrey ctermfg=0
+"highlight Visual term=NONE ctermbg=11 ctermfg=0
+"highlight EndOfBuffer ctermfg=0
+"highlight Search term=NONE cterm=NONE ctermfg=0
+"highlight NERDTreeClosable ctermfg=11 
+"highlight Directory ctermfg=245 guifg=#ffffff
+"highlight Pmenu ctermfg=7 ctermbg=0
+"highlight PmenuSbar ctermbg=8
+"highlight PmenuThumb ctermbg=7
 
-highlight Statement ctermfg=11
-highlight Identifier ctermfg=6
-highlight String ctermfg=10
-highlight Character ctermfg=10
-highlight Number ctermfg=10 
-highlight Boolean ctermfg=10 
-highlight Float ctermfg=10
-
-highlight StorageClass ctermfg=11
-highlight Include ctermfg=11
+"highlight Statement ctermfg=11
+"highlight Identifier ctermfg=6
+"highlight String ctermfg=10
+"highlight Character ctermfg=10
+"highlight Number ctermfg=10 
+"highlight Boolean ctermfg=10 
+"highlight Float ctermfg=10
+"
+"highlight StorageClass ctermfg=11
+"highlight Include ctermfg=11
 
 """""""""""""""""""""""
 " FZF

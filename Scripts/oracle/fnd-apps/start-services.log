@@ -1,0 +1,59 @@
+[14:34:58] Failed to load external module @babel/register
+[14:34:58] Requiring external module babel-register
+jenkins host: false
+available addresses: 10.156.45.37
+considered localhost address: localhost
+[14:34:58] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
+[14:34:58] Starting 'start-services:fnd-apps'...
+[14:34:59] Starting 'start-services:approvals-test'...
+[14:34:59] Starting 'start-services:fnd-approvals'...
+file doesn't exist - /Users/relhabba/Projects/fnd-apps/fnd-approvals/tests/config.json
+[14:34:59] Finished 'start-services:fnd-apps' after 66 ms
+[14:34:59] Finished 'start-services:approvals-test' after 12 ms
+[14:34:59] Finished 'start-services:fnd-approvals' after 12 ms
+[14:34:59] Starting 'start-services'...
+[14:34:59] Finished 'start-services' after 38 μs
+No sslConfFile file provided trying defaults
+No sslConfFile file provided trying defaults
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2005
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2002
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Wed, 21 Aug 2019 18:35:04 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
+navigatordata service listening on host: 0.0.0.0 port: 1889
+Wed, 21 Aug 2019 18:35:04 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
+profileoptions service listening on host: 0.0.0.0 port: 2003
+Wed, 21 Aug 2019 18:35:04 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
+worklist service listening on host: 0.0.0.0 port: 2020
+Wed, 21 Aug 2019 18:35:04 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
+notifications service listening on host: 0.0.0.0 port: 1948

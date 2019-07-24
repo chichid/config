@@ -1,0 +1,5 @@
+cd ~/Projects/fnd-apps
+# cpulimit -i -l 70 gulp build
+npm start --prefix ~/.config/Scripts/fnd-apps/fnd-approvals-server & 
+cpulimit -i -l 50 gulp launch:nowatch &
+wait
