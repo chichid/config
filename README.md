@@ -1,2 +1,1 @@
-# oracle-config
-My Oracle Configurations
+# my configurations
