@@ -3,6 +3,9 @@
 """"""""""""""
 execute pathogen#infect()
 
+execute "set t_8f=\e[38;2;%lu;%lu;%lum"
+execute "set t_8b=\e[48;2;%lu;%lu;%lum"
+
 """""""""""
 " General
 """"""""""""
@@ -21,9 +24,9 @@ set hlsearch
 set autoread          
 set linebreak
 set nolist 
+set history=10000
 set textwidth=0
 set wrapmargin=0 
-set history=1000 
 set ignorecase
 set smartcase
 set laststatus=0
@@ -94,10 +97,12 @@ let ayucolor="dark"
 colorscheme ayu
 set cursorline
 
-"highlight LineNr cterm=NONE ctermfg=241
-"highlight StatusLine ctermbg=0
-"highlight CursorLine cterm=NONE ctermbg=8 
-"highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
+hi Normal guibg=Black
+" Highlight Normal guibg=Black guifg=Gray
+" highlight LineNr cterm=NONE guifg=LightGray ctermfg=241
+" highlight StatusLine ctermbg=0
+" highlight CursorLine cterm=NONE ctermbg=8 
+" highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
 "highlight VertSplit ctermfg=0 ctermbg=0
 "highlight MatchParen term=NONE ctermbg=LightGrey ctermfg=0
 "highlight Visual term=NONE ctermbg=11 ctermfg=0
@@ -108,7 +113,7 @@ set cursorline
 "highlight Pmenu ctermfg=7 ctermbg=0
 "highlight PmenuSbar ctermbg=8
 "highlight PmenuThumb ctermbg=7
-
+"
 "highlight Statement ctermfg=11
 "highlight Identifier ctermfg=6
 "highlight String ctermfg=10
