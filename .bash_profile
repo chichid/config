@@ -22,6 +22,7 @@ alias vim='/usr/local/Cellar/macvim/8.1-155/bin/vim'
 alias gradle='gradle -Dhttp.proxyHost=$proxy_host -Dhttp.proxyPort=$proxy_port -Dhttps.proxyHost=$proxy_host -Dhttps.proxyPort=$proxy_port'
 alias remote-copy='rsync -av -e ssh --exclude="*/node_modules*"'
 alias lgulp='cpulimit --limit 50 -i gulp'
+alias flutter='export ENABLE_FLUTTER_DESKTOP=true; flutter'
 
 test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 

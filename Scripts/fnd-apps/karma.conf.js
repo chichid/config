@@ -21,6 +21,7 @@ module.exports = function(config) {
 	    plugins: [
 		  'karma-requirejs',
 		  'karma-qunit',
+	          require('/usr/local/lib/node_modules/karma-mocha-reporter'),
 		 // 'karma-coverage',
 		 // 'karma-coverage-istanbul-reporter',
 		  'karma-chrome-launcher',
@@ -42,7 +43,7 @@ module.exports = function(config) {
 
 	    // list of files / patterns to load in the browser
 	    files: [
-		  path.resolve(process.env.HOME + '/.config/Scripts/fnd-apps/bundles-config.js'),
+				'https://static.oracle.com/cdn/jet/v7.1.0/default/js/bundles-config.js',
 		  'tests/qunit-test-main.js',
 		  'node_modules/@oracle/vb/lib/third-party-libs.js',
       'node_modules/@oracle/vb/visual-runtime.js',
@@ -133,7 +134,7 @@ module.exports = function(config) {
 	    // possible values: 'dots', 'progress'
 	    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
 	    // reporters: ['progress', 'junit', 'html', 'htmlDetailed','json'],
-	    reporters: ['dots'],
+	    reporters: ['mocha'],
 
 	    jsonReporter: {
 		  stdout: false,
@@ -178,7 +179,7 @@ module.exports = function(config) {
 
 	    // level of logging
 	    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-	    logLevel: config.LOG_DEBUG,
+	    logLevel: config.LOG_ERROR,
 
 	    // enable / disable watching file and executing tests whenever any file changes
 	    autoWatch: false,
@@ -237,10 +238,10 @@ module.exports = function(config) {
 	    singleRun: false,
 
 	    // retryLimit: 3,
-	    // captureTimeout: 30000,
-	    // browserDisconnectTimeout: 120000,
-	    // browserDisconnectTolerance: 3,
-	    // browserNoActivityTimeout: 120000,
+			// captureTimeout: 1200000,
+	    browserDisconnectTimeout: 1200000,
+	    browserDisconnectTolerance: 3,
+	    browserNoActivityTimeout: 120000,
 
 	    // Concurrency level
 	    // how many browser should be started simultaneous

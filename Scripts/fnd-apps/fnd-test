@@ -24,8 +24,8 @@ git update-index --assume-unchanged fnd-approvals/tests/qunit-test-main.js
 function cleanup {
   cp ~/Projects/fnd-apps/fnd-approvals/tests/qunit-test-main.js ~/.config/Scripts/fnd-apps/qunit-test-main.js 
   cp ~/Projects/fnd-apps/fnd-approvals/karma.conf.js ~/.config/Scripts/fnd-apps/karma.conf.js 
-  git checkout -- fnd-approvals/karma.conf.js.
-  git checkout -- fnd-approvals/tests/qunit-test-main.js
+  git checkout developer fnd-approvals/karma.conf.js
+  git checkout developer fnd-approvals/tests/qunit-test-main.js
 }
 
 trap cleanup EXIT

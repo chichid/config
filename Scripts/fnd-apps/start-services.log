@@ -1,18 +1,57 @@
-[12:46:49] Failed to load external module @babel/register
-[12:46:49] Requiring external module babel-register
+[15:02:02] Failed to load external module @babel/register
+[15:02:02] Requiring external module babel-register
 jenkins host: undefined
-available addresses: 10.156.44.236
+available addresses: 10.156.45.41
 considered localhost address: localhost
-[12:46:49] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
-[12:46:49] Starting 'start-services:fnd-apps'...
-[12:46:50] Starting 'start-services:approvals-test'...
-[12:46:50] Starting 'start-services:fnd-approvals'...
+[15:02:03] Using gulpfile ~/Projects/fnd-apps/gulpfile.babel.js
+[15:02:03] Starting 'start-services:fnd-apps'...
+[15:02:03] Starting 'start-services:approvals-test'...
+[15:02:03] Starting 'start-services:fnd-approvals'...
 file doesn't exist - /Users/relhabba/Projects/fnd-apps/fnd-approvals/tests/config.json
-[12:46:50] Finished 'start-services:fnd-apps' after 129 ms
-[12:46:50] Finished 'start-services:approvals-test' after 2.71 ms
-[12:46:50] Finished 'start-services:fnd-approvals' after 2.73 ms
-[12:46:50] Starting 'start-services'...
-[12:46:50] Finished 'start-services' after 24 μs
+[15:02:03] Finished 'start-services:fnd-apps' after 168 ms
+[15:02:03] Finished 'start-services:approvals-test' after 1.52 ms
+[15:02:03] Finished 'start-services:fnd-approvals' after 1.54 ms
+[15:02:03] Starting 'start-services'...
+[15:02:03] Finished 'start-services' after 23 μs
+Thu, 17 Oct 2019 19:02:03 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
+Thu, 17 Oct 2019 19:02:03 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
+Thu, 17 Oct 2019 19:02:03 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2003
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:1948
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Thu, 17 Oct 2019 19:02:03 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
+No sslConfFile file provided trying defaults
 No sslConfFile file provided trying defaults
 events.js:167
       throw er; // Unhandled 'error' event
@@ -31,14 +70,6 @@ Emitted 'error' event at:
     at process._tickCallback (internal/process/next_tick.js:63:19)
     [... lines matching original stack trace ...]
     at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
-Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/navigatordata/main.js:10:17
-Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/profileoptions/main.js:10:17
-Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/notifications/main.js:10:17
-profileoptions service listening on host: 0.0.0.0 port: 2003
-notifications service listening on host: 0.0.0.0 port: 1948
-Wed, 18 Sep 2019 16:46:50 GMT body-parser deprecated undefined extended: provide extended option at service-impls/worklist/main.js:10:17
-No sslConfFile file provided trying defaults
-No sslConfFile file provided trying defaults
 events.js:167
       throw er; // Unhandled 'error' event
       ^
@@ -56,7 +87,24 @@ Emitted 'error' event at:
     at process._tickCallback (internal/process/next_tick.js:63:19)
     [... lines matching original stack trace ...]
     at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
-worklist service listening on host: 0.0.0.0 port: 2020
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:2020
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+No sslConfFile file provided trying defaults
 events.js:167
       throw er; // Unhandled 'error' event
       ^
@@ -74,4 +122,20 @@ Emitted 'error' event at:
     at process._tickCallback (internal/process/next_tick.js:63:19)
     [... lines matching original stack trace ...]
     at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
-navigatordata service listening on host: 0.0.0.0 port: 1889
+events.js:167
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:1889
+    at Server.setupListenHandle [as _listen2] (net.js:1290:14)
+    at listenInCluster (net.js:1338:12)
+    at doListen (net.js:1471:7)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:745:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1317:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    [... lines matching original stack trace ...]
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:743:3)
