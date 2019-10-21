@@ -1,0 +1,1 @@
+/mnt/c/Users/rachidox/Home/.fzf/shell/key-bindings.fish

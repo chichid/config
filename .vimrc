@@ -129,7 +129,7 @@ hi Normal guibg=Black
 " FZF
 """""""""""""""""""""""
 let g:fzf_layout = { 'left': '~40%' }
-let $FZF_DEFAULT_COMMAND = 'fd --type f'
+" let $FZF_DEFAULT_COMMAND = 'fd --type f'
 
 """""""""""""
 " NERDTree
