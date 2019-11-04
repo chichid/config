@@ -29,6 +29,7 @@ function cleanup {
 }
 
 trap cleanup EXIT
-gulp test:unit --hostname=localhost --browsers=ChromeDebugger "$@"
 
+./node_modules/.bin/karma start fnd-approvals/karma.conf.js
+# gulp test:unit --hostname=localhost --browsers=Chrome --singleRun=false "$@"
 # ./node_modules/.bin/karma start ~/.config/Scripts/fnd-apps/karma.conf.approval.js "$@"

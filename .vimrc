@@ -97,7 +97,7 @@ let ayucolor="mirage"
 colorscheme ayu
 set cursorline
 
-hi Normal guibg=Black
+" hi Normal guibg=Black
 " Highlight Normal guibg=Black guifg=Gray
 " highlight LineNr cterm=NONE guifg=LightGray ctermfg=241
 " highlight StatusLine ctermbg=0

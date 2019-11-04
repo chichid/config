@@ -24,5 +24,5 @@ alias remote-copy='rsync -av -e ssh --exclude="*/node_modules*"'
 alias lgulp='cpulimit --limit 50 -i gulp'
 alias flutter='export ENABLE_FLUTTER_DESKTOP=true; flutter'
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+# test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 
