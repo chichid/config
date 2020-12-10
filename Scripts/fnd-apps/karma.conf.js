@@ -12,7 +12,7 @@ const process = require('process');
 
 // process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -30,7 +30,6 @@ module.exports = function (config) {
       'karma-fixture',
       'karma-scss-preprocessor',
       'karma-typescript',
-      'karma-mocha-reporter',
     ],
 
     proxies: {
@@ -40,7 +39,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'https://static.oracle.com/cdn/jet/v7.1.0/default/js/bundles-config.js',
+      'https://static.oracle.com/cdn/jet/v8.0.0/default/js/bundles-config.js',
       'tests/qunit-test-main.js',
       'node_modules/@oracle/vb/lib/third-party-libs.js',
       'node_modules/@oracle/vb/visual-runtime.js',
@@ -132,9 +131,9 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     // reporters: ['progress', 'junit', 'html', 'htmlDetailed','json'],
-    reporters: ['mocha', 'karma-typescript'],
+    reporters: ['progress', 'karma-typescript'],
 
-    hostname: 'localhost',
+    hostname: '127.0.0.1',
     port: 9875,
 
     // enable / disable colors in the output (reporters and logs)
@@ -207,4 +206,3 @@ module.exports = function (config) {
     concurrency: Infinity,
   });
 };
-

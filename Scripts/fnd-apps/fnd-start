@@ -1,3 +1,4 @@
+#!/bin/bash
 cd ~/Projects/fnd-apps
 # cpulimit -i -l 70 gulp build
 npm start --prefix ~/.config/Scripts/fnd-apps/fnd-approvals-server & 

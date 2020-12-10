@@ -36,11 +36,18 @@ if test (uname) = Darwin
 	end
 end
 
-set HTTP_PROXY $http_proxy
-set HTTPS_PROXY $http_proxy
-set export http_proxy $http_proxy
-set https_proxy $http_proxy
-set proxy $http_proxy
-set proxy_host "echo $http_proxy | awk -F[/:] '{print $4}'"
-set proxy_port "echo $http_proxy | awk -F[/:] '{print $5}'"
+#set HTTP_PROXY $http_proxy
+#set HTTPS_PROXY $http_proxy
+#set export http_proxy $http_proxy
+#set https_proxy $http_proxy
+#set proxy $http_proxy
+#set proxy_host "echo $http_proxy | awk -F[/:] '{print $4}'"
+#set proxy_port "echo $http_proxy | awk -F[/:] '{print $5}'"
 
+if test $http_proxy
+	npm config set proxy $HTTP_PROXY
+	git config --global http.proxy $HTTP_PROXY
+else 
+	npm config delete proxy
+	git config --global http.proxy ''
+end

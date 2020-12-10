@@ -1,0 +1,12 @@
+﻿ffmpeg version 4.3.0-emby_2019_11_09 Copyright (c) 2000-2019 the FFmpeg developers and softworkz for Emby LLC
+built with clang version 8.0.0 (tags/RELEASE_800/final)
+configuration: --cc=x86_64-apple-darwin18-clang --prefix=/home/embybuilder/Buildbot/x64_osx/ffmpeg-x64_osx/staging --disable-doc --disable-ffplay --disable-vdpau --disable-xlib --enable-fontconfig --enable-gnutls --enable-gpl --enable-iconv --enable-libass --enable-libfreetype --enable-libfribidi --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libwebp --enable-libx264 --enable-libx265 --enable-libzvbi --enable-version3 --enable-libvpx --enable-audiotoolbox --enable-videotoolbox --enable-cross-compile --cross-prefix=x86_64-apple-darwin18- --extra-libs='-lexpat -lfreetype -lfribidi -lfontconfig -liconv -lpng -lz -lvorbis -logg -lnettle -lhogweed -lgmp -lc++ -ldl -lm' --arch=x86_64 --target-os=darwin --disable-shared --enable-static
+libavutil      56. 34.100 / 56. 34.100
+libavcodec     58. 56.101 / 58. 56.101
+libavformat    58. 31.104 / 58. 31.104
+libavdevice    58.  9.100 / 58.  9.100
+libavfilter     7. 58.102 /  7. 58.102
+libswscale      5.  6.100 /  5.  6.100
+libswresample   3.  6.100 /  3.  6.100
+libpostproc    55.  6.100 / 55.  6.100
+

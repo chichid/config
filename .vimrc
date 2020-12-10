@@ -1,15 +1,20 @@
 """"""""""""
 " Core
 """"""""""""""
-execute pathogen#infect()
-
-execute "set t_8f=\e[38;2;%lu;%lu;%lum"
-execute "set t_8b=\e[48;2;%lu;%lu;%lum"
+call plug#begin()
+  Plug 'ayu-theme/ayu-vim'
+  Plug 'ciaranm/detectindent'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'junegunn/fzf.vim.git', { 'dir': '~/.fzf' }
+  Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
+  Plug 'leafgarland/typescript-vim'
+  Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocRestart'}
+  Plug 'mxw/vim-jsx'
+call plug#end()
 
 """""""""""
 " General
 """"""""""""
-syntax on
 set nocompatible
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l,[,]
@@ -30,58 +35,86 @@ set wrapmargin=0
 set ignorecase
 set smartcase
 set laststatus=0
+set ttymouse=sgr
 set mouse=a
+set splitright
+set noswapfile
+set cursorline
+set autoread
+let &winwidth = &columns * 7 / 10
 
-"""""""""""""""
-" AutoComplete 
-"""""""""""""""
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:coc_start_at_start = 0
-
-"""""""""""""""
+""""""""""""""
 " Indent
 """""""""""""""
-filetype plugin indent on
 set tabstop=2
 set expandtab
 set shiftwidth=2
 set autoindent
-set smartindent
 set matchtime=0
 
-let delimitMate_expand_cr = 1
-autocmd VimEnter * DetectIndent
-
-""""""""""""""
+""""""""""""""""""""
 " Keyboard Mapping
-"""""""""""""""
-nnoremap <BS> i<BS><ESC><ESC> 
+""""""""""""""""""""
 noremap <silent> <CR> :nohlsearch<CR>
-nnoremap \ i<CR><ESC>
-nnoremap <BAR> o<ESC><UP>
+noremap <C-K> :w<CR>:!clear;<UP><CR>
 
-nmap q :qa<CR>
-nnoremap <silent> t gt
-nnoremap <silent> T gT
-nnoremap <S-RIGHT> $
-nnoremap <S-LEFT> 0
-nnoremap <C-k> <C-y>
-nnoremap <C-j> <C-e>
+noremap > >>
+noremap > >gv
+noremap < <gv
 
-nnoremap < <<
-nnoremap > >>
-vnoremap > >gv
-vnoremap < <gv
+noremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode()<CR>" : "<RIGHT>"
+noremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode()<CR>" : "<LEFT>"
+noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>""
+noremap <silent> <C-b> :NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>
+noremap <silent> <C-j> :vert term<CR>
 
-noremap  <silent> ? :NERDTreeClose<CR>:FZF --reverse<CR>  
-nnoremap <silent> <expr> / g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : "/"
-nnoremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode()<CR>" : "<RIGHT>"
-nnoremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode()<CR>" : "<LEFT>"
-nnoremap <silent> <C-n> :NERDTreeToggle<CR>
+"""""""""""""""""""""
+" COC.vim 
+"""""""""""""""""""""
+set updatetime=300
+
+if has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" GoTo code navigation.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use enter to accept completion
+if exists('*complete_info')
+	inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+	inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <C-K> pumvisible() ? "\<C-p>" : "\<Up>"
+nnoremap <C-]> :call CocActionAsync('jumpDefinition')<CR>
+inoremap <silent><expr> <c-space> coc#refresh()
+nmap <F2> <Plug>(coc-rename)
 
 """"""""""""""""""""""
-" Escape
+" Easy Escape
 """"""""""""""""""""""
 let g:easyescape_chars = { "j": 1, "k": 1 }
 let g:easyescape_timeout = 100 
@@ -92,56 +125,30 @@ cnoremap kj <ESC>
 """"""""""""""
 " Theme
 """"""""""""""
-set termguicolors     
-let ayucolor="mirage" 
-colorscheme ayu
-set cursorline
-
-" hi Normal guibg=Black
-" Highlight Normal guibg=Black guifg=Gray
-" highlight LineNr cterm=NONE guifg=LightGray ctermfg=241
-" highlight StatusLine ctermbg=0
-" highlight CursorLine cterm=NONE ctermbg=8 
-" highlight CursorLineNr cterm=bold ctermbg=8 ctermfg=7
-"highlight VertSplit ctermfg=0 ctermbg=0
-"highlight MatchParen term=NONE ctermbg=LightGrey ctermfg=0
-"highlight Visual term=NONE ctermbg=11 ctermfg=0
-"highlight EndOfBuffer ctermfg=0
-"highlight Search term=NONE cterm=NONE ctermfg=0
-"highlight NERDTreeClosable ctermfg=11 
-"highlight Directory ctermfg=245 guifg=#ffffff
-"highlight Pmenu ctermfg=7 ctermbg=0
-"highlight PmenuSbar ctermbg=8
-"highlight PmenuThumb ctermbg=7
-"
-"highlight Statement ctermfg=11
-"highlight Identifier ctermfg=6
-"highlight String ctermfg=10
-"highlight Character ctermfg=10
-"highlight Number ctermfg=10 
-"highlight Boolean ctermfg=10 
-"highlight Float ctermfg=10
-"
-"highlight StorageClass ctermfg=11
-"highlight Include ctermfg=11
+augroup THEME
+  let ayucolor="dark" 
+  autocmd VimEnter * syntax on
+  autocmd VimEnter * set termguicolors     
+  autocmd VimEnter * colorscheme ayu
+  autocmd VimEnter * hi Normal guibg=black
+  autocmd VimEnter * hi EndOfBuffer guifg=black
+  autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
+augroup END
 
 """""""""""""""""""""""
 " FZF
 """""""""""""""""""""""
 let g:fzf_layout = { 'left': '~40%' }
-" let $FZF_DEFAULT_COMMAND = 'fd --type f'
+let g:fzf_buffers_jump = 1
+" let $FZF_DEFAULT_COMMAND = 'fzf --type f'
 
 """""""""""""
 " NERDTree
 """"""""""""""
 let g:NERDTreeMinimalUI = 1
-let g:NERDTreeDirArrowExpandable = '▹'
+let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMapHelp = 'H'
-
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | call MyNERDTreeOpenDir() | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 function! MyNERDTreeOpenDir()
 	execute ":NERDTreeFocus"
@@ -175,4 +182,5 @@ function! MyNERDTreeCloseNode()
 		endif
 	endif
 endfunction
+
 
