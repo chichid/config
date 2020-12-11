@@ -1,1 +1,0 @@
-{"StartTimeUtc":"2020-02-10T05:04:44.7827780Z","EndTimeUtc":"2020-02-10T05:04:46.1589480Z","Status":"Completed","Name":"Check for application updates","Key":"SystemUpdateTask","Id":"1cc2f60a05befec8b1532ac44630a00f"}

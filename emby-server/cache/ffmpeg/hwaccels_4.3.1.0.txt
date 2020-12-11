@@ -1,5 +1,0 @@
-﻿Hardware acceleration methods:
-videotoolbox
-videotoolbox
-
-

@@ -1,2 +1,0 @@
-#!/bin/bash
-ssh -x -C slc10fab.us.oracle.com

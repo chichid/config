@@ -66,7 +66,6 @@ noremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode(
 noremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode()<CR>" : "<LEFT>"
 noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>""
 noremap <silent> <C-b> :NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>
-noremap <silent> <C-j> :vert term<CR>
 
 """""""""""""""""""""
 " COC.vim 
@@ -130,9 +129,6 @@ augroup THEME
   autocmd VimEnter * syntax on
   autocmd VimEnter * set termguicolors     
   autocmd VimEnter * colorscheme ayu
-  autocmd VimEnter * hi Normal guibg=black
-  autocmd VimEnter * hi EndOfBuffer guifg=black
-  autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
 augroup END
 
 """""""""""""""""""""""
@@ -140,7 +136,7 @@ augroup END
 """""""""""""""""""""""
 let g:fzf_layout = { 'left': '~40%' }
 let g:fzf_buffers_jump = 1
-" let $FZF_DEFAULT_COMMAND = 'fzf --type f'
+let $FZF_DEFAULT_COMMAND = 'fzf --type f'
 
 """""""""""""
 " NERDTree
