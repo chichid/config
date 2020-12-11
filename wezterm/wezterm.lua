@@ -8,8 +8,10 @@ local mouse_bindings = {
 local keys = {
   -- Copy/Paste 
   { key="c", mods="CTRL", action="Copy" },
+  { key="c", mods="ALT", action="Copy" },
   { key="c", mods="CMD", action="Copy" },
   { key="v", mods="CTRL", action="Paste" },
+  { key="v", mods="ALT", action="Paste" },
   { key="v", mods="CMD", action="Paste" },
   
   -- Open New Window 
@@ -22,6 +24,12 @@ local keys = {
   { key=",", mods="ALT", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
   { key=",", mods="CMD", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
 };
+
+-- Tab Navigation
+for i = 1, 9 do 
+  table.insert(keys, { key=tostring(i), mods="ALT", action=wezterm.action{ActivateTab=i-1} })
+  table.insert(keys, { key=tostring(i), mods="CTRL", action=wezterm.action{ActivateTab=i-1} });
+end
 
 local colors = {
   tab_bar = {
