@@ -1,11 +1,28 @@
 local wezterm = require 'wezterm';
 
+local default_program;
+local font;
+local font_size;
+
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+  default_program = {"wsl.exe"}; 
+  font = wezterm.font("Consolas"); 
+  font_size = 11.5;
+elseif wezterm.target_triple == "x86_64-apple-darwin" then
+  font = wezterm.font("Fira Code"); 
+  font_size = 12.0;
+end
+
 local mouse_bindings = {
   -- Right Click to paste 
   { event={Down={streak=1, button="Right"}}, mods="NONE", action="Paste" },
 };
 
 local keys = {
+  -- Clear Screen
+  { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
+  { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
+  
   -- Copy/Paste 
   { key="c", mods="CTRL", action="Copy" },
   { key="c", mods="ALT", action="Copy" },
@@ -75,13 +92,13 @@ return {
   mouse_bindings = mouse_bindings,
   
   -- General 
-  default_prog = {"wsl.exe"},
+  default_prog = default_prog,
   hide_tab_bar_if_only_one_tab = true,
-  term = "xterm-256",
+  term = "xterm",
 
   -- Window
-  initial_rows = 45,
-  initial_cols = 150,
+  initial_rows = 10,
+  initial_cols = 10,
   window_padding = {
     left = 1,
     right = 1,
@@ -95,15 +112,15 @@ return {
   colors = colors,
   default_cursor_style = "BlinkingBlock",
   cursor_blink_rate = 400,
-  font = wezterm.font("Consolas"),
-  font_size = 11.5,
+  font = font,
+  font_size = font_size,
   dpi = 96.0,
   font_antialias = "Subpixel", -- None, Greyscale, Subpixel
   font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
 
   -- Fine Tuning
   scrollback_lines = 3500,
-  ratelimit_output_bytes_per_second = 400000,
-  ratelimit_mux_output_pushes_per_second = 10,
-  ratelimit_mux_output_scans_per_second = 100,
+  -- ratelimit_output_bytes_per_second = 400000,
+  -- ratelimit_mux_output_pushes_per_second = 10,
+  -- ratelimit_mux_output_scans_per_second = 100,
 }
