@@ -26,7 +26,6 @@ set showmatch
 set ruler  
 set incsearch
 set hlsearch
-set autoread          
 set linebreak
 set nolist 
 set history=10000
@@ -41,6 +40,7 @@ set splitright
 set noswapfile
 set cursorline
 set autoread
+au CursorHold * checktime  
 let &winwidth = &columns * 7 / 10
 
 """"""""""""""
@@ -62,10 +62,8 @@ noremap > >>
 noremap > >gv
 noremap < <gv
 
-noremap <silent> <expr> <RIGHT> g:NERDTree.IsOpen() ? ":call MyNERDTreeOpenNode()<CR>" : "<RIGHT>"
-noremap <silent> <expr> <LEFT> g:NERDTree.IsOpen() ? ":call MyNERDTreeCloseNode()<CR>" : "<LEFT>"
-noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>""
-noremap <silent> <C-b> :NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>
+noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>"
+noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
 
 """""""""""""""""""""
 " COC.vim 
@@ -126,6 +124,7 @@ cnoremap kj <ESC>
 """"""""""""""
 augroup THEME
   let ayucolor="dark" 
+  autocmd VimEnter * highlight NonText ctermfg=black ctermfg=black 
   autocmd VimEnter * syntax on
   autocmd VimEnter * set termguicolors     
   autocmd VimEnter * colorscheme ayu
@@ -145,38 +144,3 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMapHelp = 'H'
-
-function! MyNERDTreeOpenDir()
-	execute ":NERDTreeFocus"
-	
-	for child in g:NERDTreeFileNode.GetRootForTab().children
-		if has_key(child, "path") && child.path.isDirectory !=# 1 && child.isVisible() ==# 1
-			call child.putCursorHere(0, 0)
-			break
-		endif
-	endfor
-endfunction
-
-function! MyNERDTreeOpenNode()
-	let l:sf = g:NERDTreeFileNode.GetSelected()
-	if has_key(l:sf, "path")
-		if l:sf.path.isDirectory ==# 1 && l:sf.isOpen ==# 0 
-			call l:sf.activate()
-		elseif l:sf.path.isDirectory !=# 1 
-			call l:sf.activate()
-		endif
-	endif
-endfunction
-
-function! MyNERDTreeCloseNode()
-	let l:sf = g:NERDTreeFileNode.GetSelected()
-	if has_key(l:sf, "path")
-		if l:sf.path.isDirectory ==# 1 && l:sf.isOpen ==# 1
-			call l:sf.activate()
-		else
-			call l:sf.parent.putCursorHere(0, 0)
-		endif
-	endif
-endfunction
-
-
