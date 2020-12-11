@@ -124,10 +124,12 @@ cnoremap kj <ESC>
 """"""""""""""
 augroup THEME
   let ayucolor="dark" 
-  autocmd VimEnter * highlight NonText ctermfg=black ctermfg=black 
   autocmd VimEnter * syntax on
   autocmd VimEnter * set termguicolors     
   autocmd VimEnter * colorscheme ayu
+  autocmd VimEnter * hi Normal guibg=black
+  autocmd VimEnter * hi EndOfBuffer guifg=black
+  autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
 augroup END
 
 """""""""""""""""""""""

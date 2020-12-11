@@ -31,6 +31,22 @@ for i = 1, 9 do
   table.insert(keys, { key=tostring(i), mods="CTRL", action=wezterm.action{ActivateTab=i-1} });
 end
 
+-- Color Scheme
+local color_schemes = {
+  ["ayu_dark"] = {
+    -- Ayu Dark
+    foreground = "#e6e1cf",
+    background = "black",
+    cursor_bg = "#f29718",
+    cursor_border = "#f29718",
+    cursor_fg = "#e6e1cf",
+    selection_bg = "#253340",
+    selection_fg = "#e6e1cf",
+    ansi = {"#000000","#ff3333","#b8cc52","#e7c547","#36a3d9","#f07178","#95e6cb","#ffffff"},
+    brights = {"#323232","#ff6565","#eafe84","#fff779","#68d5ff","#ffa3aa","#c7fffd","#ffffff"},
+  },
+};
+
 local colors = {
   tab_bar = {
     background = "black",
@@ -61,7 +77,7 @@ return {
   -- General 
   default_prog = {"wsl.exe"},
   hide_tab_bar_if_only_one_tab = true,
-  term = "xterm-256color",
+  term = "xterm-256",
 
   -- Window
   initial_rows = 45,
@@ -73,11 +89,12 @@ return {
     bottom = 0,
   },
 
-  -- Theme
-  default_cursor_style = "BlinkingBlock",
-  cursor_blink_rate = 300,
-  color_scheme = "ayu",
+  -- Appearance and Colors 
+  color_schemes = color_schemes,
+  color_scheme = "ayu_dark" ,
   colors = colors,
+  default_cursor_style = "BlinkingBlock",
+  cursor_blink_rate = 400,
   font = wezterm.font("Consolas"),
   font_size = 11.5,
   dpi = 96.0,
