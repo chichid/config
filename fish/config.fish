@@ -11,3 +11,8 @@ bind \ek 'clear; commandline -f repaint'
 bind \t forward-word
 bind \e\[F\x7F backward-kill-word
 
+#Windows
+if string match -qa -- "*Microsoft*" (uname -a)
+  alias npm "cmd.exe /c npm"
+end
+
