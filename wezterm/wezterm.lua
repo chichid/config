@@ -1,16 +1,9 @@
 local wezterm = require 'wezterm';
 
 local default_program;
-local font;
-local font_size;
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   default_program = {"wsl.exe"}; 
-  font = wezterm.font("Consolas"); 
-  font_size = 11.5;
-elseif wezterm.target_triple == "x86_64-apple-darwin" then
-  font = wezterm.font("Fira Code"); 
-  font_size = 12.0;
 end
 
 local mouse_bindings = {
@@ -97,8 +90,8 @@ return {
   term = "xterm",
 
   -- Window
-  initial_rows = 10,
-  initial_cols = 10,
+  initial_rows = 40,
+  initial_cols = 120,
   window_padding = {
     left = 1,
     right = 1,
@@ -112,8 +105,8 @@ return {
   colors = colors,
   default_cursor_style = "BlinkingBlock",
   cursor_blink_rate = 400,
-  font = font,
-  font_size = font_size,
+  font = wezterm.font("Fira Code"),
+  font_size = 12.0,
   dpi = 96.0,
   font_antialias = "Subpixel", -- None, Greyscale, Subpixel
   font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
