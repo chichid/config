@@ -90,8 +90,8 @@ return {
   term = "xterm",
 
   -- Window
-  initial_rows = 41,
-  initial_cols = 120,
+  initial_rows = 44,
+  initial_cols = 140,
   window_padding = {
     left = 1,
     right = 1,
@@ -106,8 +106,7 @@ return {
   default_cursor_style = "BlinkingBlock",
   cursor_blink_rate = 400,
   font = wezterm.font("Fira Code"),
-  font_size = 11.0,
-  dpi = 96.0,
+  font_size = 10.5,
   font_antialias = "Subpixel", -- None, Greyscale, Subpixel
   font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
 
