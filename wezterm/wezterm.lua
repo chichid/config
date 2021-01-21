@@ -17,10 +17,8 @@ local keys = {
   { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
   
   -- Copy/Paste 
-  { key="c", mods="CTRL", action="Copy" },
   { key="c", mods="ALT", action="Copy" },
   { key="c", mods="CMD", action="Copy" },
-  { key="v", mods="CTRL", action="Paste" },
   { key="v", mods="ALT", action="Paste" },
   { key="v", mods="CMD", action="Paste" },
   

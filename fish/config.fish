@@ -1,5 +1,5 @@
 # General 
-cd ~
+# cd ~
 set fish_greeting
 
 # LS
@@ -14,6 +14,6 @@ bind \e\[F\x7F backward-kill-word
 #Windows
 if string match -qa -- "*Microsoft*" (uname -a)
   alias npm "cmd.exe /c npm"
-  alias node "cmd.exe /c node"
+  alias node "cmd.exe /c node.exe"
 end
 

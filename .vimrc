@@ -5,7 +5,6 @@ call plug#begin()
   Plug 'ayu-theme/ayu-vim'
   Plug 'ciaranm/detectindent'
   Plug 'jiangmiao/auto-pairs'
-  Plug 'junegunn/fzf.vim.git', { 'dir': '~/.fzf' }
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
   Plug 'leafgarland/typescript-vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocRestart'}
@@ -62,7 +61,7 @@ noremap > >>
 noremap > >gv
 noremap < <gv
 
-noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>"
+" noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>"
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
 
 """""""""""""""""""""
@@ -138,6 +137,7 @@ augroup END
 let g:fzf_layout = { 'left': '~40%' }
 let g:fzf_buffers_jump = 1
 let $FZF_DEFAULT_COMMAND = 'fzf --type f'
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 """""""""""""
 " NERDTree
