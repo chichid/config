@@ -93,7 +93,7 @@ return {
   -- General 
   default_prog = default_prog,
   hide_tab_bar_if_only_one_tab = true,
-  term = "xterm",
+  term = "xterm-256color",
 
   -- Window
   initial_rows = 44,
