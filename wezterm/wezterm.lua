@@ -1,9 +1,17 @@
 local wezterm = require 'wezterm';
 
 local default_prog;
+local font_size;
+local dpi;
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe"}; 
+  font_size = 10.5;
+end
+
+if string.find(wezterm.target_triple, "darwin") then
+  font_size = 11.0;
+  dpi = 96.0;
 end
 
 local mouse_bindings = {
@@ -104,7 +112,8 @@ return {
   default_cursor_style = "BlinkingBlock",
   cursor_blink_rate = 400,
   font = wezterm.font("Fira Code"),
-  font_size = 10.5,
+  font_size = font_size,
+  dpi = dpi,
   font_antialias = "Subpixel", -- None, Greyscale, Subpixel
   font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
 
