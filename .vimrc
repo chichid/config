@@ -129,6 +129,9 @@ augroup THEME
   autocmd VimEnter * hi Normal guibg=black
   autocmd VimEnter * hi EndOfBuffer guifg=black
   autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
+  autocmd VimEnter * hi TabLine guibg=white guifg=black
+  autocmd VimEnter * hi TabLineFill guifg=black
+  autocmd VimEnter * hi TabLineSel guibg=#1f2430
 augroup END
 
 """""""""""""""""""""""
