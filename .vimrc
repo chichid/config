@@ -4,7 +4,7 @@
 call plug#begin()
   Plug 'ayu-theme/ayu-vim'
   Plug 'ciaranm/detectindent'
-  Plug 'jiangmiao/auto-pairs'
+  Plug 'townk/vim-autoclose'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
   Plug 'leafgarland/typescript-vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocRestart'}
