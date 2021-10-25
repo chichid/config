@@ -139,7 +139,7 @@ augroup THEME
   autocmd VimEnter * set termguicolors     
   autocmd VimEnter * colorscheme ayu
   autocmd VimEnter * hi Normal guibg=black
-  autocmd VimEnter * hi EndOfBuffer guifg=black
+  autocmd VimEnter * hi EndOfBuffer ctermfg=black guifg=black
   autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
   autocmd VimEnter * hi TabLine guibg=white guifg=black
   autocmd VimEnter * hi TabLineFill guifg=black
