@@ -64,6 +64,18 @@ noremap < <gv
 " noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:FZF --reverse<CR>" : ":FZF --reverse<CR>"
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
 
+vnoremap Y "+y
+noremap <C-p> "+p
+
+" WSL yank support
+let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+if executable(s:clip)
+    augroup WSLYank
+        autocmd!
+        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+    augroup END
+endif
+
 """""""""""""""""""""
 " COC.vim 
 """""""""""""""""""""

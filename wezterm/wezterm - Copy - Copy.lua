@@ -19,26 +19,6 @@ local mouse_bindings = {
   { event={Down={streak=1, button="Right"}}, mods="NONE", action="Paste" },
 };
 
-wezterm.on("SpawnNewWindowInWorkingDirectory", function(window, pane)
-  current_directory = pane:get_current_working_dir():gsub("file://dox", "")
-  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish"
-
-  -- Open a new window running vim and tell it to open the file
-  window:perform_action(wezterm.action{SpawnCommandInNewWindow={
-    args={"bash", "-c", startup_command}
-  }}, pane)
-end)
-
-wezterm.on("SpawnNewTabInWorkingDirectory", function(window, pane)
-  current_directory = pane:get_current_working_dir():gsub("file://dox", "")
-  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish"
-
-  -- Open a new window running vim and tell it to open the file
-  window:perform_action(wezterm.action{SpawnCommandInNewTab={
-    args={"bash", "-c", startup_command}
-  }}, pane)
-end)
-
 local keys = {
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
@@ -52,9 +32,21 @@ local keys = {
   
   -- Open New Window 
   { key="t", mods="CMD", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
-  { key="t", mods="ALT", action=wezterm.action{EmitEvent="SpawnNewTabInWorkingDirectory"} },
+  { key="t", mods="ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
   { key="n", mods="CMD", action="SpawnWindow" },
-  { key="n", mods="ALT", action=wezterm.action{EmitEvent="SpawnNewWindowInWorkingDirectory"}},
+  --{
+  --key = "n",
+  --  mods = "ALT",
+  --  action = wezterm.action_callback(function(win, pane)
+  --    wezterm.log_info("Hello from callback!")
+  --    wezterm.log_info("WindowID:", win:window_id(), "PaneID:", pane:pane_id())
+  --  end)
+  --},
+  -- { key="n", mods="ALT", action="SpawnWindow" },
+  -- CMD-y starts `top` in a new window
+  --{key="n", mods="ALT", action=wezterm.action{SpawnCommandInNewWindow={
+  --  args={"bash", "-c", "export wezterm_folder=~/github && fish"},
+  --}}},
 
   -- Open the config
   { key=",", mods="ALT", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
@@ -143,8 +135,8 @@ return {
   font = wezterm.font("Fira Code"),
   font_size = font_size,
   dpi = dpi,
-  -- font_antialias = "Subpixel", -- None, Greyscale, Subpixel
-  -- font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
+  font_antialias = "Subpixel", -- None, Greyscale, Subpixel
+  font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
 
   -- Fine Tuning
   scrollback_lines = 3500,
