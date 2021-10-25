@@ -144,6 +144,7 @@ augroup THEME
   autocmd VimEnter * hi TabLine guibg=white guifg=black
   autocmd VimEnter * hi TabLineFill guifg=black
   autocmd VimEnter * hi TabLineSel guibg=#1f2430
+  autocmd VimEnter * hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
 augroup END
 
 """""""""""""""""""""""

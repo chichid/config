@@ -3,15 +3,20 @@ local wezterm = require 'wezterm';
 local default_prog;
 local font_size;
 local dpi;
+local initial_rows;
+local initial_cols;
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl", "~"}; 
   font_size = 10.5;
+  initial_rows = 44;
+  initial_cols = 140;
 end
 
 if string.find(wezterm.target_triple, "darwin") then
-  font_size = 11.0;
-  dpi = 96.0;
+  font_size = 13.5;
+  initial_rows = 20;
+  initial_cols = 100;
 end
 
 local mouse_bindings = {
