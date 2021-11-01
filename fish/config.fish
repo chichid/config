@@ -21,3 +21,4 @@ end
 if set -q wezterm_startup_directory
   cd $wezterm_startup_directory
 end
+

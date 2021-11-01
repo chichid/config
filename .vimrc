@@ -46,8 +46,9 @@ let &winwidth = &columns * 7 / 10
 " Indent
 """""""""""""""
 set tabstop=2
-set expandtab
+set softtabstop=2
 set shiftwidth=2
+set expandtab
 set autoindent
 set matchtime=0
 
@@ -134,17 +135,21 @@ cnoremap kj <ESC>
 " Theme
 """"""""""""""
 augroup THEME
-  let ayucolor="dark" 
   autocmd VimEnter * syntax on
   autocmd VimEnter * set termguicolors     
+  autocmd VimEnter * let ayucolor="dark" 
   autocmd VimEnter * colorscheme ayu
   autocmd VimEnter * hi Normal guibg=black
   autocmd VimEnter * hi EndOfBuffer ctermfg=black guifg=black
   autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
-  autocmd VimEnter * hi TabLine guibg=white guifg=black
-  autocmd VimEnter * hi TabLineFill guifg=black
-  autocmd VimEnter * hi TabLineSel guibg=#1f2430
-  autocmd VimEnter * hi Visual cterm=none ctermbg=darkgrey ctermfg=cyan
+  autocmd VimEnter * hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
+  autocmd VimEnter * hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
+  autocmd VimEnter * hi TabLineFill ctermfg=black guifg=black
+  autocmd VimEnter * hi Visual cterm=none ctermbg=darkgrey ctermfg=white
+  autocmd VimEnter * hi Search cterm=none ctermbg=darkgrey ctermfg=white
+  autocmd VimEnter * hi MatchParen ctermfg=white ctermbg=darkgrey
+  autocmd VimEnter * hi CursorLineNr term=bold ctermfg=white
+  autocmd VimEnter * hi LineNr ctermfg=darkgrey 
 augroup END
 
 """""""""""""""""""""""
