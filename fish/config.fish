@@ -1,5 +1,4 @@
 # General 
-# cd ~
 set fish_greeting
 
 # LS
@@ -21,4 +20,10 @@ end
 if set -q wezterm_startup_directory
   cd $wezterm_startup_directory
 end
+
+function __handle_osc7 --on-variable PWD
+  printf "\033]7;file://dox"$PWD"\033\\"
+end
+
+__handle_osc7
 
