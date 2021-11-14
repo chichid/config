@@ -15,6 +15,7 @@ if string match -qa -- "*Microsoft*" (uname -a)
   #alias npm "cmd.exe /c npm"
   #alias node "cmd.exe /c node.exe"
   alias cargo "cmd.exe /c cargo.exe"
+  alias arduino-cli "arduino-cli.exe"
 end
 
 if set -q wezterm_startup_directory

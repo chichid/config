@@ -7,7 +7,8 @@ local initial_rows;
 local initial_cols;
 
 if string.find(wezterm.target_triple, "windows") then
-  default_prog = {"wsl", "~"}; 
+--  default_prog = {"bash.exe", "-c", "fish", "~"}; 
+  default_prog = {"wsl.exe", "~"}; 
   font_size = 10.5;
   initial_rows = 44;
   initial_cols = 140;
