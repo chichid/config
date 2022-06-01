@@ -3,14 +3,14 @@
 """"""""""""""
 call plug#begin()
   Plug 'ayu-theme/ayu-vim'
-  Plug 'ciaranm/detectindent'
   Plug 'townk/vim-autoclose'
-  Plug 'dense-analysis/ale'
-  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'ctrlpvim/ctrlp.vim', {'on': 'CtrlP'}
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
-  Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
   Plug 'mxw/vim-jsx', { 'for': ['tsx', 'jsx'] }
-  Plug 'rust-lang/rust.vim', { 'for': ['rs'] }
+  Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
+  Plug 'nvim-treesitter/nvim-treesitter'
+  Plug 'williamboman/nvim-lsp-installer'
+  Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
 """""""""""
@@ -35,7 +35,6 @@ set wrapmargin=0
 set ignorecase
 set smartcase
 set laststatus=0
-set ttymouse=sgr
 set mouse=a
 set splitright
 set noswapfile
@@ -56,18 +55,19 @@ let &winwidth = &columns * 7 / 10
 """"""""""""""""""""
 " Keyboard Mapping
 """"""""""""""""""""
-noremap <silent> <CR> :nohlsearch<CR>
-noremap <C-K> :w<CR>:!clear;<UP><CR>
 noremap > >>
 noremap > >gv
+noremap <silent> <CR> :nohlsearch<CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
 
 """""""""""""""""""""
-" Ale 
+" Custom Commands 
 """""""""""""""""""""
-let g:ale_completion_enabled = 1
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = ' '
+command ConfigReload :source $MYVIMRC
+command Config :e $MYVIMRC
+command -nargs=1 ConfigModule execute ":e ".substitute($MYVIMRC, "init.vim", "lua/", "").<f-args>.".lua"
+command -nargs=+ Runner :!<args>
+noremap <C-K> :w<CR>:Runner <UP><CR>
 
 """"""""""""""""""""""
 " Ctrlp 
@@ -75,6 +75,11 @@ let g:ale_sign_warning = ' '
 let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:10'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -c --exclude-standard --recurse-submodules | grep -x -v "$( git ls-files -d --exclude-standard )" ; git ls-files -o --exclude-standard', 'find %s -type f' ]
 let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'AcceptSelection("t")': ['<cr>'], }
+
+"""""""""""""
+" Treesitter 
+""""""""""""""
+lua require('treesitter')
 
 """""""""""""
 " NERDTree

@@ -75,8 +75,7 @@ end
 
 -- Color Scheme
 local color_schemes = {
-  ["ayu_dark"] = {
-    -- Ayu Dark
+  ["ayu"] = {
     foreground = "#e6e1cf",
     background = "black",
     cursor_bg = "#f29718",
@@ -89,31 +88,10 @@ local color_schemes = {
   },
 };
 
-local colors = {
-  tab_bar = {
-    background = "black",
-
-    active_tab = {
-      bg_color = "#111",
-      fg_color = "white",
-      intensity = "Bold",
-    },
-
-    inactive_tab = {
-      bg_color = "black",
-      fg_color = "#555",
-    },
-
-    inactive_tab_hover = {
-      bg_color = "#222",
-      fg_color = "#555",
-    },
-  },
-};
-
 return {
   -- General
   window_close_confirmation = "NeverPrompt",
+  tab_close_confirmation = "NeverPrompt",
 
   set_environment_variables = {
     -- This changes the default prompt for cmd.exe to report the current directory using OSC 7, show the current time and
@@ -133,28 +111,13 @@ return {
   -- Window
   initial_rows = 44,
   initial_cols = 140,
-  window_padding = {
-    left = 1,
-    right = 1,
-    top = 1,
-    bottom = 0,
-  },
+  window_padding = { left = 1, right = 1, top = 1, bottom = 0 },
 
   -- Appearance and Colors 
+  color_scheme = "ayu",
   color_schemes = color_schemes,
-  color_scheme = "ayu_dark" ,
-  colors = colors,
   default_cursor_style = "BlinkingBlock",
-  cursor_blink_rate = 400,
-  font = wezterm.font("Fira Code"),
   font_size = font_size,
   dpi = dpi,
-  -- font_antialias = "Subpixel", -- None, Greyscale, Subpixel
-  -- font_hinting = "Full",  -- None, Vertical, VerticalSubpixel, Full
-
-  -- Fine Tuning
-  scrollback_lines = 3500,
-  -- ratelimit_output_bytes_per_second = 400000,
-  -- ratelimit_mux_output_pushes_per_second = 10,
-  -- ratelimit_mux_output_scans_per_second = 100,
+  audible_bell = "Disabled",
 }
