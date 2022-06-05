@@ -4,13 +4,13 @@
 call plug#begin()
   Plug 'ayu-theme/ayu-vim'
   Plug 'townk/vim-autoclose'
-  Plug 'ctrlpvim/ctrlp.vim', {'on': 'CtrlP'}
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
   Plug 'mxw/vim-jsx', { 'for': ['tsx', 'jsx'] }
   Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
   Plug 'nvim-treesitter/nvim-treesitter'
-  Plug 'williamboman/nvim-lsp-installer'
-  Plug 'neovim/nvim-lspconfig'
+  Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocEnable'}
 call plug#end()
 
 """""""""""
@@ -55,19 +55,19 @@ let &winwidth = &columns * 7 / 10
 """"""""""""""""""""
 " Keyboard Mapping
 """"""""""""""""""""
-noremap > >>
-noremap > >gv
 noremap <silent> <CR> :nohlsearch<CR>
+noremap <silent> <ESC> :nohlsearch<ESC>
+noremap <silent> <C-l> :b#<CR>
+noremap <silent> <C-K> :w<CR>:RunExternal <UP><CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
 
 """""""""""""""""""""
 " Custom Commands 
 """""""""""""""""""""
-command ConfigReload :source $MYVIMRC
+command ReloadConfig :source $MYVIMRC
 command Config :e $MYVIMRC
 command -nargs=1 ConfigModule execute ":e ".substitute($MYVIMRC, "init.vim", "lua/", "").<f-args>.".lua"
-command -nargs=+ Runner :!<args>
-noremap <C-K> :w<CR>:Runner <UP><CR>
+command -nargs=? RunExternal call RunInFloatingWindow(<q-args>)
 
 """"""""""""""""""""""
 " Ctrlp 
@@ -79,7 +79,88 @@ let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'Acce
 """""""""""""
 " Treesitter 
 """"""""""""""
-lua require('treesitter')
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  indent = {
+    enable = true,
+  },
+  highlight = {
+    enable = false,
+  }
+}
+EOF
+
+"""""""""""""
+" Telescope 
+""""""""""""""
+noremap <silent> <C-p> :Telescope find_files<CR>
+
+lua << EOF
+local actions = require("telescope.actions")
+
+require('telescope').setup {
+  pickers = {
+    find_files = {
+      theme = 'dropdown',
+      prompt_title = '',
+      previewer = false,
+      layout_config = {
+        width = 0.7,
+        height = 0.95 
+      },
+    }
+  },
+  defaults = {
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+      },
+    },
+  },
+}
+
+EOF
+
+"""""""""""""
+" COC
+""""""""""""""
+set encoding=utf-8
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=1
+set shortmess+=c
+
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : CheckBackspace() ? "\<TAB>" : coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <TAB> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 """""""""""""
 " NERDTree
@@ -135,4 +216,42 @@ if executable(s:clip)
         autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
     augroup END
 endif
+
+""""""""""""""""""""
+" Floating Terminal 
+""""""""""""""""""""
+function! RunInFloatingWindow(command) abort
+  let width = min([&columns - 4, max([80, &columns - 20])])
+  let height = min([&lines - 4, max([20, &lines - 10])])
+  let top = ((&lines - height) / 2) - 1
+  let left = (&columns - width) / 2
+  let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+  let top = "╭" . repeat("─", width - 2) . "╮"
+  let mid = "│" . repeat(" ", width - 2) . "│"
+  let bot = "╰" . repeat("─", width - 2) . "╯"
+  let lines = [top] + repeat([mid], height - 2) + [bot]
+  let s:buf = nvim_create_buf(v:false, v:true)
+  call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+  let s:border_win = nvim_open_win(s:buf, v:true, opts)
+
+  set winhl=Normal:Floating
+  let s:text_buf = nvim_create_buf(v:false, v:true)
+  let opts.row += 1
+  let opts.height -= 2
+  let opts.col += 2
+  let opts.width -= 4
+
+
+  call nvim_open_win(s:text_buf, v:true, opts)
+  call nvim_set_current_buf(s:text_buf)
+  execute "term " . a:command
+
+  map <buffer> j <C-e>
+  map <buffer> k <C-y>
+  map <buffer> <silent> <ESC> :close<CR>
+
+  autocmd WinClosed * ++once call nvim_win_close(s:border_win, v:true) 
+endfunction
+
 
