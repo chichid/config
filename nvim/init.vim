@@ -16,6 +16,7 @@ call plug#end()
 """""""""""
 " General
 """"""""""""
+set title
 set nocompatible
 set backspace=indent,eol,start
 set whichwrap+=<,>,h,l,[,]
@@ -55,11 +56,14 @@ let &winwidth = &columns * 7 / 10
 """"""""""""""""""""
 " Keyboard Mapping
 """"""""""""""""""""
+noremap ! :!
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 noremap <silent> <CR> :nohlsearch<CR>
 noremap <silent> <ESC> :nohlsearch<ESC>
 noremap <silent> <C-l> :b#<CR>
 noremap <silent> <C-K> :w<CR>:RunExternal <UP><CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
+noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:Telescope find_files<CR>" : ":Telescope find_files<CR>"
 
 """""""""""""""""""""
 " Custom Commands 
@@ -93,8 +97,6 @@ EOF
 """""""""""""
 " Telescope 
 """"""""""""""
-noremap <silent> <C-p> :Telescope find_files<CR>
-
 lua << EOF
 local actions = require("telescope.actions")
 
@@ -187,25 +189,27 @@ augroup END
 """"""""""""""
 " Theme
 """"""""""""""
-augroup THEME
-  autocmd VimEnter * syntax on
-  autocmd VimEnter * filetype plugin indent on
-  autocmd VimEnter * set termguicolors     
-  autocmd VimEnter * let ayucolor="dark" 
-  autocmd VimEnter * colorscheme ayu
-  autocmd VimEnter * hi Normal guibg=black
-  autocmd VimEnter * hi EndOfBuffer ctermfg=black guifg=black
-  autocmd VimEnter * hi SignColumn guibg=NONE ctermbg=NONE
-  autocmd VimEnter * hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
-  autocmd VimEnter * hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
-  autocmd VimEnter * hi TabLineFill ctermfg=black guifg=black
-  autocmd VimEnter * hi Visual cterm=none ctermbg=darkgrey ctermfg=white
-  autocmd VimEnter * hi Search cterm=none ctermbg=darkgrey ctermfg=white
-  autocmd VimEnter * hi MatchParen ctermfg=white ctermbg=darkgrey
-  autocmd VimEnter * hi CursorLineNr term=bold ctermfg=white
-  autocmd VimEnter * hi LineNr ctermfg=yellow
-  autocmd VimEnter * hi FloatBorder ctermfg=white
-augroup END
+autocmd VimEnter * call InitTheme() 
+
+function! InitTheme() abort
+  syntax on
+  filetype plugin indent on
+  set termguicolors     
+  let ayucolor="dark" 
+  colorscheme ayu
+  hi Normal guibg=black
+  hi EndOfBuffer ctermfg=black guifg=black
+  hi SignColumn guibg=NONE ctermbg=NONE
+  hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
+  hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
+  hi TabLineFill ctermfg=black guifg=black
+  hi Visual cterm=none ctermbg=darkgrey ctermfg=white
+  hi Search cterm=none ctermbg=darkgrey ctermfg=white
+  hi MatchParen ctermfg=white ctermbg=darkgrey
+  hi CursorLineNr term=bold ctermfg=white
+  hi LineNr ctermfg=yellow
+  hi FloatBorder ctermfg=white
+endfunction
 
 """"""""""""""""""
 " WSL yank support
