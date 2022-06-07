@@ -204,6 +204,7 @@ augroup THEME
   autocmd VimEnter * hi MatchParen ctermfg=white ctermbg=darkgrey
   autocmd VimEnter * hi CursorLineNr term=bold ctermfg=white
   autocmd VimEnter * hi LineNr ctermfg=yellow
+  autocmd VimEnter * hi FloatBorder ctermfg=white
 augroup END
 
 """"""""""""""""""
@@ -233,7 +234,6 @@ function! RunInFloatingWindow(command) abort
   let lines = [top] + repeat([mid], height - 2) + [bot]
   let s:buf = nvim_create_buf(v:false, v:true)
   call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-  let s:border_win = nvim_open_win(s:buf, v:true, opts)
 
   set winhl=Normal:Floating
   let s:text_buf = nvim_create_buf(v:false, v:true)
@@ -241,7 +241,8 @@ function! RunInFloatingWindow(command) abort
   let opts.height -= 2
   let opts.col += 2
   let opts.width -= 4
-
+  let opts.style = 'minimal' 
+  let opts.border = 'rounded'
 
   call nvim_open_win(s:text_buf, v:true, opts)
   call nvim_set_current_buf(s:text_buf)
@@ -250,8 +251,6 @@ function! RunInFloatingWindow(command) abort
   map <buffer> j <C-e>
   map <buffer> k <C-y>
   map <buffer> <silent> <ESC> :close<CR>
-
-  autocmd WinClosed * ++once call nvim_win_close(s:border_win, v:true) 
+  map <buffer> <silent> <CR> :close<CR>
 endfunction
-
 
