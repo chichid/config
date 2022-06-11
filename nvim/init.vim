@@ -109,11 +109,7 @@ require('telescope').setup {
       theme = 'dropdown',
       prompt_title = '',
       previewer = false,
-      layout_config = {
-        width = 0.7,
-        height = 0.95 
-      },
-    }
+    },
   },
   defaults = {
     mappings = {
@@ -252,6 +248,7 @@ function! RunInFloatingWindow(command) abort
   call nvim_set_current_buf(s:text_buf)
   execute "term " . a:command
 
+  map <buffer> <C-c> "*y
   map <buffer> j <C-e>
   map <buffer> k <C-y>
   map <buffer> <silent> <ESC> :close<CR>

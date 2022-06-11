@@ -27,7 +27,7 @@ local mouse_bindings = {
 
 wezterm.on("SpawnNewWindowInWorkingDirectory", function(window, pane)
   current_directory = pane:get_current_working_dir():gsub("file://dox", "")
-  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish"
+  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish && set title"
 
   -- Open a new window running vim and tell it to open the file
   window:perform_action(wezterm.action{SpawnCommandInNewWindow={
@@ -61,6 +61,7 @@ local keys = {
   { key="t", mods="ALT", action=wezterm.action{EmitEvent="SpawnNewTabInWorkingDirectory"} },
   { key="n", mods="CMD", action="SpawnWindow" },
   { key="n", mods="ALT", action=wezterm.action{EmitEvent="SpawnNewWindowInWorkingDirectory"}},
+  { key="w", mods="ALT", action=wezterm.action{CloseCurrentTab={confirm=false}}},
 
   -- Open the config
   { key=",", mods="ALT", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
