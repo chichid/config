@@ -62,8 +62,9 @@ inoremap <expr>  <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
 inoremap <expr>  <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr>  <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr>  <C-v> "\<S-Insert>"
-inoremap <C-Del> <C-o>dw 
-imap <BS>  <C-o>db
+inoremap <C-E> <C-o>$ 
+inoremap <C-a> <C-o>^
+inoremap <C-K> <C-o>d$
 
 vnoremap <silent> <C-c> "*y 
 vnoremap <silent> <ESC> v
