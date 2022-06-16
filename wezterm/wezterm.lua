@@ -46,7 +46,9 @@ wezterm.on("SpawnNewTabInWorkingDirectory", function(window, pane)
 end)
 
 local keys = {
-  { key="F", mods="CTRL|SHIFT", action=wezterm.action{SendString="F"}},
+  -- Delete Word
+  { key="Backspace", mods="CTRL", action={SendKey={key="W", mods="CTRL"}} },
+  { key="Delete", mods="CTRL", action={SendKey={key="d", mods="ALT"}} },
 
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},

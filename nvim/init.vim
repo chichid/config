@@ -8,8 +8,8 @@ call plug#begin()
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
   Plug 'mxw/vim-jsx', { 'for': ['tsx', 'jsx'] }
+  Plug 'rust-lang/rust.vim'
   Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
-  Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocEnable'}
 call plug#end()
 
@@ -57,11 +57,13 @@ let &winwidth = &columns * 7 / 10
 " Keyboard Mapping
 """"""""""""""""""""
 noremap ! :!
-inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
-inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <C-v> "\<S-Insert>"
+inoremap <expr>  <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+inoremap <expr>  <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
+inoremap <expr>  <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr>  <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr>  <C-v> "\<S-Insert>"
+inoremap <C-Del> <C-o>dw 
+imap <BS>  <C-o>db
 
 vnoremap <silent> <C-c> "*y 
 vnoremap <silent> <ESC> v
@@ -71,9 +73,9 @@ noremap <silent> <ESC> :nohlsearch<ESC>
 noremap <silent> <C-l> :b#<CR>
 noremap <silent> <C-K> :w<CR>:RunExternal <UP><CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
-noremap <silent> <C-p> :call OpenTelescopePicker("find_files")<CR>
-noremap <silent> <C-f> :call OpenTelescopePicker("current_buffer_fuzzy_find")<CR>
-noremap <silent> <S-f> :call OpenTelescopePicker("live_grep")<CR>
+noremap <silent> <C-p> :call OpenTelescopePicker("find_files", 0)<CR>
+noremap <silent> <C-f> :call OpenTelescopePicker("current_buffer_fuzzy_find", 0)<CR>
+noremap <silent> <S-f> :call OpenTelescopePicker("live_grep", 1)<CR>
 
 """""""""""""""""""""
 " Custom Commands 
@@ -93,16 +95,6 @@ let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'Acce
 """""""""""""
 " Treesitter 
 """"""""""""""
-lua << EOF
-require'nvim-treesitter.configs'.setup {
-  indent = {
-    enable = true,
-  },
-  highlight = {
-    enable = true,
-  }
-}
-EOF
 
 """""""""""""
 " Telescope 
@@ -156,12 +148,12 @@ EOF
 
 let last_telescope_picker = ""
 
-function! OpenTelescopePicker(picker) abort
+function! OpenTelescopePicker(picker, resume) abort
   if exists("g:NERDTree") && g:NERDTree.IsOpen()
     call NERDTreeClose
   endif
 
-  if g:last_telescope_picker == a:picker
+  if g:last_telescope_picker == a:picker && a:resume
     execute "Telescope resume"
   else
     let g:last_telescope_picker = a:picker
