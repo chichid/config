@@ -46,6 +46,8 @@ wezterm.on("SpawnNewTabInWorkingDirectory", function(window, pane)
 end)
 
 local keys = {
+  { key="F", mods="CTRL|SHIFT", action=wezterm.action{SendString="F"}},
+
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
   { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},

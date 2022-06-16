@@ -61,12 +61,19 @@ inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <C-v> "\<S-Insert>"
+
+vnoremap <silent> <C-c> "*y 
+vnoremap <silent> <ESC> v
+
 noremap <silent> <CR> :nohlsearch<CR>
 noremap <silent> <ESC> :nohlsearch<ESC>
 noremap <silent> <C-l> :b#<CR>
 noremap <silent> <C-K> :w<CR>:RunExternal <UP><CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
-noremap <silent> <expr> <C-p> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>:Telescope find_files<CR>" : ":Telescope find_files<CR>"
+noremap <silent> <C-p> :call OpenTelescopePicker("find_files")<CR>
+noremap <silent> <C-f> :call OpenTelescopePicker("current_buffer_fuzzy_find")<CR>
+noremap <silent> <S-f> :call OpenTelescopePicker("live_grep")<CR>
 
 """""""""""""""""""""
 " Custom Commands 
@@ -92,7 +99,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
   },
   highlight = {
-    enable = false,
+    enable = true,
   }
 }
 EOF
@@ -104,7 +111,35 @@ lua << EOF
 local actions = require("telescope.actions")
 
 require('telescope').setup {
+  defaults = {
+    theme = "dropdown",
+    mappings = {
+      i = {
+        ["<esc>"] = actions.close,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+      },
+    },
+  },
   pickers = {
+    live_grep = {
+      theme = 'dropdown',
+      prompt_title = '',
+      previewer = false,
+      layout_config = {
+        width = 0.7,
+        height = 0.95
+      },
+    },
+    current_buffer_fuzzy_find = {
+      theme = 'dropdown',
+      prompt_title = '',
+      previewer = false,
+      layout_config = {
+        width = 0.7,
+        height = 0.95
+      },
+    },
     find_files = {
       theme = 'dropdown',
       prompt_title = '',
@@ -115,18 +150,24 @@ require('telescope').setup {
       },
     },
   },
-  defaults = {
-    mappings = {
-      i = {
-        ["<esc>"] = actions.close,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-j>"] = actions.move_selection_next,
-      },
-    },
-  },
 }
 
 EOF
+
+let last_telescope_picker = ""
+
+function! OpenTelescopePicker(picker) abort
+  if exists("g:NERDTree") && g:NERDTree.IsOpen()
+    call NERDTreeClose
+  endif
+
+  if g:last_telescope_picker == a:picker
+    execute "Telescope resume"
+  else
+    let g:last_telescope_picker = a:picker
+    execute "Telescope ".a:picker
+  endif
+endfunction
 
 """""""""""""
 " COC
@@ -137,14 +178,6 @@ set nobackup
 set nowritebackup
 set cmdheight=1
 set shortmess+=c
-
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nnoremap <silent> K :call ShowDocumentation()<CR>
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -250,6 +283,10 @@ function! RunInFloatingWindow(command) abort
 
   call nvim_open_win(s:text_buf, v:true, opts)
   call nvim_set_current_buf(s:text_buf)
+  setlocal buftype=nofile
+  setlocal bufhidden=hide
+  setlocal noswapfile
+
   execute "term " . a:command
 
   map <buffer> <C-c> "*y
