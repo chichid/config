@@ -2,21 +2,17 @@ local wezterm = require 'wezterm';
  
 local default_prog;
 local font_size;
-local dpi;
-local initial_rows;
-local initial_cols;
+local tab_font_size;
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe", "~"}; 
-  font_size = 10.5;
-  initial_rows = 44;
-  initial_cols = 140;
+  tab_font_size = 9.0;
+  font_size = 10.7;
 end
 
 if string.find(wezterm.target_triple, "darwin") then
-  font_size = 13.5;
-  initial_rows = 20;
-  initial_cols = 100;
+  tab_font_size = 14.0;
+  font_size = 15.0;
 end
 
 local mouse_bindings = {
@@ -110,12 +106,6 @@ return {
   window_close_confirmation = "NeverPrompt",
   tab_close_confirmation = "NeverPrompt",
 
-  set_environment_variables = {
-    -- This changes the default prompt for cmd.exe to report the current directory using OSC 7, show the current time and
-    prompt = "$E]7;file://localhost/$P$E\\$E[32m$T$E[0m $E[35m$P$E[36m$_$G$E[0m ",
-  },
-
-
   -- Key Bindings
   keys = keys,  
   mouse_bindings = mouse_bindings,
@@ -127,14 +117,16 @@ return {
   -- Window
   initial_rows = 42,
   initial_cols = 160,
-  window_padding = { left = 1, right = 1, top = 1, bottom = 0 },
+  window_padding = { left = 1, right = 1, top = 0, bottom = 0 },
 
   -- Appearance and Colors 
   color_scheme = "ayu",
   window_decorations = "RESIZE",
   color_schemes = color_schemes,
   default_cursor_style = "BlinkingBlock",
-  font_size = font_size,
-  dpi = dpi,
   audible_bell = "Disabled",
+  font_size = font_size,
+  window_frame = {
+    font_size = tab_font_size,
+  }
 }
