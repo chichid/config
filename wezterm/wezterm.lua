@@ -7,7 +7,6 @@ local initial_rows;
 local initial_cols;
 
 if string.find(wezterm.target_triple, "windows") then
---  default_prog = {"bash.exe", "-c", "fish", "~"}; 
   default_prog = {"wsl.exe", "~"}; 
   font_size = 10.5;
   initial_rows = 44;
@@ -27,7 +26,7 @@ local mouse_bindings = {
 
 wezterm.on("SpawnNewWindowInWorkingDirectory", function(window, pane)
   current_directory = pane:get_current_working_dir():gsub("file://dox", "")
-  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish && set title"
+  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish"
 
   -- Open a new window running vim and tell it to open the file
   window:perform_action(wezterm.action{SpawnCommandInNewWindow={
@@ -120,16 +119,16 @@ return {
   
   -- General 
   default_prog = default_prog,
-  hide_tab_bar_if_only_one_tab = true,
   term = "xterm-256color",
 
   -- Window
-  initial_rows = 44,
-  initial_cols = 140,
+  initial_rows = 42,
+  initial_cols = 160,
   window_padding = { left = 1, right = 1, top = 1, bottom = 0 },
 
   -- Appearance and Colors 
   color_scheme = "ayu",
+  window_decorations = "RESIZE",
   color_schemes = color_schemes,
   default_cursor_style = "BlinkingBlock",
   font_size = font_size,

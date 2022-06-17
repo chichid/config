@@ -11,6 +11,7 @@ call plug#begin()
   Plug 'rust-lang/rust.vim'
   Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocEnable'}
+  Plug 'dinhhuy258/vim-local-history'
 call plug#end()
 
 """""""""""
