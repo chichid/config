@@ -12,6 +12,7 @@ call plug#begin()
   Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocEnable'}
   Plug 'dinhhuy258/vim-local-history'
+  Plug 'tpope/vim-fugitive'
 call plug#end()
 
 """"""""""""

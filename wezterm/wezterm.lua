@@ -44,7 +44,9 @@ local keys = {
   -- Keyboard Navigation
   { key="Backspace", mods="CTRL", action={SendKey={key="W", mods="CTRL"}} },
   { key="Delete", mods="CTRL", action={SendKey={key="d", mods="ALT"}} },
+
   { key="Backspace", mods="ALT", action={SendKey={key="U", mods="CTRL"}} },
+  { key="Backspace", mods="CMD", action={SendKey={key="U", mods="CTRL"}} },
 
   { key="Delete", mods="ALT", action={SendKey={key="K", mods="CTRL"}} },
   { key="Delete", mods="CMD", action={SendKey={key="K", mods="CTRL"}} },
