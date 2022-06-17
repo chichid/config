@@ -234,7 +234,7 @@ function! InitTheme() abort
   hi Search cterm=none ctermbg=darkgrey ctermfg=white
   hi MatchParen ctermfg=white ctermbg=darkgrey
   hi CursorLineNr term=bold ctermfg=white
-  hi LineNr ctermfg=yellow
+  hi LineNr guifg=#666666
   hi FloatBorder ctermfg=white
 endfunction
 

@@ -59,6 +59,9 @@ local keys = {
   { key="RightArrow", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
   { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
 
+  { key="]", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
+  { key="]", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
+
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
   { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
