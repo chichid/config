@@ -1,6 +1,6 @@
-""""""""""""
-" Plugins 
-""""""""""""""
+"""""""""""""
+"" Plugins 
+"""""""""""""""
 call plug#begin()
   Plug 'ayu-theme/ayu-vim'
   Plug 'townk/vim-autoclose'
@@ -14,9 +14,9 @@ call plug#begin()
   Plug 'dinhhuy258/vim-local-history'
 call plug#end()
 
-"""""""""""
-" General
 """"""""""""
+"" General
+"""""""""""""
 set title
 set nocompatible
 set backspace=indent,eol,start
@@ -68,10 +68,8 @@ inoremap <C-a> <C-o>^
 inoremap <C-K> <C-o>d$
 
 vnoremap <silent> <C-c> "*y 
-vnoremap <silent> <ESC> v
 
 noremap <silent> <CR> :nohlsearch<CR>
-noremap <silent> <ESC> :nohlsearch<ESC>
 noremap <silent> <C-l> :b#<CR>
 noremap <silent> <C-K> :w<CR>:RunExternal <UP><CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
@@ -234,7 +232,7 @@ function! InitTheme() abort
   hi Search cterm=none ctermbg=darkgrey ctermfg=white
   hi MatchParen ctermfg=white ctermbg=darkgrey
   hi CursorLineNr term=bold ctermfg=white
-  hi LineNr guifg=#666666
+  hi LineNr guifg=#4E4E4E
   hi FloatBorder ctermfg=white
 endfunction
 
