@@ -150,7 +150,7 @@ let last_telescope_picker = ""
 
 function! OpenTelescopePicker(picker, resume) abort
   if exists("g:NERDTree") && g:NERDTree.IsOpen()
-    call NERDTreeClose
+    execute "NERDTreeClose"
   endif
 
   if g:last_telescope_picker == a:picker && a:resume
