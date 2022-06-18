@@ -9,8 +9,8 @@ bind \el 'clear; commandline -f repaint'
 bind \ek 'clear; commandline -f repaint'
 bind \t forward-word
 
-#Aliases
-alias vim="nvim"
+#aliases
+alias vim=nvim
 
 # Wezterm helpers
 if set -q wezterm_startup_directory
@@ -22,4 +22,4 @@ function __handle_osc7 --on-variable PWD
 end
 
 __handle_osc7
-sleep 0.05 && set title
+

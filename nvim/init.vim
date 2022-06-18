@@ -1,4 +1,4 @@
-"""""""""""""
+"""""""
 "" Plugins 
 """""""""""""""
 call plug#begin()
@@ -12,7 +12,6 @@ call plug#begin()
   Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocEnable'}
   Plug 'dinhhuy258/vim-local-history'
-  Plug 'tpope/vim-fugitive'
 call plug#end()
 
 """"""""""""
@@ -40,6 +39,7 @@ set smartcase
 set laststatus=0
 set mouse=a
 set splitright
+set guitablabel=%t
 set noswapfile
 set cursorline
 set autoread
@@ -63,7 +63,6 @@ inoremap <expr>  <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 inoremap <expr>  <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
 inoremap <expr>  <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr>  <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr>  <C-v> "\<S-Insert>"
 inoremap <C-E> <C-o>$ 
 inoremap <C-a> <C-o>^
 inoremap <C-K> <C-o>d$
@@ -75,8 +74,9 @@ noremap <silent> <C-l> :b#<CR>
 noremap <silent> <C-K> :w<CR>:RunExternal <UP><CR>
 noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
 noremap <silent> <C-p> :call OpenTelescopePicker("find_files", 0)<CR>
-noremap <silent> <C-f> :call OpenTelescopePicker("current_buffer_fuzzy_find", 0)<CR>
-noremap <silent> <S-f> :call OpenTelescopePicker("live_grep", 1)<CR>
+noremap <silent> ? :call OpenTelescopePicker("current_buffer_fuzzy_find", 0)<CR>
+noremap <silent> <C-f> :call OpenTelescopePicker("live_grep", 1)<CR>
+noremap <silent> <C-g> :call OpenTelescopePicker("git_status", 1)<CR>
 
 """""""""""""""""""""
 " Custom Commands 
@@ -86,26 +86,23 @@ command Config :e $MYVIMRC
 command -nargs=1 ConfigModule execute ":e ".substitute($MYVIMRC, "init.vim", "lua/", "").<f-args>.".lua"
 command -nargs=? RunExternal call RunInFloatingWindow(<q-args>)
 
-""""""""""""""""""""""
-" Ctrlp 
-""""""""""""""""""""""
-let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:10'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -c --exclude-standard --recurse-submodules | grep -x -v "$( git ls-files -d --exclude-standard )" ; git ls-files -o --exclude-standard', 'find %s -type f' ]
-let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'AcceptSelection("t")': ['<cr>'], }
-
-"""""""""""""
-" Treesitter 
-""""""""""""""
-
 """""""""""""
 " Telescope 
 """"""""""""""
 lua << EOF
 local actions = require("telescope.actions")
+local picker_config = {
+  theme = 'dropdown',
+  prompt_title = '',
+  previewer = false,
+  layout_config = {
+    width = 0.7,
+    height = 0.95
+  },
+};
 
 require('telescope').setup {
   defaults = {
-    theme = "dropdown",
     mappings = {
       i = {
         ["<esc>"] = actions.close,
@@ -115,7 +112,10 @@ require('telescope').setup {
     },
   },
   pickers = {
-    live_grep = {
+    live_grep = picker_config, 
+    current_buffer_fuzzy_find = picker_config, 
+    find_files = picker_config,
+    git_status = {
       theme = 'dropdown',
       prompt_title = '',
       previewer = false,
@@ -123,24 +123,16 @@ require('telescope').setup {
         width = 0.7,
         height = 0.95
       },
-    },
-    current_buffer_fuzzy_find = {
-      theme = 'dropdown',
-      prompt_title = '',
-      previewer = false,
-      layout_config = {
-        width = 0.7,
-        height = 0.95
-      },
-    },
-    find_files = {
-      theme = 'dropdown',
-      prompt_title = '',
-      previewer = false,
-      layout_config = {
-        width = 0.7,
-        height = 0.95
-      },
+      mappings = {
+        i = {
+          ["<CR>"] = function(prompt_bufnr)
+            local action_state = require "telescope.actions.state"
+            actions.close(prompt_bufnr)
+            local selection = action_state.get_selected_entry()
+            vim.cmd("call OpenGitDiff('" .. selection.path .. "')")
+          end,
+        }
+      }
     },
   },
 }
@@ -150,6 +142,10 @@ EOF
 let last_telescope_picker = ""
 
 function! OpenTelescopePicker(picker, resume) abort
+  if &diff
+    return
+  endif
+
   if exists("g:NERDTree") && g:NERDTree.IsOpen()
     execute "NERDTreeClose"
   endif
@@ -289,3 +285,44 @@ function! RunInFloatingWindow(command) abort
   map <buffer> <silent> <CR> :close<CR>
 endfunction
 
+"""""""""""""
+" Git 
+""""""""""""""
+function! OpenGitDiff(input)
+  if !(line('$') == 1 && getline(1) == '')
+    execute ":tabnew"
+  endif
+
+  execute ":e".a:input
+  diffthis
+  diffupdate
+
+  let root = systemlist("git rev-parse --show-toplevel")[0]
+  let input = substitute(a:input, root."/", "", "")
+  let git_cmd = "git --no-pager show HEAD:".input
+  let cmd = "cd " .root. " && " . git_cmd
+
+  let filetype = &filetype
+  lefta vertical new
+  setlocal noswapfile
+  setlocal buftype=nofile
+  let &filetype=filetype
+
+  let exists = system(git_cmd)
+  if v:shell_error == 0
+    silent! execute "read ++edit !".cmd
+  endif 
+
+  0d_
+  diffthis
+  diffupdate
+
+  nmap <silent> <buffer> <ESC> :close<CR>
+
+  wincmd p
+
+  nmap <silent> <buffer> <ESC> :close<CR>
+
+  au WinClosed * ++once silent! execute ":q" 
+  au WinClosed * ++once silent! execute ":q" 
+endfunction
