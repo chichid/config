@@ -58,7 +58,7 @@ local keys = {
 
   { key="RightArrow", mods="CTRL", action={SendKey={key="E", mods="CTRL"}} },
   { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
-  { key="RightArrow", mods="ALT", action={SendKey={key="F", mods="ALT"}} },
+  { key="RightArrow", mods="ALT", action={SendKey={key="f", mods="ALT"}} },
 
   { key="]", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
   { key="]", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
