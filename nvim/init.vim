@@ -52,6 +52,7 @@ set shiftwidth=2
 set expandtab
 set autoindent
 set matchtime=0
+set shell=bash\ --login
 au CursorHold * checktime  
 let &winwidth = &columns * 7 / 10
 
