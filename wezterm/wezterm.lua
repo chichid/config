@@ -3,16 +3,22 @@ local wezterm = require 'wezterm';
 local default_prog;
 local font_size;
 local tab_font_size;
+local initial_rows;
+local inital_cols;
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe", "~"}; 
   tab_font_size = 9.0;
   font_size = 10.7;
+  initial_rows = 42;
+  initial_cols = 160;
 end
 
 if string.find(wezterm.target_triple, "darwin") then
   tab_font_size = 14.0;
   font_size = 15.0;
+  initial_rows = 38;
+  initial_cols = 120;
 end
 
 local mouse_bindings = {
@@ -42,20 +48,17 @@ end)
 
 local keys = {
   -- Keyboard Navigation
-  { key="Backspace", mods="CTRL", action={SendKey={key="W", mods="CTRL"}} },
-  { key="Delete", mods="CTRL", action={SendKey={key="d", mods="ALT"}} },
-
-  { key="Backspace", mods="ALT", action={SendKey={key="U", mods="CTRL"}} },
+  { key="Backspace", mods="CTRL", action={SendKey={key="U", mods="CTRL"}} },
   { key="Backspace", mods="CMD", action={SendKey={key="U", mods="CTRL"}} },
+  { key="Backspace", mods="ALT", action={SendKey={key="W", mods="CTRL"}} },
 
-  { key="Delete", mods="ALT", action={SendKey={key="K", mods="CTRL"}} },
-  { key="Delete", mods="CMD", action={SendKey={key="K", mods="CTRL"}} },
-
-  { key="LeftArrow", mods="ALT", action={SendKey={key="a", mods="CTRL"}} },
+  { key="LeftArrow", mods="CTRL", action={SendKey={key="a", mods="CTRL"}} },
   { key="LeftArrow", mods="CMD", action={SendKey={key="a", mods="CTRL"}} },
+  { key="LeftArrow", mods="ALT", action={SendKey={key="b", mods="ALT"}} },
 
-  { key="RightArrow", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
+  { key="RightArrow", mods="CTRL", action={SendKey={key="E", mods="CTRL"}} },
   { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
+  { key="RightArrow", mods="ALT", action={SendKey={key="F", mods="ALT"}} },
 
   { key="]", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
   { key="]", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
@@ -63,6 +66,7 @@ local keys = {
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
   { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
+  { key="l", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
   
   -- Copy/Paste 
   { key="c", mods="ALT", action="Copy" },
@@ -117,8 +121,8 @@ return {
   term = "xterm-256color",
 
   -- Window
-  initial_rows = 42,
-  initial_cols = 160,
+  initial_rows = initial_rows,
+  initial_cols = initial_cols,
   window_padding = { left = 1, right = 1, top = 0, bottom = 0 },
 
   -- Appearance and Colors 

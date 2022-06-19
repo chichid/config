@@ -85,6 +85,7 @@ command ReloadConfig :source $MYVIMRC
 command Config :e $MYVIMRC
 command -nargs=1 ConfigModule execute ":e ".substitute($MYVIMRC, "init.vim", "lua/", "").<f-args>.".lua"
 command -nargs=? RunExternal call RunInFloatingWindow(<q-args>)
+command -nargs=? Diff :call OpenGitDiff(<q-args>) 
 
 """""""""""""
 " Telescope 
@@ -231,6 +232,14 @@ function! InitTheme() abort
   hi CursorLineNr term=bold ctermfg=white
   hi LineNr guifg=#4E4E4E
   hi FloatBorder ctermfg=white
+
+  " Diff Colors
+  hi DiffDelete ctermbg=None ctermfg=Black gui=none guifg=#14191F guibg=#14191F
+  hi DiffText cterm=bold gui=bold ctermfg=225 guifg=#FF7733 ctermbg=Green guibg=#253b26
+  au WinEnter * if !(&diff) | hi DiffAdd ctermbg=none guibg=none | endif
+  au WinEnter * if  (&diff) | hi DiffAdd ctermbg=none ctermbg=Green guibg=#19261e | endif
+  au WinEnter * if !(&diff) | hi DiffChange ctermbg=none guibg=none | endif
+  au WinEnter * if  (&diff) | hi DiffChange ctermbg=none ctermbg=Green guibg=#19261e | endif
 endfunction
 
 """"""""""""""""""
@@ -288,41 +297,57 @@ endfunction
 """""""""""""
 " Git 
 """"""""""""""
+autocmd BufWritePost * if &diff == 1 | diffupdate | endif
+
 function! OpenGitDiff(input)
+  function! DiffKeyBinding()
+    nmap <silent> <buffer> <C-j> ]czz
+    nmap <silent> <buffer> <C-k> [czz
+    nmap <silent> <expr> <buffer> u &ma ? "u":":wincmd p\<cr>:normal u\<cr>:wincmd p\<cr>"
+    nmap <silent> <expr> <buffer> <C-r> &ma ? "\<C-r>":":wincmd p\<cr>\<C-r>:wincmd p\<cr>"
+    nmap <silent> <expr> <buffer> <C-u> &ma ? "\<c-v>:'<,'>diffget\<cr>:diffupdate\<cr>":"\<c-v>:'<,'>diffput\<cr>:diffupdate\<cr>"
+    vmap <silent> <expr> <buffer> <C-u> &ma ? ":'<,'>diffget\<cr>:diffupdate\<cr>":":'<,'>diffput\<cr>:diffupdate\<cr>"
+  endfunction
+
   if !(line('$') == 1 && getline(1) == '')
     execute ":tabnew"
   endif
 
-  execute ":e".a:input
+  set diffopt=filler,foldcolumn:0
+
+  execute ":e ".a:input
+  call DiffKeyBinding()
   diffthis
   diffupdate
+  set nofoldenable
 
+  "" Diff Window
   let root = systemlist("git rev-parse --show-toplevel")[0]
   let input = substitute(a:input, root."/", "", "")
   let git_cmd = "git --no-pager show HEAD:".input
   let cmd = "cd " .root. " && " . git_cmd
-
+  let exists = system(git_cmd)
   let filetype = &filetype
+
   lefta vertical new
+  call DiffKeyBinding()
   setlocal noswapfile
   setlocal buftype=nofile
   let &filetype=filetype
-
-  let exists = system(git_cmd)
   if v:shell_error == 0
     silent! execute "read ++edit !".cmd
   endif 
-
-  0d_
   diffthis
   diffupdate
+  setlocal nomodifiable 
+  setlocal nofoldenable
 
-  nmap <silent> <buffer> <ESC> :close<CR>
+  execute ":goto"
+  wincmd p 
+  execute ":e"
 
-  wincmd p
-
-  nmap <silent> <buffer> <ESC> :close<CR>
-
+  au WinClosed * ++once silent! diffoff 
   au WinClosed * ++once silent! execute ":q" 
   au WinClosed * ++once silent! execute ":q" 
 endfunction
+
