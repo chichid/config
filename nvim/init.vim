@@ -309,11 +309,22 @@ function! OpenGitDiff(input)
     vmap <silent> <expr> <buffer> <C-u> &ma ? ":'<,'>diffget\<cr>:diffupdate\<cr>":":'<,'>diffput\<cr>:diffupdate\<cr>"
   endfunction
 
+  """ Git Initialization
+  set diffopt=filler,foldcolumn:0
+  let root = systemlist("git rev-parse --show-toplevel")[0]
+  if v:shell_error != 0 | return | endif
+
+  let input = substitute(a:input, root."/", "", "")
+  let git_cmd = "git --no-pager show HEAD:".input
+  call system(git_cmd)
+  let exists = v:shell_error == 0
+
+  let cmd = "cd " .root. " && " . git_cmd
+
+  """ Modifable code window (Right) 
   if !(line('$') == 1 && getline(1) == '')
     execute ":tabnew"
   endif
-
-  set diffopt=filler,foldcolumn:0
 
   execute ":e ".a:input
   call DiffKeyBinding()
@@ -322,21 +333,13 @@ function! OpenGitDiff(input)
   set nofoldenable
 
   "" Diff Window
-  let root = systemlist("git rev-parse --show-toplevel")[0]
-  let input = substitute(a:input, root."/", "", "")
-  let git_cmd = "git --no-pager show HEAD:".input
-  let cmd = "cd " .root. " && " . git_cmd
-  let exists = system(git_cmd)
   let filetype = &filetype
-
   lefta vertical new
   call DiffKeyBinding()
   setlocal noswapfile
   setlocal buftype=nofile
   let &filetype=filetype
-  if v:shell_error == 0
-    silent! execute "read ++edit !".cmd
-  endif 
+  if exists | silent! execute "read ++edit !".cmd | endif 
   diffthis
   diffupdate
   setlocal nomodifiable 
