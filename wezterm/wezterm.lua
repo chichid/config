@@ -15,8 +15,8 @@ if string.find(wezterm.target_triple, "windows") then
 end
 
 if string.find(wezterm.target_triple, "darwin") then
-  tab_font_size = 14.0;
-  font_size = 15.0;
+  tab_font_size = 15.0;
+  font_size = 16;
   initial_rows = 38;
   initial_cols = 120;
 end
@@ -63,6 +63,11 @@ local keys = {
   { key=".", mods="CTRL", action={SendKey={key="E", mods="CTRL"}} },
   { key=".", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
   { key=".", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
+
+  -- Fullscreen
+  { key="Enter", mods="CTRL", action= "ToggleFullScreen" },
+  { key="Enter", mods="CMD", action= "ToggleFullScreen" },
+  { key="Enter", mods="ALT", action= "ToggleFullScreen" },
 
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
