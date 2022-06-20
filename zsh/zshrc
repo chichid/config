@@ -1,7 +1,13 @@
+## Aliases
 alias vim=nvim
 
+## Keybindings
+bindkey '\t' forward-word
+
+## Colors
 export CLICOLOR=1
 
+## Hooks 
 precmd () {
   echo -en "\033]0;$(basename `pwd`)\a"
 
@@ -10,4 +16,6 @@ precmd () {
   fi
 }
 
+## Autocomplete
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
