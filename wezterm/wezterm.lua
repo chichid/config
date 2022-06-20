@@ -60,8 +60,9 @@ local keys = {
   { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
   { key="RightArrow", mods="ALT", action={SendKey={key="f", mods="ALT"}} },
 
-  { key="]", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
-  { key="]", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
+  { key=".", mods="CTRL", action={SendKey={key="E", mods="CTRL"}} },
+  { key=".", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
+  { key=".", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
 
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
@@ -73,6 +74,7 @@ local keys = {
   { key="c", mods="CMD", action="Copy" },
   { key="v", mods="ALT", action="Paste" },
   { key="v", mods="CMD", action="Paste" },
+  { key="v", mods="CTRL", action={SendKey={key="v", mods="CTRL"}} },
   
   -- Open New Window 
   { key="t", mods="CMD", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
