@@ -1,0 +1,13 @@
+alias vim=nvim
+
+export CLICOLOR=1
+
+precmd () {
+  echo -en "\033]0;$(basename `pwd`)\a"
+
+  if grep -q Microsoft /proc/version; then
+    printf "\033]7;file://%s\033\\" $(wslpath -w "$PWD") 
+  fi
+}
+
+source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh

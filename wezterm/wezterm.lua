@@ -1,18 +1,22 @@
 local wezterm = require 'wezterm';
  
 local default_prog;
+local default_cwd;
 local font_size;
 local tab_font_size;
 local initial_rows;
 local inital_cols;
 
 if string.find(wezterm.target_triple, "windows") then
-  default_prog = {"wsl.exe", "~"}; 
+  default_prog = {"wsl.exe"}; 
+  default_cwd = os.getenv("HOME");
   tab_font_size = 9.0;
   font_size = 10.7;
   initial_rows = 42;
   initial_cols = 160;
 end
+
+print(default_cwd)
 
 if string.find(wezterm.target_triple, "darwin") then
   tab_font_size = 15.0;
@@ -25,26 +29,6 @@ local mouse_bindings = {
   -- Right Click to paste 
   { event={Down={streak=1, button="Right"}}, mods="NONE", action="Paste" },
 };
-
-wezterm.on("SpawnNewWindowInWorkingDirectory", function(window, pane)
-  current_directory = pane:get_current_working_dir():gsub("file://dox", "")
-  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish"
-
-  -- Open a new window running vim and tell it to open the file
-  window:perform_action(wezterm.action{SpawnCommandInNewWindow={
-    args={"bash", "-c", startup_command}
-  }}, pane)
-end)
-
-wezterm.on("SpawnNewTabInWorkingDirectory", function(window, pane)
-  current_directory = pane:get_current_working_dir():gsub("file://dox", "")
-  startup_command = "export wezterm_startup_directory=" .. current_directory .. "&& fish"
-
-  -- Open a new window running vim and tell it to open the file
-  window:perform_action(wezterm.action{SpawnCommandInNewTab={
-    args={"bash", "-c", startup_command}
-  }}, pane)
-end)
 
 local keys = {
   -- Keyboard Navigation
@@ -60,7 +44,6 @@ local keys = {
   { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
 
   { key="RightArrow", mods="ALT", action={SendKey={key="f", mods="ALT"}} },
-  { key="Tab", action={SendKey={key="f", mods="ALT"}} },
 
   { key=".", mods="CTRL", action={SendKey={key="RightArrow"}} },
   { key=".", mods="ALT" , action={SendKey={key="RightArrow"}} },
@@ -74,7 +57,8 @@ local keys = {
   -- Clear Screen
   { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
   { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
-  { key="l", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
+  { key="l", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
+  { key="l", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
   { key="c", mods="ALT", action="Copy" },
@@ -85,9 +69,9 @@ local keys = {
   
   -- Open New Window 
   { key="t", mods="CMD", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
-  { key="t", mods="ALT", action=wezterm.action{EmitEvent="SpawnNewTabInWorkingDirectory"} },
+  { key="t", mods="ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
   { key="n", mods="CMD", action="SpawnWindow" },
-  { key="n", mods="ALT", action=wezterm.action{EmitEvent="SpawnNewWindowInWorkingDirectory"}},
+  { key="n", mods="ALT", action="SpawnWindow" },
   { key="w", mods="ALT", action=wezterm.action{CloseCurrentTab={confirm=false}}},
 
   -- Open the config
@@ -119,15 +103,13 @@ local color_schemes = {
 return {
   -- General
   window_close_confirmation = "NeverPrompt",
-  tab_close_confirmation = "NeverPrompt",
+  default_prog = default_prog,
+  default_cwd = default_cwd,
+  term = "xterm-256color",
 
   -- Key Bindings
   keys = keys,  
   mouse_bindings = mouse_bindings,
-  
-  -- General 
-  default_prog = default_prog,
-  term = "xterm-256color",
 
   -- Window
   initial_rows = initial_rows,

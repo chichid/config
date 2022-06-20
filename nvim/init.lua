@@ -85,7 +85,6 @@ vim.opt.smartcase = true
 vim.opt.laststatus = 0
 vim.opt.mouse = "a"
 vim.opt.splitright = true
-vim.opt.guitablabel = "%t"
 vim.opt.swapfile = false
 vim.opt.cursorline = true
 vim.opt.autoread = true
