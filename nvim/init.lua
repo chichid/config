@@ -102,7 +102,7 @@ vim.opt.hidden = true
 vim.opt.backup = false 
 vim.opt.writebackup = false
 vim.opt.cmdheight = 1
-vim.opt.winwidth = 40
+vim.opt.winwidth = math.floor(vim.fn.winwidth(0)*0.6)
 
 -------------------------
 -- Custom Commands 
