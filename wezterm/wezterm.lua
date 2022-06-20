@@ -60,9 +60,9 @@ local keys = {
   { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
   { key="RightArrow", mods="ALT", action={SendKey={key="f", mods="ALT"}} },
 
-  { key=".", mods="CTRL", action={SendKey={key="E", mods="CTRL"}} },
-  { key=".", mods="ALT", action={SendKey={key="E", mods="CTRL"}} },
-  { key=".", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
+  { key=".", mods="CTRL", action={SendKey={key="RightArrow"}} },
+  { key=".", mods="ALT" , action={SendKey={key="RightArrow"}} },
+  { key=".", mods="CMD" , action={SendKey={key="RightArrow"}} },
 
   -- Fullscreen
   { key="Enter", mods="CTRL", action= "ToggleFullScreen" },

@@ -124,7 +124,6 @@ vim.api.nvim_create_user_command('ReloadConfig', function()
 end, {})
 
 vim.api.nvim_create_user_command('Sync', function()
-  vim.cmd[[ execute "luafile %" ]]
   vim.cmd[[ execute "ReloadConfig" ]]
   require('packer').sync()
 end, {})
@@ -214,7 +213,7 @@ function load_theme() vim.cmd [[
 
   set termguicolors     
   let ayucolor="dark" 
-  colorscheme ayu
+  try | colorscheme ayu | catch | endtry
 
   hi Normal guibg=black
   hi EndOfBuffer ctermfg=black guifg=black
