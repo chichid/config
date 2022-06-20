@@ -1,22 +1,24 @@
-"""""""
+"""""""""""""""
 "" Plugins 
 """""""""""""""
-call plug#begin()
+function InitPlugins()
   Plug 'ayu-theme/ayu-vim'
   Plug 'townk/vim-autoclose'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
   Plug 'mxw/vim-jsx', { 'for': ['tsx', 'jsx'] }
-  Plug 'rust-lang/rust.vim'
+  Plug 'rust-lang/rust.vim', { 'for': ['rs', 'toml'] } 
   Plug 'leafgarland/typescript-vim', { 'for': ['tsx', 'ts'] }
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'on': 'CocEnable'}
   Plug 'dinhhuy258/vim-local-history'
-call plug#end()
+endfunction
 
 """"""""""""
 "" General
 """""""""""""
+set noloadplugins
+set shell=bash\ --login
 set title
 set nocompatible
 set backspace=indent,eol,start
@@ -52,9 +54,13 @@ set shiftwidth=2
 set expandtab
 set autoindent
 set matchtime=0
-set shell=bash\ --login
 au CursorHold * checktime  
 let &winwidth = &columns * 7 / 10
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=1
+set shortmess+=c
 
 """"""""""""""""""""
 " Keyboard Mapping
@@ -87,6 +93,37 @@ command Config :e $MYVIMRC
 command -nargs=1 ConfigModule execute ":e ".substitute($MYVIMRC, "init.vim", "lua/", "").<f-args>.".lua"
 command -nargs=? RunExternal call RunInFloatingWindow(<q-args>)
 command -nargs=? Diff :call OpenGitDiff(<q-args>) 
+
+"""""""""""""""""""""
+" Vim-Plug 
+"""""""""""""""""""""
+let auto_load_dir = has('nvim') ? stdpath('data').'/autoload' : '~/.vim/autoload'
+let data_dir = has('nvim') ? stdpath('data').'/site' : '~/.vim'
+
+if empty(glob(auto_load_dir.'/plug.vim')) 
+  let tmp = data_dir.'/vim_plug_install_tmp'
+  echo 'Installing Vim-Plug '.data_dir
+
+  if empty(glob(auto_load_dir)) | silent execute '!mkdir -p '.auto_load_dir | endif
+  if empty(glob(data_dir)) | silent execute '!mkdir -p '.data_dir | endif
+  if empty(glob(tmp)) | silent execute '!mkdir -p '.tmp | endif
+  if empty(glob(tmp.'/vim-plug')) | silent execute '!git '.' -C '.tmp.' clone https://github.com/junegunn/vim-plug' | endif
+  if !empty(glob(tmp.'/vim-plug')) | silent execute '!mv '.tmp.'/vim-plug/plug.vim'.' '.auto_load_dir | endif
+  if !empty(glob(tmp)) | silent execute '!rm -rf '.tmp | endif
+
+  if !empty(glob(auto_load_dir.'/plug.vim'))
+    echo 'Vim-Plug Was installed successfully'
+    autocmd VimEnter * execute ":PlugInstall"
+  else
+    echoerr 'Unable to Install Vim-Plug'
+  endif
+endif
+
+execute "source ".auto_load_dir."/plug.vim"
+
+call plug#begin()
+call InitPlugins()
+call plug#end()
 
 """""""""""""
 " Telescope 
@@ -161,34 +198,6 @@ function! OpenTelescopePicker(picker, resume) abort
 endfunction
 
 """""""""""""
-" COC
-""""""""""""""
-set encoding=utf-8
-set hidden
-set nobackup
-set nowritebackup
-set cmdheight=1
-set shortmess+=c
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-if has("nvim-0.5.0") || has("patch-8.1.1564")
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-"""""""""""""
 " NERDTree
 """"""""""""""
 let g:NERDTreeMinimalUI = 1
@@ -196,31 +205,22 @@ let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMapHelp = 'H'
 
-"""""""""""""
-" Hex Editor
-""""""""""""""
-augroup Binary
-  au!
-  au BufReadPre  *.bin let &bin=1
-  au BufReadPost *.bin if &bin | %!xxd
-  au BufReadPost *.bin set ft=xxd | endif
-  au BufWritePre *.bin if &bin | %!xxd -r
-  au BufWritePre *.bin endif
-  au BufWritePost *.bin if &bin | %!xxd
-  au BufWritePost *.bin set nomod | endif
-augroup END
-
 """"""""""""""
 " Theme
 """"""""""""""
-autocmd VimEnter * call InitTheme() 
-
-function! InitTheme() abort
+function! InitTheme() 
   syntax on
   filetype plugin indent on
+
+  if !(&runtimepath =~? "ayu")
+    echo "Ayu Theme is not available"
+    return
+  endif
+
   set termguicolors     
   let ayucolor="dark" 
   colorscheme ayu
+
   hi Normal guibg=black
   hi EndOfBuffer ctermfg=black guifg=black
   hi SignColumn guibg=NONE ctermbg=NONE
@@ -242,17 +242,18 @@ function! InitTheme() abort
   au WinEnter * if !(&diff) | hi DiffChange ctermbg=none guibg=none | endif
   au WinEnter * if  (&diff) | hi DiffChange ctermbg=none ctermbg=Green guibg=#19261e | endif
 endfunction
+call InitTheme() 
 
 """"""""""""""""""
 " WSL yank support
 """"""""""""""""""
-let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-if executable(s:clip)
-    augroup WSLYank
-        autocmd!
-        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-    augroup END
-endif
+"let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+"if executable(s:clip)
+"    augroup WSLYank
+"        autocmd!
+"        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+"    augroup END
+"endif
 
 """"""""""""""""""""
 " Floating Terminal 
@@ -355,3 +356,45 @@ function! OpenGitDiff(input)
   au WinClosed * ++once silent! execute ":q" 
 endfunction
 
+"""""""""""""
+" Hex Editor
+""""""""""""""
+autocmd VimEnter *.bin call InitBinarySupport()
+
+function InitBinarySupport()
+  augroup Binary
+    au!
+    au BufReadPre  *.bin let &bin=1
+    au BufReadPost *.bin if &bin | %!xxd
+    au BufReadPost *.bin set ft=xxd | endif
+    au BufWritePre *.bin if &bin | %!xxd -r
+    au BufWritePre *.bin endif
+    au BufWritePost *.bin if &bin | %!xxd
+    au BufWritePost *.bin set nomod | endif
+  augroup END
+endfunction
+
+"""""""""""""""""""""""
+" Startup Optimization 
+"""""""""""""""""""""""
+let g:loaded_gzip = 1
+let g:loaded_tar = 1
+let g:loaded_tarPlugin = 1
+let g:loaded_zip = 1
+let g:loaded_zipPlugin = 1
+
+let g:loaded_getscript = 1
+let g:loaded_getscriptPlugin = 1
+let g:loaded_vimball = 1
+let g:loaded_vimballPlugin = 1
+
+let g:loaded_matchit = 1
+let g:loaded_matchparen = 1
+let g:loaded_2html_plugin = 1
+let g:loaded_logiPat = 1
+let g:loaded_rrhelper = 1
+
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
