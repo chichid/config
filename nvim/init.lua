@@ -102,6 +102,7 @@ vim.opt.hidden = true
 vim.opt.backup = false 
 vim.opt.writebackup = false
 vim.opt.cmdheight = 1
+vim.opt.winwidth = 40
 
 -------------------------
 -- Custom Commands 
@@ -205,6 +206,8 @@ function open_telescope_picker(picker)
 -------------------------
 -- Theme 
 -------------------------
+vim.cmd [[ autocmd VimEnter * :lua load_theme() ]]
+
 function load_theme() vim.cmd [[
   syntax on
   filetype plugin indent on
@@ -234,8 +237,6 @@ function load_theme() vim.cmd [[
   au WinEnter * if !(&diff) | hi DiffChange ctermbg=none guibg=none | endif
   au WinEnter * if  (&diff) | hi DiffChange ctermbg=none ctermbg=Green guibg=#19261e | endif
 ]] end 
-
-vim.cmd [[ autocmd VimEnter * :lua load_theme() ]]
 
 -------------------------
 -- Floating term utility 
