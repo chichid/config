@@ -44,8 +44,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/mnt/c/Users/rachidox/Home/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/mnt/c/Users/rachidox/Home/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/mnt/c/Users/rachidox/Home/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/mnt/c/Users/rachidox/Home/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/mnt/c/Users/rachidox/Home/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/rachidox/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/rachidox/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/rachidox/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/rachidox/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/rachidox/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -73,22 +73,22 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     only_cond = false,
-    path = "/mnt/c/Users/rachidox/Home/.local/share/nvim/site/pack/packer/opt/ayu-vim",
+    path = "/Users/rachidox/.local/share/nvim/site/pack/packer/opt/ayu-vim",
     url = "https://github.com/ayu-theme/ayu-vim"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/mnt/c/Users/rachidox/Home/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    path = "/Users/rachidox/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/mnt/c/Users/rachidox/Home/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    path = "/Users/rachidox/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,
-    path = "/mnt/c/Users/rachidox/Home/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    path = "/Users/rachidox/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   }
 }

@@ -14,7 +14,7 @@ end
 
 ### OSC7
 function osc7_promp --on-event fish_prompt
-  if grep -q Microsoft /proc/version
+  if command -c wslpath &> /dev/null
     printf "\033]7;file://%s\033\\" (wslpath -w "$PWD") 
   end
 end

@@ -16,8 +16,6 @@ if string.find(wezterm.target_triple, "windows") then
   initial_cols = 160;
 end
 
-print(default_cwd)
-
 if string.find(wezterm.target_triple, "darwin") then
   tab_font_size = 15.0;
   font_size = 16;
