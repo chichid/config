@@ -62,7 +62,6 @@ vim.g.loaded_netrwFileHandlers = 1
 -- General 
 -------------------------
 vim.opt.loadplugins = false
-vim.opt.termguicolors = true 
 vim.opt.shell = "bash --login"
 vim.opt.title = true
 vim.opt.compatible = false 
@@ -206,15 +205,22 @@ function open_telescope_picker(picker)
 -------------------------
 vim.cmd [[ autocmd VimEnter * :lua load_theme() ]]
 
-function load_theme() vim.cmd [[
+function load_theme() vim.cmd [[ try
   syntax on
   filetype plugin indent on
 
-  set termguicolors     
-  let ayucolor="dark" 
-  try | colorscheme ayu | catch | endtry
+  if $TERM_PROGRAM !=? 'Apple_Terminal' && $TERM ==? 'xterm-256color'
+    set termguicolors
+    let ayucolor="dark" 
+    colorscheme ayu
+  else
+    colorscheme delek 
+    hi CursorLine ctermbg=lightgray ctermfg=black
+    throw l:output
+  endif
 
-  hi Normal guibg=black
+
+  hi Normal ctermbg=0 guibg=black
   hi EndOfBuffer ctermfg=black guifg=black
   hi SignColumn guibg=NONE ctermbg=NONE
   hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
@@ -234,6 +240,9 @@ function load_theme() vim.cmd [[
   au WinEnter * if  (&diff) | hi DiffAdd ctermbg=none ctermbg=Green guibg=#19261e | endif
   au WinEnter * if !(&diff) | hi DiffChange ctermbg=none guibg=none | endif
   au WinEnter * if  (&diff) | hi DiffChange ctermbg=none ctermbg=Green guibg=#19261e | endif
+  catch 
+    echo "No term gui colors for you!"
+  endtry
 ]] end 
 
 -------------------------

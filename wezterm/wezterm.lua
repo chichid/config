@@ -103,7 +103,6 @@ return {
   window_close_confirmation = "NeverPrompt",
   default_prog = default_prog,
   default_cwd = default_cwd,
-  term = "xterm-256color",
 
   -- Key Bindings
   keys = keys,  
