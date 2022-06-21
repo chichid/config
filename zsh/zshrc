@@ -1,16 +1,19 @@
+## Core
+autoload -Uz promptinit
+promptinit
+prompt adam1 
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+kHISTSIZE=1000
+
 ## Aliases
 alias vim=nvim
 
 ## Keybindings
 bindkey '\t' forward-word
 
-## Colors
-export CLICOLOR=1
-
 ## Hooks 
 precmd () {
-  echo -en "\033]0;$(basename `pwd`)\a"
-
   if grep -q Microsoft /proc/version; then
     printf "\033]7;file://%s\033\\" $(wslpath -w "$PWD") 
   fi
