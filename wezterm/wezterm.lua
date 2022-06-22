@@ -53,8 +53,6 @@ local keys = {
   { key="Enter", mods="ALT", action= "ToggleFullScreen" },
 
   -- Clear Screen
-  { key="k", mods="ALT", action=wezterm.action{SendString="printf '\\033c'\n"}},
-  { key="k", mods="CMD", action=wezterm.action{SendString="printf '\\033c'\n"}},
   { key="l", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
   { key="l", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   

@@ -171,9 +171,10 @@ function open_telescope_picker(picker)
     mappings = mappings,
     prompt_title = '',
     previewer = false,
+    winblend = 10,
     layout_config = {
       width = 0.7,
-      height = 0.95
+      height = 0.97
     },
   })
 
@@ -368,6 +369,17 @@ function! InitBinarySupport()
     au BufWritePost *.bin set nomod | endif
   augroup END
 endfunction ]]
+
+---------------------------
+-- Windows Shortcut Support 
+---------------------------
+vim.api.nvim_create_user_command('OpenWslFile', function(command)
+  cmd([[ 
+    " execute ":e ".system("wslpath -u {command.args}")
+    set wrap
+    startinsert
+  ]])
+end, { nargs = '?' })
 
 -------------------------
 -- Utility Functions 

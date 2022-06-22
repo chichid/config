@@ -13,8 +13,12 @@ function fish_prompt -d "Write out the prompt"
 end
 
 ### OSC7
+if command -vq wslpath 
+  set IS_WSL 1
+end
+
 function osc7_promp --on-event fish_prompt
-  if command -c wslpath &> /dev/null
+  if test -n IS_WSL 
     printf "\033]7;file://%s\033\\" (wslpath -w "$PWD") 
   end
 end
