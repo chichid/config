@@ -30,19 +30,22 @@ local mouse_bindings = {
 
 local keys = {
   -- Keyboard Navigation
+  --- delete words backwards 
   { key="Backspace", mods="CTRL", action={SendKey={key="U", mods="CTRL"}} },
   { key="Backspace", mods="CMD", action={SendKey={key="U", mods="CTRL"}} },
   { key="Backspace", mods="ALT", action={SendKey={key="W", mods="CTRL"}} },
 
-  { key="LeftArrow", mods="CTRL", action={SendKey={key="a", mods="CTRL"}} },
-  { key="LeftArrow", mods="CMD", action={SendKey={key="a", mods="CTRL"}} },
-  { key="LeftArrow", mods="ALT", action={SendKey={key="b", mods="ALT"}} },
+  --- home and end 
+  { key="LeftArrow", mods="CTRL", action={SendKey={key="Home"}} },
+  { key="LeftArrow", mods="CMD", action={SendKey={key="Home"}} },
+  { key="RightArrow", mods="CTRL", action={SendKey={key="End"}} },
+  { key="RightArrow", mods="CMD", action={SendKey={key="End"}} },
 
-  { key="RightArrow", mods="CTRL", action={SendKey={key="E", mods="CTRL"}} },
-  { key="RightArrow", mods="CMD", action={SendKey={key="E", mods="CTRL"}} },
+  --- move one word
+  { key="LeftArrow", mods="ALT", action={SendKey={key="LeftArrow", mods="CTRL"}} },
+  { key="RightArrow", mods="ALT", action={SendKey={key="RightArrow", mods="CTRL"}} },
 
-  { key="RightArrow", mods="ALT", action={SendKey={key="f", mods="ALT"}} },
-
+  --- accept completion on ctrl|alt|cmd + .
   { key=".", mods="CTRL", action={SendKey={key="RightArrow"}} },
   { key=".", mods="ALT" , action={SendKey={key="RightArrow"}} },
   { key=".", mods="CMD" , action={SendKey={key="RightArrow"}} },
@@ -61,7 +64,6 @@ local keys = {
   { key="c", mods="CMD", action="Copy" },
   { key="v", mods="ALT", action="Paste" },
   { key="v", mods="CMD", action="Paste" },
-  { key="v", mods="CTRL", action={SendKey={key="v", mods="CTRL"}} },
   
   -- Open New Window 
   { key="t", mods="CMD", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
