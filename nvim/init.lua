@@ -4,7 +4,7 @@
 function load_plugins(use)
   use 'wbthomason/packer.nvim'
   use { 'ayu-theme/ayu-vim' }
-  use { "nvim-telescope/telescope-file-browser.nvim", opt = true }
+  use { 'kyazdani42/nvim-tree.lua', opt = true }
   use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
 end
 
@@ -33,7 +33,7 @@ vim.cmd [[
   noremap <silent> ? :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
   noremap <silent> <C-g> :lua open_telescope_picker("git_status", false)<CR>
-  noremap <silent> <C-b> :lua open_telescope_picker("file_browser", false)<CR>
+  noremap <silent> <C-b> :lua toggle_nvim_tree()<CR>
 ]]
 
 -------------------------
@@ -158,27 +158,6 @@ function open_telescope_picker(picker)
     }
   })
 
-  --- File Browser
-  if (picker == 'file_browser') then 
-    picker_config.hijack_netrw = true;
-    picker_config.layout_strategy = 'center'
-    picker_config.border = false 
-    picker_config.layout_config = {
-      anchor = 'NW',
-      prompt_position = 'top',
-      height = function(_,_,max_lines)
-        return max_lines 
-      end,
-    };
-    mappings = {
-      i = {
-        ['<esc>'] = actions.close,
-        ['k'] = actions.move_selection_previous,
-        ['j'] = actions.move_selection_next,
-      },
-    }
-  end
-
   --- Git Integration 
   if (picker == 'git_status') then 
      mappings = {
@@ -196,14 +175,6 @@ function open_telescope_picker(picker)
     }
   end
 
-  --- Theme
-  cmd [[
-    hi TelescopeNormal guibg=#3D4751
-    hi TelescopePromptBorder guibg=#3D4751 guifg=#c4a25f
-    hi TelescopeResultsBorder guibg=#3D4751 guifg=#c4a25f
-    hi TelescopePromptCounter guifg=lightgrey
-  ]]
-
   telescope.setup {
     defaults = {
       mappings = mappings,
@@ -218,15 +189,73 @@ function open_telescope_picker(picker)
     },
   }
 
-  if (picker == 'file_browser') then 
-    cmd [[ packadd telescope-file-browser.nvim ]]
-    telescope.load_extension 'file_browser'
-    telescope.extensions.file_browser.file_browser()
-  else
-    require'telescope.builtin'[picker](picker_config)
-  end 
- end
+  require'telescope.builtin'[picker](picker_config)
+end
 
+-------------------------
+-- NvimTree 
+-------------------------
+function toggle_nvim_tree()
+  local current_winwidth = vim.api.nvim_get_option("winwidth")
+
+  local config =  {
+    renderer = {
+      icons = {
+        webdev_colors = false,
+        padding = false,
+        show = {
+          file = false,
+          folder = true,
+          folder_arrow = true,
+          git = false,
+        },
+      },
+    },
+    view = {
+      signcolumn = "no",
+      width = 40,
+      mappings = {
+        list = {
+          { key = "i", action = "close_node" },
+          { key = "<Left>", action = "close_node" },
+          { key = "l", action = "edit" },
+          { key = "<Right>", action = "edit" },
+        },
+      },
+    },
+    filters = {
+      dotfiles = true,
+    },
+    live_filter = {
+      prefix = "[FILTER]: ",
+      always_show_folders = false,
+    },
+    actions = {
+      open_file = {
+        quit_on_open = true,
+      },
+      expand_all = {
+        max_folder_discovery = 300,
+      },
+    },
+  }
+
+  --- Load the plugin
+  if not vim.g["loaded_nvimTree"] then
+    cmd [[ packadd nvim-tree.lua ]]
+    require("nvim-tree").setup(config)
+    cmd [[ let g:loaded_nvimTree = 1 ]]
+  end
+
+  --- Toggle (dealing with wincmd)
+  cmd [[ 
+    setlocal winwidth=1
+    execute "NvimTreeToggle"
+    execute "wincmd p" 
+    setlocal winwidth={current_winwidth}
+    execute "wincmd p" 
+  ]]
+end
 -------------------------
 -- Theme 
 -------------------------
@@ -270,14 +299,28 @@ function load_theme() vim.cmd [[ try
   catch 
     echo "No term gui colors for you!"
   endtry
+
+  " NvimTree
+  hi NvimTreeFolderName guifg=#5C6773 gui=none
+  hi NvimTreeFolderIcon guifg=#5C6773 gui=none
+  hi NvimTreeExecFile guifg=#5C6773 gui=none
+  hi NvimTreeSpecialFile guifg=#5C6773 gui=none
+  hi NvimTreeOpenedFile guifg=#F29718 gui=bold
+  hi NvimTreeRootFolder guifg=#F29718 gui=none
+  hi NvimTreeCursorLine guifg=#E6E1CF guibg=#253340 gui=bold
+
+  " Telescope
+  hi TelescopeNormal guibg=#3D4751
+  hi TelescopePromptBorder guibg=#3D4751 guifg=#c4a25f
+  hi TelescopeResultsBorder guibg=#3D4751 guifg=#c4a25f
+  hi TelescopePromptCounter guifg=lightgrey
 ]] end 
 
 -------------------------
 -- Floating term utility 
 -- Todo: Convert to lua
 -------------------------
-vim.cmd[[ 
-function! RunCmd(command)
+vim.cmd[[ function! RunCmd(command)
   let width = min([&columns - 4, max([80, &columns - 20])])
   let height = min([&lines - 4, max([20, &lines - 10])])
   let top = ((&lines - height) / 2) - 1
@@ -400,11 +443,11 @@ endfunction ]]
 -- Windows Shortcut Support 
 ---------------------------
 vim.api.nvim_create_user_command('OpenWslFile', function(command)
-  cmd([[ 
+  cmd[[ 
     " execute ":e ".system("wslpath -u {command.args}")
     set wrap
     startinsert
-  ]])
+  ]]
 end, { nargs = '?' })
 
 -------------------------
