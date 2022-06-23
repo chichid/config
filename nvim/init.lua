@@ -1,10 +1,11 @@
--------------------------
+------------------------
 -- Plugins 
 -------------------------
 function load_plugins(use)
   use 'wbthomason/packer.nvim'
-  use { 'ayu-theme/ayu-vim', event = 'VimEnter' }
-  use { 'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}} }
+  use { 'ayu-theme/ayu-vim' }
+  use { "nvim-telescope/telescope-file-browser.nvim", opt = true }
+  use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
 end
 
 -------------------------
@@ -32,31 +33,8 @@ vim.cmd [[
   noremap <silent> ? :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
   noremap <silent> <C-g> :lua open_telescope_picker("git_status", false)<CR>
+  noremap <silent> <C-b> :lua open_telescope_picker("file_browser", false)<CR>
 ]]
-
--------------------------
--- Startup Optimization 
--------------------------
-vim.g.loaded_gzip = 1
-vim.g.loaded_ftp = 1
-vim.g.loaded_ftpPlugin = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_zip = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_getscript = 1
-vim.g.loaded_getscriptPlugin = 1
-vim.g.loaded_vimball = 1
-vim.g.loaded_vimballPlugin = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_logiPat = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
-vim.g.loaded_netrwFileHandlers = 1
 
 -------------------------
 -- General 
@@ -147,7 +125,12 @@ end init_packer()
 -- Telescope 
 -------------------------
 function open_telescope_picker(picker) 
-  local actions = require("telescope.actions")
+  cmd [[ packadd plenary.nvim ]]
+  cmd [[ packadd telescope.nvim ]]
+
+  local telescope = require 'telescope'
+  local actions = require 'telescope.actions'
+  local themes = require 'telescope.themes'
 
   local mappings = {
     i = {
@@ -157,16 +140,7 @@ function open_telescope_picker(picker)
     },
   }
 
-  if (picker == "git_status") then
-    mappings['i']['CR'] = function(prompt_bufnr)
-      local action_state = require "telescope.actions.state"
-      actions.close(prompt_bufnr)
-      local selection = action_state.get_selected_entry()
-      vim.cmd("call OpenGitDiff('" .. selection.path .. "')")
-    end
-  end 
-
-  local picker_config = require('telescope.themes').get_dropdown({
+  local picker_config = themes.get_dropdown({
     theme = 'dropdown',
     mappings = mappings,
     prompt_title = '',
@@ -178,7 +152,11 @@ function open_telescope_picker(picker)
     },
   })
 
-  require('telescope').setup {
+  if (picker == 'file_browser') then 
+    picker_config.hijack_netrw = true;
+  end
+
+  telescope.setup {
     defaults = {
       mappings = mappings,
     },
@@ -195,10 +173,19 @@ function open_telescope_picker(picker)
           },
         },
       },
-    }
+    },
+    extensions = {
+      file_browser = picker_config, 
+    },
   }
 
-  require('telescope.builtin')[picker](picker_config)
+  if (picker == 'file_browser') then 
+    cmd [[ packadd telescope-file-browser.nvim ]]
+    telescope.load_extension 'file_browser'
+    telescope.extensions.file_browser.file_browser()
+  else
+    require'telescope.builtin'[picker](picker_config)
+  end 
  end
 
 -------------------------
@@ -416,3 +403,28 @@ end
 function cmd(str) 
   vim.cmd(f(str))
 end
+
+-------------------------
+-- Startup Optimization 
+-------------------------
+vim.g.loaded_gzip = 1
+vim.g.loaded_ftp = 1
+vim.g.loaded_ftpPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
+
