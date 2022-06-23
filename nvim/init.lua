@@ -146,15 +146,63 @@ function open_telescope_picker(picker)
     prompt_title = '',
     previewer = false,
     winblend = 10,
-    layout_config = {
-      width = 0.7,
-      height = 0.97
+    borderchars = {
+      prompt = { "─", "│", " ", "│", "┌", "┐", "│", "│" },
+      results = { "─", "", "", "", "└", "┘", "", "" },
+      preview = { "─", "", "", "", "└", "┘", "", "" },
     },
+    layout_config = {
+      anchor = 'N',
+      width = 0.5,
+      height = 0.9, 
+    }
   })
 
+  --- File Browser
   if (picker == 'file_browser') then 
     picker_config.hijack_netrw = true;
+    picker_config.layout_strategy = 'center'
+    picker_config.border = false 
+    picker_config.layout_config = {
+      anchor = 'NW',
+      prompt_position = 'top',
+      height = function(_,_,max_lines)
+        return max_lines 
+      end,
+    };
+    mappings = {
+      i = {
+        ['<esc>'] = actions.close,
+        ['k'] = actions.move_selection_previous,
+        ['j'] = actions.move_selection_next,
+      },
+    }
   end
+
+  --- Git Integration 
+  if (picker == 'git_status') then 
+     mappings = {
+      i = {
+        ['<esc>'] = actions.close,
+        ['k'] = actions.move_selection_previous,
+        ['j'] = actions.move_selection_next,
+        ["<CR>"] = function(prompt_bufnr)
+          local action_state = require "telescope.actions.state"
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          vim.cmd("call OpenGitDiff('" .. selection.path .. "')")
+        end,
+      },
+    }
+  end
+
+  --- Theme
+  cmd [[
+    hi TelescopeNormal guibg=#3D4751
+    hi TelescopePromptBorder guibg=#3D4751 guifg=#c4a25f
+    hi TelescopeResultsBorder guibg=#3D4751 guifg=#c4a25f
+    hi TelescopePromptCounter guifg=lightgrey
+  ]]
 
   telescope.setup {
     defaults = {
@@ -162,16 +210,7 @@ function open_telescope_picker(picker)
     },
     pickers = {
       git_status = {
-        mappings = {
-          i = {
-            ["<CR>"] = function(prompt_bufnr)
-              local action_state = require "telescope.actions.state"
-              actions.close(prompt_bufnr)
-              local selection = action_state.get_selected_entry()
-              vim.cmd("call OpenGitDiff('" .. selection.path .. "')")
-            end,
-          },
-        },
+        mappings = mappings
       },
     },
     extensions = {
