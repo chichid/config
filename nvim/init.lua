@@ -2,11 +2,21 @@
 -- Plugins 
 -------------------------
 function load_plugins(use)
-  use 'wbthomason/packer.nvim'
+  use { 'wbthomason/packer.nvim' }
   use { 'ayu-theme/ayu-vim' }
   use { 'kyazdani42/nvim-tree.lua', opt = true }
   use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
+  use { 'pest-parser/pest.vim', opt = true }
 end
+
+-------------------------
+-- File Types 
+-------------------------
+vim.cmd [[ augroup FileTypes 
+  autocmd!
+  autocmd BufRead,BufNewFile *.pest setfiletype pest
+  autocmd FileType pest packadd pest.vim
+augroup END ]]
 
 -------------------------
 -- Keyboard Mapping 
@@ -202,7 +212,6 @@ function toggle_nvim_tree()
     renderer = {
       icons = {
         webdev_colors = false,
-        padding = false,
         show = {
           file = false,
           folder = true,
