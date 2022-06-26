@@ -38,12 +38,11 @@ vim.cmd [[
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
   noremap <silent> <C-k> :w!<CR>:RunExternal <UP><CR>
-  noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
   noremap <silent> <C-p> :lua open_telescope_picker("find_files", false)<CR>
   noremap <silent> ? :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
   noremap <silent> <C-g> :lua open_telescope_picker("git_status", false)<CR>
-  noremap <silent> <C-b> :lua toggle_nvim_tree()<CR>
+  noremap <silent> <C-b> :lua open_nvim_tree()<CR>
 ]]
 
 -------------------------
@@ -205,9 +204,7 @@ end
 -------------------------
 -- NvimTree 
 -------------------------
-function toggle_nvim_tree()
-  local current_winwidth = vim.api.nvim_get_option("winwidth")
-
+function setup_nvim_tree() 
   local config =  {
     renderer = {
       icons = {
@@ -249,14 +246,32 @@ function toggle_nvim_tree()
     },
   }
 
-  --- Load the plugin
   if not vim.g["loaded_nvimTree"] then
     cmd [[ packadd nvim-tree.lua ]]
     require("nvim-tree").setup(config)
     cmd [[ let g:loaded_nvimTree = 1 ]]
   end
+end
 
-  --- Toggle (dealing with wincmd)
+function open_nvim_tree()
+  local current_winwidth = vim.api.nvim_get_option("winwidth")
+
+  setup_nvim_tree()
+
+  cmd [[ 
+    setlocal winwidth=1
+    execute "NvimTreeFindFileToggle"
+    execute "wincmd p" 
+    setlocal winwidth={current_winwidth}
+    execute "wincmd p" 
+  ]]
+end
+
+function toggle_nvim_tree()
+  local current_winwidth = vim.api.nvim_get_option("winwidth")
+
+  setup_nvim_tree()
+
   cmd [[ 
     setlocal winwidth=1
     execute "NvimTreeToggle"
