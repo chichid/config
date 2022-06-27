@@ -70,7 +70,7 @@ local keys = {
   { key="t", mods="ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
   { key="n", mods="CMD", action="SpawnWindow" },
   { key="n", mods="ALT", action="SpawnWindow" },
-  { key="w", mods="ALT", action=wezterm.action{CloseCurrentTab={confirm=false}}},
+  { key="w", mods="ALT", action=wezterm.action{CloseCurrentTab={confirm=true}}},
 
   -- Open the config
   { key=",", mods="ALT", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},

@@ -20,9 +20,10 @@ augroup END ]]
 
 -------------------------
 -- Keyboard Mapping 
--- TODO convert to lua
 -------------------------
 vim.cmd [[
+  map <C-z> :q
+
   noremap ! :!
   inoremap <expr>  <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
   inoremap <expr>  <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
