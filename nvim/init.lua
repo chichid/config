@@ -282,7 +282,7 @@ function toggle_nvim_tree()
   ]]
 end
 -------------------------
--- Theme 
+-- Color Scheme 
 -------------------------
 vim.cmd [[ autocmd VimEnter * :lua load_theme() ]]
 
@@ -300,10 +300,10 @@ function load_theme() vim.cmd [[ try
     throw l:output
   endif
 
-
   " for ayu dark hi Invisible ctermbg=0 guibg=black
   hi InvisibleText ctermfg=black guifg=#212733
   hi link EndOfBuffer InvisibleText
+  hi FloatBorder guifg=#3D4751
 
   " Diff Colors
   hi DiffDelete ctermbg=None ctermfg=black gui=none guifg=#14191F guibg=#14191F
