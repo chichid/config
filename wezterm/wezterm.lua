@@ -23,11 +23,6 @@ if string.find(wezterm.target_triple, "darwin") then
   initial_cols = 120;
 end
 
-local mouse_bindings = {
-  -- Right Click to paste 
-  { event={Down={streak=1, button="Right"}}, mods="NONE", action="Paste" },
-};
-
 local keys = {
   -- Keyboard Navigation
   --- delete words backwards 
@@ -83,30 +78,24 @@ for i = 1, 9 do
   table.insert(keys, { key=tostring(i), mods="CTRL", action=wezterm.action{ActivateTab=i-1} });
 end
 
--- Color Scheme
-local color_schemes = {
-  ["ayu"] = {
-    foreground = "#e6e1cf",
-    background = "black",
-    cursor_bg = "#f29718",
-    cursor_border = "#f29718",
-    cursor_fg = "#e6e1cf",
-    selection_bg = "#253340",
-    selection_fg = "#e6e1cf",
-    ansi = {"#000000","#ff3333","#b8cc52","#e7c547","#36a3d9","#f07178","#95e6cb","#ffffff"},
-    brights = {"#323232","#ff6565","#eafe84","#fff779","#68d5ff","#ffa3aa","#c7fffd","#ffffff"},
+-- Colors 
+local colors = {
+  tab_bar = {
+    active_tab = {
+      bg_color = "#212733",
+      fg_color = "#D9D7CE",
+    },
   },
-};
+}
 
 return {
   -- General
-  window_close_confirmation = "NeverPrompt",
   default_prog = default_prog,
   default_cwd = default_cwd,
+  colors = colors,
 
   -- Key Bindings
   keys = keys,  
-  mouse_bindings = mouse_bindings,
 
   -- Window
   initial_rows = initial_rows,
@@ -114,14 +103,12 @@ return {
   window_padding = { left = 1, right = 1, top = 0, bottom = 0 },
 
   -- Appearance and Colors 
-  color_scheme = "ayu",
+  color_scheme = "Ayu Mirage",
   window_decorations = "RESIZE",
   color_schemes = color_schemes,
   default_cursor_style = "BlinkingBlock",
   audible_bell = "Disabled",
   font_size = font_size,
   ratelimit_output_bytes_per_second = 4289999998,
-  window_frame = {
-    font_size = tab_font_size,
-  }
+  window_frame = { font_size = tab_font_size, }
 }

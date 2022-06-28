@@ -292,7 +292,7 @@ function load_theme() vim.cmd [[ try
 
   if $TERM_PROGRAM !=? 'Apple_Terminal' && $TERM ==? 'xterm-256color'
     set termguicolors
-    let ayucolor="dark" 
+    let ayucolor="mirage" 
     colorscheme ayu
   else
     colorscheme delek 
@@ -301,37 +301,25 @@ function load_theme() vim.cmd [[ try
   endif
 
 
-  hi Normal ctermbg=0 guibg=black
-  hi EndOfBuffer ctermfg=black guifg=black
-  hi SignColumn guibg=NONE ctermbg=NONE
-  hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
-  hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
-  hi TabLineFill ctermfg=black guifg=black
-  hi Visual cterm=none ctermbg=darkgrey ctermfg=white
-  hi Search cterm=none ctermbg=darkgrey ctermfg=white
-  hi MatchParen ctermfg=white ctermbg=darkgrey
-  hi CursorLineNr term=bold ctermfg=white
-  hi LineNr guifg=#4E4E4E
-  hi FloatBorder ctermfg=white
+  " for ayu dark hi Invisible ctermbg=0 guibg=black
+  hi InvisibleText ctermfg=black guifg=#212733
+  hi link EndOfBuffer InvisibleText
 
   " Diff Colors
-  hi DiffDelete ctermbg=None ctermfg=Black gui=none guifg=#14191F guibg=#14191F
+  hi DiffDelete ctermbg=None ctermfg=black gui=none guifg=#14191F guibg=#14191F
   hi DiffText cterm=bold gui=bold ctermfg=225 guifg=#FF7733 ctermbg=Green guibg=#253b26
   au WinEnter * if !(&diff) | hi DiffAdd ctermbg=none guibg=none | endif
   au WinEnter * if  (&diff) | hi DiffAdd ctermbg=none ctermbg=Green guibg=#19261e | endif
   au WinEnter * if !(&diff) | hi DiffChange ctermbg=none guibg=none | endif
   au WinEnter * if  (&diff) | hi DiffChange ctermbg=none ctermbg=Green guibg=#19261e | endif
-  catch 
-    echo "No term gui colors for you!"
-  endtry
 
   " NvimTree
   hi NvimTreeFolderName guifg=#5C6773 gui=none
-  hi NvimTreeFolderIcon guifg=#5C6773 gui=none
-  hi NvimTreeExecFile guifg=#5C6773 gui=none
-  hi NvimTreeSpecialFile guifg=#5C6773 gui=none
+  hi link NvimTreeFolderIcon NvimTreeFolderName
+  hi link NvimTreeExecFile NvimTreeFolderName
+  hi link NvimTreeSpecialFile NvimTreeFolderName 
   hi NvimTreeOpenedFile guifg=#F29718 gui=bold
-  hi NvimTreeRootFolder guifg=#F29718 gui=none
+  hi link NvimTreeRootFolder NvimTreeOpenedFile 
   hi NvimTreeCursorLine guifg=#E6E1CF guibg=#253340 gui=bold
 
   " Telescope
@@ -339,6 +327,10 @@ function load_theme() vim.cmd [[ try
   hi TelescopePromptBorder guibg=#3D4751 guifg=#c4a25f
   hi TelescopeResultsBorder guibg=#3D4751 guifg=#c4a25f
   hi TelescopePromptCounter guifg=lightgrey
+
+  catch 
+    echo "No term gui colors for you!"
+  endtry
 ]] end 
 
 -------------------------
