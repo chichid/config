@@ -55,7 +55,6 @@ local keys = {
   { key="l", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
   { key="l", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   { key="k", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
-  { key="k", mods="CTRL", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
   { key="c", mods="ALT", action="Copy" },
