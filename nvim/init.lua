@@ -22,7 +22,7 @@ augroup END ]]
 -- Keyboard Mapping 
 -------------------------
 vim.cmd [[
-  map <C-z> :q
+  map <C-z> :CloseAll<CR>
 
   noremap ! :!
   inoremap <expr>  <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
@@ -50,6 +50,7 @@ vim.cmd [[
 -- General 
 -------------------------
 vim.opt.loadplugins = false
+vim.opt.confirm= true 
 vim.opt.shell = "bash --login"
 vim.opt.title = true
 vim.opt.compatible = false 
@@ -93,6 +94,25 @@ vim.opt.winwidth = math.floor(vim.fn.winwidth(0)*0.6)
 -------------------------
 -- Custom Commands 
 -------------------------
+vim.cmd [[
+  cabbrev help vert help
+]]
+
+vim.api.nvim_create_user_command('CloseAll', function(command)
+  cmd([[
+    if execute("ls +") != ''
+      echo "There are unsaved changes, Close Anwyay (y/n):" 
+      if nr2char(getchar()) == 'y'
+        execute "cq"
+      else
+        execute "normal :<ESC>"
+      endif
+    else
+      execute "cq"
+    endif
+  ]])
+end, { nargs = '?' })
+
 vim.api.nvim_create_user_command('RunExternal', function(command)
   cmd([[call RunCmd("{command.args}")]])
 end, { nargs = '?' })

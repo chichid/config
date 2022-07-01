@@ -1,5 +1,8 @@
 ### Aliases
-alias vim=nvim
+function vim 
+  # Exit Vim on cquit - useful to close vim and the tab using wezterm commands 
+  nvim $argv || exit 
+end
 
 ### Keybinding 
 bind \t forward-word
@@ -14,11 +17,7 @@ end
 
 ### OSC7
 if command -vq wslpath 
-  set IS_WSL 1
-end
-
-function osc7_promp --on-event fish_prompt
-  if test -n IS_WSL 
+  function osc7_promp --on-event fish_prompt
     printf "\033]7;file://%s\033\\" (wslpath -w "$PWD") 
   end
 end

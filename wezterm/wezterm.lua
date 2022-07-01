@@ -1,11 +1,12 @@
-local wezterm = require 'wezterm';
+local wezterm = require 'wezterm'
+local act = wezterm.action
  
-local default_prog;
-local default_cwd;
-local font_size;
-local tab_font_size;
-local initial_rows;
-local inital_cols;
+local default_prog
+local default_cwd
+local font_size
+local tab_font_size
+local initial_rows
+local inital_cols
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe"}; 
@@ -53,6 +54,8 @@ local keys = {
   -- Clear Screen
   { key="l", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
   { key="l", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
+  { key="k", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
+  { key="k", mods="CTRL", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
   { key="c", mods="ALT", action="Copy" },
@@ -61,25 +64,48 @@ local keys = {
   { key="v", mods="CMD", action="Paste" },
   
   -- Open New Window 
-  { key="t", mods="CMD", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
-  { key="t", mods="ALT", action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
+  { key="t", mods="CMD", action={SpawnTab="CurrentPaneDomain"} },
+  { key="t", mods="ALT", action={SpawnTab="CurrentPaneDomain"} },
   { key="n", mods="CMD", action="SpawnWindow" },
   { key="n", mods="ALT", action="SpawnWindow" },
-  { key="w", mods="ALT", action=wezterm.action{CloseCurrentTab={confirm=true}}},
+  { key="w", mods="ALT", action={EmitEvent = "CloseCurrentTab"} },
+  { key="w", mods="CMD", action={EmitEvent = "CloseCurrentTab"} },
 
   -- Open the config
-  { key=",", mods="ALT", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
-  { key=",", mods="CMD", action=wezterm.action{SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
+  { key=",", mods="ALT", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
+  { key=",", mods="CMD", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
 };
 
--- Tab Navigation
+-- ALT-Tab
 for i = 1, 9 do 
   table.insert(keys, { key=tostring(i), mods="ALT", action=wezterm.action{ActivateTab=i-1} })
   table.insert(keys, { key=tostring(i), mods="CTRL", action=wezterm.action{ActivateTab=i-1} });
 end
 
+-- Delegate close confirmation to some apps such as VIM, etc.
+wezterm.on("CloseCurrentTab", function(window, pane)
+  function is_vim()
+    local current_process = pane:get_title():upper()
+    return 
+      current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
+      current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
+      current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
+  end
+
+  if is_vim() then
+    window:perform_action(wezterm.action{
+      SendKey={key="Z", mods="CTRL"}
+    }, pane)
+  else
+    window:perform_action(wezterm.action{
+      CloseCurrentTab={confirm=false}
+    }, pane)
+  end
+end)
+
 -- Colors 
 local colors = {
+  -- Tab Bar Ayu Mirage
   tab_bar = {
     active_tab = {
       bg_color = "#212733",
@@ -93,6 +119,7 @@ return {
   default_prog = default_prog,
   default_cwd = default_cwd,
   colors = colors,
+  exit_behavior = "Close",
 
   -- Key Bindings
   keys = keys,  
