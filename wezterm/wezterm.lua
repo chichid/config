@@ -132,7 +132,7 @@ return {
   color_scheme = "Ayu Mirage",
   window_decorations = "RESIZE",
   color_schemes = color_schemes,
-  default_cursor_style = "BlinkingBlock",
+  default_cursor_style = "SteadyBlock",
   audible_bell = "Disabled",
   font_size = font_size,
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
