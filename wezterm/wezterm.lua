@@ -135,6 +135,7 @@ return {
   default_cursor_style = "BlinkingBlock",
   audible_bell = "Disabled",
   font_size = font_size,
+  harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
   ratelimit_output_bytes_per_second = 4289999998,
   window_frame = { font_size = tab_font_size, }
 }
