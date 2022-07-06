@@ -326,12 +326,8 @@ function load_theme() vim.cmd [[ try
   hi FloatBorder guifg=#3D4751
 
   " Diff Colors
-  hi DiffDelete ctermbg=None ctermfg=black gui=none guifg=#14191F guibg=#14191F
+  hi DiffDelete guifg=#212733 guibg=#272D38
   hi DiffText cterm=bold gui=bold ctermfg=225 guifg=#FF7733 ctermbg=Green guibg=#253b26
-  au WinEnter * if !(&diff) | hi DiffAdd ctermbg=none guibg=none | endif
-  au WinEnter * if  (&diff) | hi DiffAdd ctermbg=none ctermbg=Green guibg=#19261e | endif
-  au WinEnter * if !(&diff) | hi DiffChange ctermbg=none guibg=none | endif
-  au WinEnter * if  (&diff) | hi DiffChange ctermbg=none ctermbg=Green guibg=#19261e | endif
 
   " NvimTree
   hi NvimTreeFolderName guifg=#5C6773 gui=none
