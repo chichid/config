@@ -4,6 +4,7 @@
 function load_plugins(use)
   use { 'wbthomason/packer.nvim' }
   use { 'ayu-theme/ayu-vim' }
+  use { 'airblade/vim-rooter', opt = true }
   use { 'kyazdani42/nvim-tree.lua', opt = true }
   use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
   use { 'pest-parser/pest.vim', opt = true }
@@ -38,7 +39,7 @@ vim.cmd [[
 
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
-  noremap <silent> <C-k> :w!<CR>:RunExternal <UP><CR>
+  noremap <C-k> :w!<CR>:RunExternal <UP><CR>
   noremap <silent> <C-p> :lua open_telescope_picker("find_files", false)<CR>
   noremap <silent> ? :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
@@ -101,7 +102,7 @@ vim.cmd [[
 vim.api.nvim_create_user_command('CloseAll', function(command)
   cmd([[
     if execute("ls +") != ''
-      echo "There are unsaved changes, Close Anwyay (y/n):" 
+      echo "There are unsaved changes, Save and Close (y/n):" 
       if nr2char(getchar()) == 'y'
         execute "cq"
       else
@@ -113,6 +114,13 @@ vim.api.nvim_create_user_command('CloseAll', function(command)
   ]])
 end, { nargs = '?' })
 
+vim.api.nvim_create_user_command('GitRoot', function(command)
+  cmd [[
+    packadd vim-rooter
+    :Rooter
+  ]]
+end, { nargs = '?' })
+
 vim.api.nvim_create_user_command('RunExternal', function(command)
   cmd([[call RunCmd("{command.args}")]])
 end, { nargs = '?' })
@@ -122,7 +130,10 @@ vim.api.nvim_create_user_command('Diff', function(command)
 end, { nargs = '?' })
 
 vim.api.nvim_create_user_command('Config', function()
-  vim.cmd[[ execute "e $MYVIMRC" ]]
+  vim.cmd[[ 
+    execute "e $MYVIMRC" 
+    cd %:p:h
+  ]]
 end, {})
 
 vim.api.nvim_create_user_command('ReloadConfig', function()

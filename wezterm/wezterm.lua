@@ -113,11 +113,16 @@ local colors = {
   },
 }
 
+local color_schemes = {
+  ["Ayu Mirage"] = {
+    background = "#212733",
+  }
+};
+
 return {
   -- General
   default_prog = default_prog,
   default_cwd = default_cwd,
-  colors = colors,
   exit_behavior = "Close",
 
   -- Key Bindings
@@ -130,6 +135,8 @@ return {
 
   -- Appearance and Colors 
   color_scheme = "Ayu Mirage",
+  colors = colors,
+  color_schemes = color_schemes,
   window_decorations = "RESIZE",
   color_schemes = color_schemes,
   default_cursor_style = "SteadyBlock",
