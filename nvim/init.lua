@@ -7,7 +7,6 @@ function load_plugins(use)
   use { 'airblade/vim-rooter', opt = true }
   use { 'kyazdani42/nvim-tree.lua', opt = true }
   use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
-  use { 'pest-parser/pest.vim', opt = true }
 end
 
 -------------------------
