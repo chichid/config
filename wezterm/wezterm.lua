@@ -13,8 +13,8 @@ if string.find(wezterm.target_triple, "windows") then
   default_cwd = os.getenv("HOME");
   tab_font_size = 9.0;
   font_size = 10.7;
-  initial_rows = 42;
-  initial_cols = 160;
+  initial_rows = 43;
+  initial_cols = 180;
 end
 
 if string.find(wezterm.target_triple, "darwin") then
