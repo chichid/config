@@ -41,6 +41,12 @@ local keys = {
   { key="LeftArrow", mods="ALT", action={SendKey={key="LeftArrow", mods="CTRL"}} },
   { key="RightArrow", mods="ALT", action={SendKey={key="RightArrow", mods="CTRL"}} },
 
+  --- ctrl + jk keyboard navigation 
+  { key="k", mods="ALT", action={SendKey={key="UpArrow"}} },
+  { key="k", mods="CMD", action={SendKey={key="UpArrow"}} },
+  { key="j", mods="ALT", action={SendKey={key="DownArrow"}} },
+  { key="j", mods="CMD", action={SendKey={key="DownArrow"}} },
+
   --- accept completion on ctrl|alt|cmd + .
   { key=".", mods="CTRL", action={SendKey={key="RightArrow"}} },
   { key=".", mods="ALT" , action={SendKey={key="RightArrow"}} },
