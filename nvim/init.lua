@@ -36,6 +36,9 @@ vim.cmd [[
 
   vnoremap <silent> <C-c> "*ygv
 
+  noremap <C-h> viw"hy:%s/<C-r>h//gc<left><left><left>
+  vnoremap <C-h> "hy:%s/<C-r>h//gc<left><left><left>
+
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
   noremap <C-k> :w!<CR>:RunExternal <UP><CR>
