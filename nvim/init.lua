@@ -322,7 +322,7 @@ function load_theme() vim.cmd [[ try
 
   if $TERM_PROGRAM !=? 'Apple_Terminal' && $TERM ==? 'xterm-256color'
     set termguicolors
-    let ayucolor="mirage" 
+    let ayucolor="dark" 
     colorscheme ayu
   else
     colorscheme delek 

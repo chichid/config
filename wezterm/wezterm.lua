@@ -111,17 +111,11 @@ end)
 -- Colors 
 local colors = {
   -- Tab Bar Ayu Mirage
-  tab_bar = {
-    active_tab = {
-      bg_color = "#212733",
-      fg_color = "#D9D7CE",
-    },
-  },
 }
 
 local color_schemes = {
-  ["Ayu Mirage"] = {
-    background = "#212733",
+  ["Ayu"] = {
+    background = "#0f1419",
   }
 };
 
@@ -140,7 +134,7 @@ return {
   window_padding = { left = 1, right = 1, top = 0, bottom = 0 },
 
   -- Appearance and Colors 
-  color_scheme = "Ayu Mirage",
+  color_scheme = "Ayu",
   colors = colors,
   color_schemes = color_schemes,
   window_decorations = "RESIZE",
