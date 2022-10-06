@@ -7,6 +7,7 @@ function load_plugins(use)
   use { 'airblade/vim-rooter', opt = true }
   use { 'kyazdani42/nvim-tree.lua', opt = true }
   use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
+  use { 'neoclide/coc.nvim', opt = true }
 end
 
 -------------------------
@@ -36,8 +37,10 @@ vim.cmd [[
 
   vnoremap <silent> <C-c> "*ygv
 
-  noremap <C-h> viw"hy:%s/<C-r>h//gc<left><left><left>
-  vnoremap <C-h> "hy:%s/<C-r>h//gc<left><left><left>
+  noremap <C-h> viw"hy:%s/<C-r>h//g<left><left>
+  vnoremap <C-h> "hy:%s/<C-r>h//g<left><left>
+  noremap <C-H> viw"hy:%s/<C-r>h//g<left><left>
+  vnoremap <C-H> "hy:%s/<C-r>h//g<left><left>
 
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
@@ -116,10 +119,10 @@ vim.api.nvim_create_user_command('CloseAll', function(command)
   ]])
 end, { nargs = '?' })
 
-vim.api.nvim_create_user_command('GitRoot', function(command)
+vim.api.nvim_create_user_command('RenameSymbol', function(command)
   cmd [[
-    packadd vim-rooter
-    :Rooter
+    packadd coc.nvim
+    :CocEnable
   ]]
 end, { nargs = '?' })
 
@@ -334,7 +337,7 @@ function load_theme() vim.cmd [[ try
   endif
 
   " for ayu dark hi Invisible ctermbg=0 guibg=black
-  hi InvisibleText ctermfg=black guifg=#212733
+  hi InvisibleText ctermfg=black guifg=#0f1419
   hi link EndOfBuffer InvisibleText
   hi FloatBorder guifg=#3D4751
 
