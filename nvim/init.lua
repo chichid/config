@@ -23,19 +23,8 @@ augroup END ]]
 -- Keyboard Mapping 
 -------------------------
 vim.cmd [[
-  map <C-z> :CloseAll<CR>
-
-  noremap ! :!
-  inoremap <expr>  <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
-  inoremap <expr>  <TAB> pumvisible() ? "\<C-y>" : "\<TAB>"
-  inoremap <expr>  <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
-  inoremap <expr>  <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
-  inoremap <C-E> <C-o>$ 
-  inoremap <C-a> <C-o>^
-  inoremap <C-K> <C-o>d$
+  map <C-z> :CloseAll<CR> "" this is important for Wezterm intergation
   inoremap <silent> <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
-
-  vnoremap <silent> <C-c> "*ygv
 
   noremap <C-h> viw"hy:%s/<C-r>h//g<left><left>
   vnoremap <C-h> "hy:%s/<C-r>h//g<left><left>
@@ -50,6 +39,17 @@ vim.cmd [[
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
   noremap <silent> <C-g> :lua open_telescope_picker("git_status", false)<CR>
   noremap <silent> <C-b> :lua open_nvim_tree()<CR>
+]]
+
+-- Cross session yank and paste (Better than clipboard)
+vim.cmd [[
+  augroup CrossSessionClipboard 
+    autocmd!
+    autocmd TextYankPost * call writefile(v:event['regcontents'], $VIM..'/.clipboard')
+  augroup END
+
+  noremap <silent> p :r $VIM/.clipboard<CR>
+  noremap <silent> P k:r $VIM/.clipboard<CR>
 ]]
 
 -------------------------
@@ -367,7 +367,6 @@ function load_theme() vim.cmd [[ try
 
 -------------------------
 -- Floating term utility 
--- Todo: Convert to lua
 -------------------------
 vim.cmd[[ function! RunCmd(command)
   let width = min([&columns - 4, max([80, &columns - 20])])
@@ -409,7 +408,6 @@ endfunction ]]
 
 -------------------------
 -- Git 
--- TOOD: Convert to lua
 -------------------------
 vim.cmd [[ 
 autocmd BufWritePost * if &diff == 1 | diffupdate | endif
@@ -489,7 +487,7 @@ function! InitBinarySupport()
 endfunction ]]
 
 ---------------------------
--- Windows Shortcut Support 
+-- WSL 
 ---------------------------
 vim.api.nvim_create_user_command('OpenWslFile', function(command)
   cmd[[ 
