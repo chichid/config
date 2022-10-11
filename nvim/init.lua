@@ -84,7 +84,6 @@ vim.opt.cursorline = true
 vim.opt.autoread = true
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 10
-vim.opt.cindent = true
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
