@@ -58,6 +58,7 @@ vim.opt.wrapmargin = 0
 vim.opt.encoding = "utf-8"
 vim.opt.wildmenu = true
 vim.opt.showmatch = true
+vim.opt.matchtime = 1
 vim.opt.ruler = true
 vim.opt.incsearch = true
 vim.opt.hlsearch = true
