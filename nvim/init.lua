@@ -34,13 +34,9 @@ vim.cmd [[
 
 -- Cross session yank and paste (Better than clipboard)
 vim.cmd [[
-  augroup CrossSessionClipboard 
-    autocmd!
-    autocmd TextYankPost * call writefile(v:event['regcontents'], $VIM..'/.clipboard')
-  augroup END
-
-  noremap <silent> p :r $VIM/.clipboard<CR>
-  noremap <silent> P k:r $VIM/.clipboard<CR>
+  autocmd TextYankPost * call writefile([getreg('"', 1)], $VIM..'/.clipboard')
+  nnoremap <silent> p :call setreg('"', join(readfile($VIM..'/.clipboard'), '\n'))<CR>p
+  nnoremap <silent> P :call setreg('"', join(readfile($VIM..'/.clipboard'), '\n'))<CR>P
 ]]
 
 -------------------------
