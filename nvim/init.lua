@@ -11,15 +11,6 @@ function load_plugins(use)
 end
 
 -------------------------
--- File Types 
--------------------------
-vim.cmd [[ augroup FileTypes 
-  autocmd!
-  autocmd BufRead,BufNewFile *.pest setfiletype pest
-  autocmd FileType pest packadd pest.vim
-augroup END ]]
-
--------------------------
 -- Keyboard Mapping 
 -------------------------
 vim.cmd [[
@@ -88,8 +79,7 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.matchtime = 0
+vim.opt.cindent = true 
 vim.opt.hidden = true
 vim.opt.backup = false 
 vim.opt.writebackup = false
@@ -97,9 +87,22 @@ vim.opt.cmdheight = 1
 vim.opt.winwidth = math.floor(vim.fn.winwidth(0)*0.6)
 
 -------------------------
+-- Indent 
+-------------------------
+vim.cmd[[
+autocmd FileType * call InitIndent()
+
+function! InitIndent()
+  set cindent
+  set cino=(4
+endfunction 
+]]
+
+-------------------------
 -- Custom Commands 
 -------------------------
 vim.cmd [[
+  cabbrev h vert help
   cabbrev help vert help
 ]]
 
@@ -317,14 +320,11 @@ function toggle_nvim_tree()
   ]]
 end
 -------------------------
--- Color Scheme 
+-- color scheme 
 -------------------------
 vim.cmd [[ autocmd VimEnter * :lua load_theme() ]]
 
 function load_theme() vim.cmd [[ try
-  syntax on
-  filetype plugin indent on
-
   if $TERM_PROGRAM !=? 'Apple_Terminal' && $TERM ==? 'xterm-256color'
     set termguicolors
     let ayucolor="dark" 
@@ -339,6 +339,10 @@ function load_theme() vim.cmd [[ try
   hi InvisibleText ctermfg=black guifg=#0f1419
   hi link EndOfBuffer InvisibleText
   hi FloatBorder guifg=#3D4751
+
+  " Vert Split
+  set fillchars+=vert:│
+  hi VertSplit ctermbg=NONE guibg=NONE guifg=#151A1E
 
   " Diff Colors
   hi DiffDelete guifg=#212733 guibg=#272D38
@@ -555,4 +559,3 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_netrwSettings = 1
 vim.g.loaded_netrwFileHandlers = 1
-
