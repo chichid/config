@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "$(wslpath -a "$1")"
+/mnt/c/Users/rachidox/Home/.bin/nvim "$(wslpath -a "$1")"

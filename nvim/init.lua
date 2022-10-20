@@ -14,13 +14,20 @@ end
 -- Keyboard Mapping 
 -------------------------
 vim.cmd [[
+  cabbrev h vert help
+  cabbrev help vert help
+  cabbrev copen vert copen
+]]
+
+vim.cmd [[
   map <C-z> :CloseAll<CR> "" this is important for Wezterm intergation
+  map <C-c> "*ygv
   inoremap <silent> <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
 
-  noremap <C-h> viw"hy:%s/<C-r>h//g<left><left>
-  vnoremap <C-h> "hy:%s/<C-r>h//g<left><left>
-  noremap <C-H> viw"hy:%s/<C-r>h//g<left><left>
-  vnoremap <C-H> "hy:%s/<C-r>h//g<left><left>
+  noremap <C-h> viw"hy:%s/<C-r>h/<C-r>h/g<left><left>
+  vnoremap <C-h> "hy:%s/<C-r>h/<C-r>h/g<left><left>
+  noremap <S-h> viw"hy:vimgrep "<C-r>h" **/*<left><left><left><left><left><left> 
+  vnoremap <S-h> "hy:vimgrep "<C-r>h" **/*<left><left><left><left><left><left><left> 
 
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
@@ -33,11 +40,11 @@ vim.cmd [[
 ]]
 
 -- Cross session yank and paste (Better than clipboard)
-vim.cmd [[
-  autocmd TextYankPost * call writefile([getreg('"', 1)], $VIM..'/.clipboard')
-  nnoremap <silent> p :call setreg('"', join(readfile($VIM..'/.clipboard'), '\n'))<CR>p
-  nnoremap <silent> P :call setreg('"', join(readfile($VIM..'/.clipboard'), '\n'))<CR>P
-]]
+--vim.cmd [[
+--  autocmd TextYankPost * call writefile([getreg('"')], $VIM..'/.clipboard')
+--  nnoremap <silent> p :call setreg('"', join(readfile($VIM..'/.clipboard'), '\n'))<CR>p
+--  nnoremap <silent> P :call setreg('"', join(readfile($VIM..'/.clipboard'), '\n'))<CR>P
+--]]
 
 -------------------------
 -- General 
@@ -98,9 +105,11 @@ endfunction
 -------------------------
 -- Custom Commands 
 -------------------------
-vim.cmd [[
-  cabbrev h vert help
-  cabbrev help vert help
+vim.cmd[[
+  command! Ammend !git add -A && git commit --amend --no-edit
+  command! -nargs=1 Commit !git add -A && git commit -am <q-args>
+  command! Push !git push 
+  command! Status !git status
 ]]
 
 vim.api.nvim_create_user_command('CloseAll', function(command)
@@ -487,15 +496,23 @@ function! InitBinarySupport()
 endfunction ]]
 
 ---------------------------
--- WSL 
+-- Fucking Windows 
 ---------------------------
-vim.api.nvim_create_user_command('OpenWslFile', function(command)
-  cmd[[ 
-    " execute ":e ".system("wslpath -u {command.args}")
-    set wrap
-    startinsert
-  ]]
-end, { nargs = '?' })
+vim.cmd[[
+let s:clip = '/mnt/c/Windows/System32/clip.exe' 
+if executable(s:clip)
+  let g:clipboard = {
+  \   'name': 'win32yank.exe',
+  \   'copy': {
+  \      '*': 'clip.exe',
+  \    },
+  \   'paste': {
+  \      '*': 'clip.exe',
+  \   },
+  \   'cache_enabled': 0,
+  \ }
+endif
+]] 
 
 -------------------------
 -- Utility Functions 

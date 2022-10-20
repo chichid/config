@@ -12,7 +12,7 @@ if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe"}; 
   default_cwd = os.getenv("HOME");
   tab_font_size = 9.0;
-  font_size = 10.7;
+  font_size = 10.5;
   initial_rows = 43;
   initial_cols = 180;
 end
@@ -27,19 +27,19 @@ end
 local keys = {
   -- Keyboard Navigation
   --- delete words backwards 
-  { key="Backspace", mods="CTRL", action={SendKey={key="U", mods="CTRL"}} },
-  { key="Backspace", mods="CMD", action={SendKey={key="U", mods="CTRL"}} },
-  { key="Backspace", mods="ALT", action={SendKey={key="W", mods="CTRL"}} },
+  { key="Backspace", mods="CTRL", action={SendKey={key="W", mods="CTRL"}} },
+  { key="Backspace", mods="CMD", action={SendKey={key="W", mods="CTRL"}} },
+  { key="Backspace", mods="ALT", action={SendKey={key="U", mods="CTRL"}} },
 
   --- home and end 
-  { key="LeftArrow", mods="CTRL", action={SendKey={key="Home"}} },
+  { key="LeftArrow", mods="ALT", action={SendKey={key="Home"}} },
   { key="LeftArrow", mods="CMD", action={SendKey={key="Home"}} },
-  { key="RightArrow", mods="CTRL", action={SendKey={key="End"}} },
+  { key="RightArrow", mods="ALT", action={SendKey={key="End"}} },
   { key="RightArrow", mods="CMD", action={SendKey={key="End"}} },
 
   --- move one word
-  { key="LeftArrow", mods="ALT", action={SendKey={key="LeftArrow", mods="CTRL"}} },
-  { key="RightArrow", mods="ALT", action={SendKey={key="RightArrow", mods="CTRL"}} },
+  { key="LeftArrow", mods="CTRL", action={SendKey={key="LeftArrow", mods="CTRL"}} },
+  { key="RightArrow", mods="CTRL", action={SendKey={key="RightArrow", mods="CTRL"}} },
 
   --- ctrl + jk keyboard navigation 
   { key="k", mods="ALT", action={SendKey={key="UpArrow"}} },
@@ -141,7 +141,9 @@ return {
   color_schemes = color_schemes,
   default_cursor_style = "SteadyBlock",
   audible_bell = "Disabled",
+  font = wezterm.font('JetBrains Mono'),
   font_size = font_size,
+  font_locator = 'ConfigDirsOnly',
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
   window_frame = { font_size = tab_font_size, }
 }

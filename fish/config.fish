@@ -5,7 +5,7 @@ function vim
 end
 
 ### Keybinding 
-bind \t forward-word
+bind \t forward-bigword
 
 ### Prompt
 set fish_greeting
