@@ -108,14 +108,14 @@ endfunction
 vim.cmd[[
   command! Ammend !git add -A && git commit --amend --no-edit
   command! -nargs=1 Commit !git add -A && git commit -am <q-args>
-  command! Push !git push 
+  command! -nargs=* Push !git push <f-args>
   command! Status !git status
 ]]
 
 vim.api.nvim_create_user_command('CloseAll', function(command)
   cmd([[
     if execute("ls +") != ''
-      echo "There are unsaved changes, Save and Close (y/n):" 
+      echo "
       if nr2char(getchar()) == 'y'
         execute "cq"
       else
@@ -368,6 +368,13 @@ function load_theme() vim.cmd [[ try
   hi TelescopePromptBorder guibg=#3D4751 guifg=#c4a25f
   hi TelescopeResultsBorder guibg=#3D4751 guifg=#c4a25f
   hi TelescopePromptCounter guifg=lightgrey
+
+  function! HI()
+    for id in synstack(line("."), col("."))
+      echo synIDattr(id, "name")
+    endfor
+  endfunction
+  command! -nargs=0 HI call HI()
 
   catch 
     echo "No term gui colors for you!"

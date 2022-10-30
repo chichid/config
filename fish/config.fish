@@ -6,6 +6,7 @@ end
 
 ### Keybinding 
 bind \t forward-bigword
+bind -k nul forward-bigword 
 
 ### Prompt
 set fish_greeting
