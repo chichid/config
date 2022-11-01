@@ -29,11 +29,13 @@ vim.cmd [[
   noremap <S-h> viw"hy:vimgrep "<C-r>h" **/*<left><left><left><left><left><left> 
   vnoremap <S-h> "hy:vimgrep "<C-r>h" **/*<left><left><left><left><left><left><left> 
 
+  noremap <silent> n nzz
+  noremap <silent> N Nzz
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
   noremap <C-k> :w!<CR>:RunExternal <UP><CR>
   noremap <silent> <C-p> :lua open_telescope_picker("find_files", false)<CR>
-  noremap <silent> ? :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
+  noremap <silent> <C-F> :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
   noremap <silent> <C-g> :lua open_telescope_picker("git_status", false)<CR>
   noremap <silent> <C-b> :lua open_nvim_tree()<CR>
@@ -326,7 +328,7 @@ function toggle_nvim_tree()
   ]]
 end
 -------------------------
--- color scheme 
+-- Color Scheme 
 -------------------------
 vim.cmd [[ autocmd VimEnter * :lua load_theme() ]]
 
@@ -345,6 +347,9 @@ function load_theme() vim.cmd [[ try
   hi InvisibleText ctermfg=black guifg=#0f1419
   hi link EndOfBuffer InvisibleText
   hi FloatBorder guifg=#3D4751
+  
+  " Search
+  hi Search cterm=bold gui=bold ctermbg=cyan guibg=#5C6773 guifg=reverse
 
   " Vert Split
   set fillchars+=vert:│

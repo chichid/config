@@ -26,6 +26,12 @@ end
 
 local keys = {
   -- Keyboard Navigation
+  -- Ctrl+f/F
+  { key="f", mods="CTRL", action={SendKey={key="f", mods="CTRL"}} },
+  { key="f", mods="CMD", action={SendKey={key="f", mods="CTRL"}} },
+  { key="F", mods="CTRL", action={SendKey={key="F", mods="CTRL"}} },
+  { key="F", mods="CMD", action={SendKey={key="F", mods="CTRL"}} },
+
   --- delete words backwards 
   { key="Backspace", mods="CTRL", action={SendKey={key="W", mods="CTRL"}} },
   { key="Backspace", mods="CMD", action={SendKey={key="W", mods="CTRL"}} },
@@ -145,5 +151,6 @@ return {
   font_size = font_size,
   font_locator = 'ConfigDirsOnly',
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
-  window_frame = { font_size = tab_font_size, }
+  window_frame = { font_size = tab_font_size, },
+  prefer_egl = true,
 }
