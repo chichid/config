@@ -7,7 +7,7 @@ function load_plugins(use)
   use { 'airblade/vim-rooter', opt = true }
   use { 'kyazdani42/nvim-tree.lua', opt = true }
   use { 'nvim-telescope/telescope.nvim', opt = true, requires = {{'nvim-lua/plenary.nvim'}} }
-  use { 'neoclide/coc.nvim', opt = true }
+  use { 'dense-analysis/ale', opt = true } 
 end
 
 -------------------------
@@ -17,12 +17,19 @@ vim.cmd [[
   cabbrev h vert help
   cabbrev help vert help
   cabbrev copen vert copen
+  cabbrev lopen vert lopen
 ]]
 
-vim.cmd [[
+vim.cmd [==[
   map <C-z> :CloseAll<CR> "" this is important for Wezterm intergation
   map <C-c> "*ygv
   inoremap <silent> <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
+
+  noremap <silent> <F7> :ALEPrevious<CR>
+  noremap <silent> <F8> :ALENext<CR>
+  noremap <silent> <C-j> :vert lopen<CR><C-w>h<C-w>l
+  autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+  autocmd BufReadPost quickfix nnoremap <buffer> <space> <CR><C-w>l
 
   noremap <C-h> viw"hy:%s/<C-r>h/<C-r>h/g<left><left>
   vnoremap <C-h> "hy:%s/<C-r>h/<C-r>h/g<left><left>
@@ -39,7 +46,7 @@ vim.cmd [[
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
   noremap <silent> <C-g> :lua open_telescope_picker("git_status", false)<CR>
   noremap <silent> <C-b> :lua open_nvim_tree()<CR>
-]]
+]==]
 
 -- Cross session yank and paste (Better than clipboard)
 --vim.cmd [[
@@ -129,6 +136,21 @@ vim.api.nvim_create_user_command('CloseAll', function(command)
   ]])
 end, { nargs = '?' })
 
+vim.api.nvim_create_user_command('Ale', function(command)
+  cmd [[
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_insert_leave = 0
+    let g:ale_lint_on_enter = 0
+    let g:ale_list_vertical = 1
+    let g:ale_sign_error = ' |'
+    let g:ale_sign_warning = ' |'
+    let g:ale_rust_cargo_check_all_targets = 1
+    packadd ale
+    :ALEEnable
+    :ALELint
+  ]]
+end, { nargs = '?' })
+
 vim.api.nvim_create_user_command('RenameSymbol', function(command)
   cmd [[
     packadd coc.nvim
@@ -137,6 +159,12 @@ vim.api.nvim_create_user_command('RenameSymbol', function(command)
 end, { nargs = '?' })
 
 vim.api.nvim_create_user_command('RunExternal', function(command)
+  cmd([[
+    try
+      :exec "norm :ALEToggle<CR>"
+      :exec "norm :lclose<CR>"
+    endtry
+  ]])
   cmd([[call RunCmd("{command.args}")]])
 end, { nargs = '?' })
 
@@ -349,7 +377,7 @@ function load_theme() vim.cmd [[ try
   hi FloatBorder guifg=#3D4751
   
   " Search
-  hi Search cterm=bold gui=bold ctermbg=cyan guibg=#5C6773 guifg=reverse
+  hi Search cterm=bold gui=bold ctermbg=cyan guibg=#5C6773 guifg=white
 
   " Vert Split
   set fillchars+=vert:│
