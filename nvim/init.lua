@@ -26,21 +26,26 @@ vim.cmd [==[
   inoremap <silent> <C-v> <C-o>:set paste<CR><C-r>*<C-o>:set nopaste<CR>
 
   noremap <silent> <F7> :ALEPrevious<CR>
-  noremap <silent> <F8> :ALENext<CR>
-  noremap <silent> <C-j> :vert lopen<CR><C-w>h<C-w>l
+  noremap <silent> <F8> :Ale<CR>:ALENext<CR>
+  noremap <silent> <C-j> :vert lwindow<CR><C-w>h<C-w>l
   autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
   autocmd BufReadPost quickfix nnoremap <buffer> <space> <CR><C-w>l
+  autocmd BufReadPost quickfix nnoremap <buffer> <C-j> <C-w>h 
+  autocmd BufReadPost quickfix nnoremap <buffer> j :lnext<CR><C-w>l
+  autocmd BufReadPost quickfix nnoremap <buffer> k :lprevious<CR><C-w>l
 
   noremap <C-h> viw"hy:%s/<C-r>h/<C-r>h/g<left><left>
   vnoremap <C-h> "hy:%s/<C-r>h/<C-r>h/g<left><left>
-  noremap <S-h> viw"hy:vimgrep "<C-r>h" **/*<left><left><left><left><left><left> 
-  vnoremap <S-h> "hy:vimgrep "<C-r>h" **/*<left><left><left><left><left><left><left> 
+  noremap <S-h> viw"hy:lvimgrep "<C-r>h" **/*<left><left><left><left><left><left> 
+  vnoremap <S-h> "hy:lvimgrep "<C-r>h" **/*<left><left><left><left><left><left><left> 
 
   noremap <silent> n nzz
   noremap <silent> N Nzz
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
-  noremap <C-k> :w!<CR>:RunExternal <UP><CR>
+  noremap <F5> :w!<CR>:RunExternal <UP><CR>
+  nnoremap <C-j> 3<C-e>
+  nnoremap <C-k> 3<C-y>
   noremap <silent> <C-p> :lua open_telescope_picker("find_files", false)<CR>
   noremap <silent> <C-F> :lua open_telescope_picker("current_buffer_fuzzy_find", false)<CR>
   noremap <silent> <C-f> :lua open_telescope_picker("live_grep", true)<CR>
@@ -118,7 +123,7 @@ vim.cmd[[
   command! Ammend !git add -A && git commit --amend --no-edit
   command! -nargs=1 Commit !git add -A && git commit -am <q-args>
   command! -nargs=* Push !git push <f-args>
-  command! Status !git status
+  command! Status vert !git status
 ]]
 
 vim.api.nvim_create_user_command('CloseAll', function(command)
@@ -142,8 +147,8 @@ vim.api.nvim_create_user_command('Ale', function(command)
     let g:ale_lint_on_insert_leave = 0
     let g:ale_lint_on_enter = 0
     let g:ale_list_vertical = 1
-    let g:ale_sign_error = ' |'
-    let g:ale_sign_warning = ' |'
+    let g:ale_sign_error = ''
+    let g:ale_sign_warning = ''
     let g:ale_rust_cargo_check_all_targets = 1
     packadd ale
     :ALEEnable
