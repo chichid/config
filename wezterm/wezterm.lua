@@ -139,6 +139,9 @@ return {
   initial_cols = initial_cols,
   window_padding = { left = 1, right = 1, top = 0, bottom = 0 },
 
+  -- Mac Os
+  native_macos_fullscreen_mode = true,
+
   -- Appearance and Colors 
   color_scheme = "Ayu",
   colors = colors,

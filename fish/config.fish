@@ -4,6 +4,15 @@ function vim
   nvim $argv || exit 
 end
 
+
+### Homebrew
+set -l os (uname)
+if test "$os" = Darwin
+  set fish_function_path $fish_function_path ~/.config/fish/plugin-foreign-env/functions
+  fenv source ~/.profile
+  fenv source ~/.zprofile
+end
+
 ### Keybinding 
 bind \t forward-bigword
 bind -k nul forward-bigword 
