@@ -33,19 +33,20 @@ local keys = {
   { key="F", mods="CMD", action={SendKey={key="F", mods="CTRL"}} },
 
   --- delete words backwards 
-  { key="Backspace", mods="CTRL", action={SendKey={key="W", mods="CTRL"}} },
-  { key="Backspace", mods="CMD", action={SendKey={key="W", mods="CTRL"}} },
-  { key="Backspace", mods="ALT", action={SendKey={key="U", mods="CTRL"}} },
+  { key="Backspace", mods="ALT", action={SendKey={key="W", mods="CTRL"}} },
+  { key="Backspace", mods="ALT", action={SendKey={key="W", mods="CTRL"}} },
+  { key="Backspace", mods="CTRL", action={SendKey={key="U", mods="CTRL"}} },
+  { key="Backspace", mods="CMD", action={SendKey={key="U", mods="CTRL"}} },
 
   --- home and end 
-  { key="LeftArrow", mods="ALT", action={SendKey={key="Home"}} },
+  { key="LeftArrow", mods="CTRL", action={SendKey={key="Home"}} },
   { key="LeftArrow", mods="CMD", action={SendKey={key="Home"}} },
-  { key="RightArrow", mods="ALT", action={SendKey={key="End"}} },
+  { key="RightArrow", mods="CTRL", action={SendKey={key="End"}} },
   { key="RightArrow", mods="CMD", action={SendKey={key="End"}} },
 
   --- move one word
-  { key="LeftArrow", mods="CTRL", action={SendKey={key="LeftArrow", mods="CTRL"}} },
-  { key="RightArrow", mods="CTRL", action={SendKey={key="RightArrow", mods="CTRL"}} },
+  { key="LeftArrow", mods="ALT", action={SendKey={key="LeftArrow", mods="CTRL"}} },
+  { key="RightArrow", mods="ALT", action={SendKey={key="RightArrow", mods="CTRL"}} },
 
   --- ctrl + jk keyboard navigation 
   { key="k", mods="ALT", action={SendKey={key="UpArrow"}} },

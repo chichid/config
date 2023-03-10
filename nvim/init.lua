@@ -44,6 +44,7 @@ vim.cmd [==[
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <C-l> :b#<CR>
   noremap <F5> :w!<CR>:RunExternal <UP><CR>
+  noremap \ :w!<CR>:RunExternal <UP><CR>
   nnoremap <C-j> 3<C-e>
   nnoremap <C-k> 3<C-y>
   noremap <silent> <C-p> :lua open_telescope_picker("find_files", false)<CR>
