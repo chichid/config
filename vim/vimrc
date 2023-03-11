@@ -1,0 +1,136 @@
+function Main()
+  call SetOptions()
+  call SetupKeyboardMapping()
+  call SetupVimPlug()
+  call plug#begin()
+  call SetupTheme()
+  call SetupIndent()
+  call SetupNerdtree()
+  call SetupHexEditing()
+  call plug#end()
+endfunction
+
+function SetOptions()
+  set nocompatible
+  set novisualbell
+  set backspace=indent,eol,start
+  set whichwrap+=<,>,h,l,[,]
+  set number              
+  set wrap!                
+  set encoding=utf-8     
+  set wildmenu
+  set showmatch
+  set ruler  
+  set incsearch
+  set hlsearch
+  set linebreak
+  set nolist 
+  set history=10000
+  set textwidth=0
+  set wrapmargin=0 
+  set ignorecase
+  set smartcase
+  set laststatus=0
+  set ttymouse=sgr
+  set mouse=a
+  set splitright
+  set noswapfile
+  set cursorline
+  set autoread
+  set foldmethod=indent
+  set foldlevel=10
+  set cindent
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+  set expandtab
+  set autoindent
+  set matchtime=0
+  au CursorHold * checktime  
+  let &winwidth = &columns * 7 / 10
+endfunction
+
+function SetupKeyboardMapping()
+  noremap <silent> <CR> :nohlsearch<CR>
+  noremap <C-K> :w<CR>:!clear;<UP><CR>
+  noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
+  noremap <expr> <C-,> :open ~/.config/vim/vimrc 
+endfunction
+
+function SetupTheme()
+  Plug 'ayu-theme/ayu-vim'
+
+  function Theme_OnVimEnter()
+    syntax on
+    filetype plugin indent on
+
+    set termguicolors     
+    let ayucolor="dark" 
+    colorscheme ayu
+
+    hi EndOfBuffer ctermfg=black guifg=black
+    hi SignColumn guibg=NONE ctermbg=NONE
+    hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
+    hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
+    hi TabLineFill ctermfg=black guifg=black
+    hi Visual cterm=none ctermbg=darkgrey ctermfg=white
+    hi Search cterm=none ctermbg=darkgrey ctermfg=white
+    hi MatchParen ctermfg=white ctermbg=darkgrey
+    hi CursorLineNr term=bold ctermfg=white
+    hi LineNr ctermfg=yellow
+  endfunction
+
+  autocmd VimEnter * call Theme_OnVimEnter()
+endfunction
+
+function SetupIndent()
+  Plug 'ciaranm/detectindent'
+  Plug 'townk/vim-autoclose'
+endfunction
+
+function SetupNerdtree()
+  Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle'  } 
+
+  let g:NERDTreeMinimalUI = 1
+  let g:NERDTreeDirArrowExpandable = ''
+  let g:NERDTreeQuitOnOpen = 1
+  let g:NERDTreeMapHelp = 'H'
+endfunction
+
+function SetupHexEditing()
+  augroup Binary
+    au!
+    au BufReadPre  *.bin let &bin=1
+    au BufReadPost *.bin if &bin | %!xxd
+    au BufReadPost *.bin set ft=xxd | endif
+    au BufWritePre *.bin if &bin | %!xxd -r
+    au BufWritePre *.bin endif
+    au BufWritePost *.bin if &bin | %!xxd
+    au BufWritePost *.bin set nomod | endif
+  augroup END
+endfunction
+
+function SetupVimPlug()
+  let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+  if empty(glob(data_dir . '/autoload/plug.vim'))
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute 'source ' data_dir.'/autoload/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+endfunction
+
+call Main()
+
+"""""""""""""""""""""
+" Ale 
+"""""""""""""""""""""
+let g:ale_completion_enabled = 1
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = ' '
+
+""""""""""""""""""""""
+" Ctrlp 
+""""""""""""""""""""""
+let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:10'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -c --exclude-standard --recurse-submodules | grep -x -v "$( git ls-files -d --exclude-standard )" ; git ls-files -o --exclude-standard', 'find %s -type f' ]
+let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'AcceptSelection("t")': ['<cr>'], }
