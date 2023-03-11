@@ -1,6 +1,7 @@
 function Main()
   call SetOptions()
   call SetupKeyboardMapping()
+  call SetupCustomCommands()
   call SetupVimPlug()
   call plug#begin()
   call SetupTheme()
@@ -54,7 +55,10 @@ function SetupKeyboardMapping()
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <C-K> :w<CR>:!clear;<UP><CR>
   noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
-  noremap <expr> <C-,> :open ~/.config/vim/vimrc 
+endfunction
+
+function SetupCustomCommands()
+  command Config :e ~/.config/vim/vimrc
 endfunction
 
 function SetupTheme()
