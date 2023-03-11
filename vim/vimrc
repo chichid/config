@@ -55,10 +55,22 @@ function SetupKeyboardMapping()
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <C-K> :w<CR>:!clear;<UP><CR>
   noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
+  noremap \ :w!<CR>:RunExternal <UP><CR>
 endfunction
 
 function SetupCustomCommands()
   command Config :e ~/.config/vim/vimrc
+
+  command -nargs=1 RunExternal call Command_RunExternal(<f-Args>)
+  function! Command_RunExternal(command)
+    execute "vert term " . a:command
+
+    map <buffer> <C-c> "*y
+    map <buffer> j <C-e>
+    map <buffer> k <C-y>
+    map <buffer> <silent> <ESC> :close<CR>
+    map <buffer> <silent> <CR> :close<CR>
+  endfunction 
 endfunction
 
 function SetupTheme()
@@ -125,16 +137,16 @@ endfunction
 
 call Main()
 
-"""""""""""""""""""""
-" Ale 
-"""""""""""""""""""""
-let g:ale_completion_enabled = 1
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = ' '
-
 """"""""""""""""""""""
-" Ctrlp 
+"" Ale 
 """"""""""""""""""""""
-let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:10'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -c --exclude-standard --recurse-submodules | grep -x -v "$( git ls-files -d --exclude-standard )" ; git ls-files -o --exclude-standard', 'find %s -type f' ]
-let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'AcceptSelection("t")': ['<cr>'], }
+"let g:ale_completion_enabled = 1
+"let g:ale_sign_error = 'x'
+"let g:ale_sign_warning = ' '
+"
+"""""""""""""""""""""""
+"" Ctrlp 
+"""""""""""""""""""""""
+"let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:10'
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -c --exclude-standard --recurse-submodules | grep -x -v "$( git ls-files -d --exclude-standard )" ; git ls-files -o --exclude-standard', 'find %s -type f' ]
+"let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'AcceptSelection("t")': ['<cr>'], }
