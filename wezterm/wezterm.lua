@@ -9,7 +9,7 @@ local initial_rows
 local inital_cols
 
 if string.find(wezterm.target_triple, "windows") then
-  default_prog = {"wsl.exe"}; 
+  default_prog = {"bash.exe"}; 
   default_cwd = os.getenv("HOME");
   tab_font_size = 9.0;
   font_size = 10.5;
