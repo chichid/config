@@ -70,10 +70,10 @@ local keys = {
   { key="k", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
-  { key="c", mods="ALT", action="Copy" },
-  { key="c", mods="CMD", action="Copy" },
-  { key="v", mods="ALT", action="Paste" },
-  { key="v", mods="CMD", action="Paste" },
+  { key="c", mods="ALT", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection'},
+  { key="c", mods="CMD", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection'},
+  { key="v", mods="ALT", action=wezterm.action.PasteFrom 'Clipboard'},
+  { key="v", mods="CMD", action=wezterm.action.PasteFrom 'Clipboard'},
   
   -- Open New Window 
   { key="t", mods="CMD", action={SpawnTab="CurrentPaneDomain"} },
