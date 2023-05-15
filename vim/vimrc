@@ -7,6 +7,7 @@ function Main()
   call SetupTheme()
   call SetupIndent()
   call SetupNerdtree()
+  call SetupFZF()
   call SetupHexEditing()
   call plug#end()
 endfunction
@@ -36,7 +37,6 @@ function SetOptions()
   set mouse=a
   set splitright
   set noswapfile
-  set cursorline
   set autoread
   set foldmethod=indent
   set foldlevel=10
@@ -46,6 +46,7 @@ function SetOptions()
   set shiftwidth=2
   set expandtab
   set autoindent
+  set cursorline
   set matchtime=0
   au CursorHold * checktime  
   let &winwidth = &columns * 7 / 10
@@ -53,14 +54,13 @@ endfunction
 
 function SetupKeyboardMapping()
   noremap <silent> <CR> :nohlsearch<CR>
-  noremap <C-K> :w<CR>:!clear;<UP><CR>
   noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
+  noremap <silent> <C-p> :GFiles<CR> 
   noremap \ :w!<CR>:RunExternal <UP><CR>
 endfunction
 
 function SetupCustomCommands()
   command Config :e ~/.config/vim/vimrc
-
   command -nargs=1 RunExternal call Command_RunExternal(<f-Args>)
   function! Command_RunExternal(command)
     execute "vert term " . a:command
@@ -74,26 +74,25 @@ function SetupCustomCommands()
 endfunction
 
 function SetupTheme()
-  Plug 'ayu-theme/ayu-vim'
+  Plug 'tomasr/molokai'
 
   function Theme_OnVimEnter()
     syntax on
     filetype plugin indent on
-
-    set termguicolors     
-    let ayucolor="dark" 
-    colorscheme ayu
+    colorscheme molokai 
 
     hi EndOfBuffer ctermfg=black guifg=black
-    hi SignColumn guibg=NONE ctermbg=NONE
-    hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
-    hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
-    hi TabLineFill ctermfg=black guifg=black
-    hi Visual cterm=none ctermbg=darkgrey ctermfg=white
-    hi Search cterm=none ctermbg=darkgrey ctermfg=white
-    hi MatchParen ctermfg=white ctermbg=darkgrey
-    hi CursorLineNr term=bold ctermfg=white
-    hi LineNr ctermfg=yellow
+    hi CursorColumn ctermbg=NONE
+    hi LineNr ctermbg=NONE
+    hi CursorLineNr cterm=bold 
+    "hi SignColumn guibg=NONE ctermbg=NONE
+    "hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
+    "hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
+    "hi TabLineFill ctermfg=black guifg=black
+    "hi Visual cterm=none ctermbg=darkgrey ctermfg=white
+    "hi Search cterm=none ctermbg=darkgrey ctermfg=white
+    "hi MatchParen ctermfg=white ctermbg=darkgrey
+    "hi LineNr ctermfg=yellow
   endfunction
 
   autocmd VimEnter * call Theme_OnVimEnter()
@@ -111,6 +110,11 @@ function SetupNerdtree()
   let g:NERDTreeDirArrowExpandable = ''
   let g:NERDTreeQuitOnOpen = 1
   let g:NERDTreeMapHelp = 'H'
+endfunction
+
+function SetupFZF()
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 endfunction
 
 function SetupHexEditing()

@@ -1,10 +1,3 @@
-### Aliases
-function vim 
-  # Exit Vim on cquit - useful to close vim and the tab using wezterm commands 
-  nvim $argv || exit 
-end
-
-
 ### Homebrew
 set -l os (uname)
 if test "$os" = Darwin
@@ -13,9 +6,13 @@ if test "$os" = Darwin
   fenv source ~/.zprofile
 end
 
+### Aliases
+alias sd "cd (find * -type d | fzf)"
+
 ### Keybinding 
 bind \t forward-bigword
 bind -k nul forward-bigword 
+fish_vi_key_bindings
 
 ### Prompt
 set fish_greeting
