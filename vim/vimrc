@@ -1,6 +1,5 @@
 function Main()
   call SetOptions()
-  call SetupKeyboardMapping()
   call SetupCustomCommands()
   call SetupVimPlug()
   call plug#begin()
@@ -9,7 +8,9 @@ function Main()
   call SetupNerdtree()
   call SetupFZF()
   call SetupHexEditing()
+  call SetupCoc()
   call plug#end()
+  call SetupKeyboardMapping()
 endfunction
 
 function SetOptions()
@@ -53,10 +54,15 @@ function SetOptions()
 endfunction
 
 function SetupKeyboardMapping()
+  noremap <C-c> "*y
   noremap <silent> <CR> :nohlsearch<CR>
-  noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>"
-  noremap <silent> <C-p> :GFiles<CR> 
+  noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>:vert resize 100<CR>:norm ^<CR>"
+  noremap <silent> <C-p> :FZF --reverse<CR> 
   noremap \ :w!<CR>:RunExternal <UP><CR>
+
+  nmap <silent> gd    <Plug>(coc-definition)
+  nmap <silent> gtd   <Plug>(coc-type-definition)
+  nmap <silent> <F2>  <Plug>(coc-rename)
 endfunction
 
 function SetupCustomCommands()
@@ -85,14 +91,6 @@ function SetupTheme()
     hi CursorColumn ctermbg=NONE
     hi LineNr ctermbg=NONE
     hi CursorLineNr cterm=bold 
-    "hi SignColumn guibg=NONE ctermbg=NONE
-    "hi TabLine ctermbg=grey ctermfg=black guibg=#1f2430
-    "hi TabLineSel ctermbg=black ctermfg=white guibg=white guifg=black
-    "hi TabLineFill ctermfg=black guifg=black
-    "hi Visual cterm=none ctermbg=darkgrey ctermfg=white
-    "hi Search cterm=none ctermbg=darkgrey ctermfg=white
-    "hi MatchParen ctermfg=white ctermbg=darkgrey
-    "hi LineNr ctermfg=yellow
   endfunction
 
   autocmd VimEnter * call Theme_OnVimEnter()
@@ -139,6 +137,18 @@ function SetupVimPlug()
   endif
 endfunction
 
+function SetupCoc()
+  let langs = ['typescript','css','javascript']
+
+  Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': langs}
+
+  set encoding=utf-8
+  set nobackup
+  set nowritebackup
+  set updatetime=300
+  set signcolumn=yes
+endfunction
+
 call Main()
 
 """"""""""""""""""""""
@@ -148,9 +158,3 @@ call Main()
 "let g:ale_sign_error = 'x'
 "let g:ale_sign_warning = ' '
 "
-"""""""""""""""""""""""
-"" Ctrlp 
-"""""""""""""""""""""""
-"let g:ctrlp_match_window = 'top,order:btt,min:1,max:10,results:10'
-"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -c --exclude-standard --recurse-submodules | grep -x -v "$( git ls-files -d --exclude-standard )" ; git ls-files -o --exclude-standard', 'find %s -type f' ]
-"let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<2-LeftMouse>'], 'AcceptSelection("t")': ['<cr>'], }

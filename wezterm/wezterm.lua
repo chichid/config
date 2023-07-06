@@ -86,6 +86,12 @@ local keys = {
   -- Open the config
   { key=",", mods="ALT", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
   { key=",", mods="CMD", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
+
+  -- Move tabs
+  { key = 'LeftArrow', mods = 'SHIFT|ALT', action = act.MoveTabRelative(-1) },
+  { key = 'LeftArrow', mods = 'SHIFT|CMD', action = act.MoveTabRelative(-1) },
+  { key = 'RightArrow', mods = 'SHIFT|ALT', action = act.MoveTabRelative(1) },
+  { key = 'RightArrow', mods = 'SHIFT|CMD', action = act.MoveTabRelative(1) },
 };
 
 -- ALT-Tab
