@@ -7,9 +7,9 @@ function Main()
   call SetupIndent()
   call SetupNerdtree()
   call SetupFZF()
-  call SetupHexEditing()
-  Plug 'dense-analysis/ale'
   " call SetupCoc()
+  Plug 'dense-analysis/ale'
+  call SetupHexEditing()
   call plug#end()
   call SetupKeyboardMapping()
 endfunction
@@ -131,7 +131,7 @@ function SetupHexEditing()
 endfunction
 
 function SetupVimPlug()
-  command PlugSync source $MYVIMRC | PlugInstall
+  command PlugSync execute 'source $MYVIMRC | PlugInstall'
 
   let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
   if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -142,9 +142,7 @@ function SetupVimPlug()
 endfunction
 
 function SetupCoc()
-  let langs = ['typescript','css','javascript']
-
-  Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': langs}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   set encoding=utf-8
   set nobackup
