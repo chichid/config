@@ -8,12 +8,14 @@ function Main()
   call SetupNerdtree()
   call SetupFZF()
   call SetupHexEditing()
-  call SetupCoc()
+  Plug 'dense-analysis/ale'
+  " call SetupCoc()
   call plug#end()
   call SetupKeyboardMapping()
 endfunction
 
 function SetOptions()
+  set ignorecase
   set nocompatible
   set novisualbell
   set backspace=indent,eol,start
@@ -66,7 +68,7 @@ function SetupKeyboardMapping()
 endfunction
 
 function SetupCustomCommands()
-  command Config :e ~/.config/vim/vimrc
+  command Config :e $MYVIMRC 
   command -nargs=1 RunExternal call Command_RunExternal(<f-Args>)
   function! Command_RunExternal(command)
     execute "vert term " . a:command
@@ -129,6 +131,8 @@ function SetupHexEditing()
 endfunction
 
 function SetupVimPlug()
+  command PlugSync source $MYVIMRC | PlugInstall
+
   let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
   if empty(glob(data_dir . '/autoload/plug.vim'))
     silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
