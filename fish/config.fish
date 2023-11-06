@@ -34,11 +34,6 @@ if command -vq wslpath
   end
 end
 
-### Nvm
-function nvm
-  bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
-end
-
 ### Ayu Theme
 set --universal fish_color_autosuggestion 4D5566 # ayu:common.ui        autosuggestions
 set --universal fish_color_command        39BAE6 # ayu:syntax.tag       commands
