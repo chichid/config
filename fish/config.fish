@@ -6,12 +6,9 @@ function fish_prompt -d "Write out the prompt"
   printf '%s%s: %s%s%s ⟩ ' (set_color --bold) $USER (set_color --bold $fish_color_cwd) (prompt_pwd) (set_color --bold normal)
 end
 
-### Homebrew
-set -l os (uname)
-if test "$os" = Darwin
-  set fish_function_path $fish_function_path ~/.config/fish/plugin-foreign-env/functions
-  fenv source ~/.profile
-  fenv source ~/.zprofile
+### Oh My Fish 
+if not type -q omf
+  echo "oh-my-fish not found, to install it run: fish ~/.config/fish/install_omf --path=~/.config/fish/omf --config=~/.config/fish/omf_config"
 end
 
 ### Aliases
@@ -25,6 +22,14 @@ fish_vi_key_bindings
 ### Silver Searcher
 if type -q 'fd' 
   set -gx FZF_DEFAULT_COMMAND 'fd' 
+end
+
+### Homebrew
+set -l os (uname)
+if test "$os" = Darwin
+  set fish_function_path $fish_function_path ~/.config/fish/plugin-foreign-env/functions
+  fenv source ~/.profile
+  fenv source ~/.zprofile
 end
 
 ### OSC7
