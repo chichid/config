@@ -9,7 +9,7 @@ local initial_rows
 local inital_cols
 
 if string.find(wezterm.target_triple, "windows") then
-  default_prog = {"C:\\Program Files\\Git\\bin\\bash.exe"}; 
+  default_prog = {"wsl.exe"}; 
   default_cwd = os.getenv("HOME");
   tab_font_size = 9.0;
   font_size = 10.5;
@@ -68,6 +68,7 @@ local keys = {
   { key="l", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
   { key="l", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   { key="k", mods="CMD", action={SendKey={key="l", mods="CTRL"}}},
+  { key="k", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
   { key="c", mods="ALT", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
