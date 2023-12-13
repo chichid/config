@@ -60,10 +60,6 @@ function SetupKeyboardMapping()
   noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>:vert resize 100<CR>:norm ^<CR>"
   noremap <silent> <C-p> :FZF --reverse<CR> 
   noremap \ :w!<CR>:RunExternal <UP><CR>
-
-  nmap <silent> gd    <Plug>(coc-definition)
-  nmap <silent> gtd   <Plug>(coc-type-definition)
-  nmap <silent> <F2>  <Plug>(coc-rename)
 endfunction
 
 function SetupCustomCommands()
