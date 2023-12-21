@@ -79,10 +79,13 @@ local keys = {
   -- Open New Window 
   { key="t", mods="CMD", action={SpawnTab="CurrentPaneDomain"} },
   { key="t", mods="ALT", action={SpawnTab="CurrentPaneDomain"} },
+  { key="t", mods="CTRL", action={SpawnTab="CurrentPaneDomain"} },
   { key="n", mods="CMD", action="SpawnWindow" },
   { key="n", mods="ALT", action="SpawnWindow" },
-  { key="w", mods="ALT", action={EmitEvent = "CloseCurrentTab"} },
+  { key="n", mods="CTRL", action="SpawnWindow" },
   { key="w", mods="CMD", action={EmitEvent = "CloseCurrentTab"} },
+  { key="w", mods="ALT", action={EmitEvent = "CloseCurrentTab"} },
+  { key="w", mods="CTRL", action={EmitEvent = "CloseCurrentTab"} },
 
   -- Open the config
   { key=",", mods="ALT", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
