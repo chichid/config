@@ -71,8 +71,10 @@ local keys = {
   { key="k", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
+  { key="c", mods="CTRL", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
   { key="c", mods="ALT", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
   { key="c", mods="CMD", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
+  { key="v", mods="CTRL", action=wezterm.action.PasteFrom 'Clipboard' },
   { key="v", mods="ALT", action=wezterm.action.PasteFrom 'Clipboard' },
   { key="v", mods="CMD", action=wezterm.action.PasteFrom 'Clipboard' },
   
@@ -100,6 +102,7 @@ local keys = {
 
 -- ALT-Tab
 for i = 1, 9 do 
+  table.insert(keys, { key=tostring(i), mods="CMD", action=wezterm.action{ActivateTab=i-1} })
   table.insert(keys, { key=tostring(i), mods="ALT", action=wezterm.action{ActivateTab=i-1} })
   table.insert(keys, { key=tostring(i), mods="CTRL", action=wezterm.action{ActivateTab=i-1} });
 end
@@ -115,26 +118,11 @@ wezterm.on("CloseCurrentTab", function(window, pane)
   end
 
   if is_vim() then
-    window:perform_action(wezterm.action{
-      SendKey={key="Z", mods="CTRL"}
-    }, pane)
+    window:perform_action(wezterm.action{ SendKey={key="Z", mods="CTRL"} }, pane)
   else
-    window:perform_action(wezterm.action{
-      CloseCurrentTab={confirm=false}
-    }, pane)
+    window:perform_action(wezterm.action{ CloseCurrentTab={confirm=false} }, pane)
   end
 end)
-
--- Colors 
-local colors = {
-  -- Tab Bar Ayu Mirage
-}
-
-local color_schemes = {
-  ["Ayu"] = {
-    background = "#0f1419",
-  }
-};
 
 return {
   -- General
@@ -148,15 +136,13 @@ return {
   -- Window
   initial_rows = initial_rows,
   initial_cols = initial_cols,
-  window_padding = { left = 1, right = 1, top = 0, bottom = 0 },
+  window_padding = { left = 0, right = 0, top = 0, bottom = 0 },
 
   -- Mac Os
   native_macos_fullscreen_mode = true,
 
   -- Appearance and Colors 
   color_scheme = "Molokai",
-  colors = colors,
-  color_schemes = color_schemes,
   window_decorations = "RESIZE",
   color_schemes = color_schemes,
   default_cursor_style = "SteadyBlock",
