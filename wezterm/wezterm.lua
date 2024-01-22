@@ -70,11 +70,11 @@ local keys = {
   { key="k", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
-  { key="c", mods="CMD", action=wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
-  { key="c", mods="ALT", action=wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
+  { key="c", mods="ALT", action={EmitEvent = "ClipboardCopy"} },
+  { key="c", mods="CMD", action={EmitEvent = "ClipboardCopy"} },
   { key="c", mods="CTRL", action={EmitEvent = "ClipboardCopy"} },
-  { key="v", mods="CMD", action=wezterm.action.PasteFrom "Clipboard" },
-  { key="v", mods="ALT", action=wezterm.action.PasteFrom "Clipboard" },
+  { key="v", mods="ALT", action={EmitEvent = "ClipboardPaste"} },
+  { key="v", mods="CMD", action={EmitEvent = "ClipboardPaste"} },
   { key="v", mods="CTRL", action={EmitEvent = "ClipboardPaste"} },
   
   -- Open New Window 
@@ -136,7 +136,7 @@ wezterm.on("ClipboardCopy", function(window, pane)
   if is_vim() then
     window:perform_action(wezterm.action{ SendKey={key="c", mods="CTRL"} }, pane)
   else
-    window:perform_action(wezterm.action{ wezterm.action.CopyTo "ClipboardAndPrimarySelection" }, pane)
+    window:perform_action(wezterm.action.CopyTo "ClipboardAndPrimarySelection", pane)
   end
 end)
 
@@ -152,7 +152,7 @@ wezterm.on("ClipboardPaste", function(window, pane)
   if is_vim() then
     window:perform_action(wezterm.action{ SendKey={key="v", mods="CTRL"} }, pane)
   else
-    window:perform_action(wezterm.action{ SendKey={key="V"} }, pane)
+    window:perform_action(wezterm.action.PasteFrom "Clipboard", pane)
   end
 end)
 
