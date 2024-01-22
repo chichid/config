@@ -10,7 +10,6 @@ local inital_cols
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe"}; 
-  default_cwd = os.getenv("HOME");
   tab_font_size = 9.0;
   font_size = 10.5;
   initial_rows = 43;
@@ -71,12 +70,12 @@ local keys = {
   { key="k", mods="ALT", action={SendKey={key="l", mods="CTRL"}}},
   
   -- Copy/Paste 
-  { key="c", mods="CTRL", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
-  { key="c", mods="ALT", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
-  { key="c", mods="CMD", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection' },
-  { key="v", mods="CTRL", action=wezterm.action.PasteFrom 'Clipboard' },
-  { key="v", mods="ALT", action=wezterm.action.PasteFrom 'Clipboard' },
-  { key="v", mods="CMD", action=wezterm.action.PasteFrom 'Clipboard' },
+  { key="c", mods="CMD", action=wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
+  { key="c", mods="ALT", action=wezterm.action.CopyTo "ClipboardAndPrimarySelection" },
+  { key="c", mods="CTRL", action={EmitEvent = "ClipboardCopy"} },
+  { key="v", mods="CMD", action=wezterm.action.PasteFrom "Clipboard" },
+  { key="v", mods="ALT", action=wezterm.action.PasteFrom "Clipboard" },
+  { key="v", mods="CTRL", action={EmitEvent = "ClipboardPaste"} },
   
   -- Open New Window 
   { key="t", mods="CMD", action={SpawnTab="CurrentPaneDomain"} },
@@ -90,6 +89,7 @@ local keys = {
   { key="w", mods="CTRL", action={EmitEvent = "CloseCurrentTab"} },
 
   -- Open the config
+  { key=",", mods="CTRL", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
   { key=",", mods="ALT", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
   { key=",", mods="CMD", action={SendString="vim ~/.config/wezterm/wezterm.lua\r\n"}},
 
@@ -124,10 +124,41 @@ wezterm.on("CloseCurrentTab", function(window, pane)
   end
 end)
 
+wezterm.on("ClipboardCopy", function(window, pane)
+  function is_vim()
+    local current_process = pane:get_title():upper()
+    return 
+      current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
+      current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
+      current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
+  end
+
+  if is_vim() then
+    window:perform_action(wezterm.action{ SendKey={key="c", mods="CTRL"} }, pane)
+  else
+    window:perform_action(wezterm.action{ wezterm.action.CopyTo "ClipboardAndPrimarySelection" }, pane)
+  end
+end)
+
+wezterm.on("ClipboardPaste", function(window, pane)
+  function is_vim()
+    local current_process = pane:get_title():upper()
+    return 
+      current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
+      current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
+      current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
+  end
+
+  if is_vim() then
+    window:perform_action(wezterm.action{ SendKey={key="v", mods="CTRL"} }, pane)
+  else
+    window:perform_action(wezterm.action{ SendKey={key="V"} }, pane)
+  end
+end)
+
 return {
   -- General
   default_prog = default_prog,
-  default_cwd = default_cwd,
   exit_behavior = "Close",
 
   -- Key Bindings
