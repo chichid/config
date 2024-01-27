@@ -56,6 +56,7 @@ endfunction
 
 function SetupKeyboardMapping()
   noremap <C-c> "*y
+  noremap <M-v> "*p
   noremap <silent> <CR> :nohlsearch<CR>
   noremap <silent> <expr> <C-b> exists("g:NERDTree") && g:NERDTree.IsOpen() ? ":NERDTreeClose<CR>" : ":NERDTreeToggle<CR><c-w><c-p>:NERDTreeFind<CR>:vert resize 100<CR>:norm ^<CR>"
   noremap <silent> <C-p> :FZF --reverse<CR> 

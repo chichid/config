@@ -135,11 +135,7 @@ wezterm.on("ClipboardCopy", function(window, pane)
 end)
 
 wezterm.on("ClipboardPaste", function(window, pane)
-  if is_vim(pane) then
-    window:perform_action(wezterm.action{ SendKey={key="v", mods="CTRL"} }, pane)
-  else
-    window:perform_action(wezterm.action.PasteFrom "Clipboard", pane)
-  end
+  window:perform_action(wezterm.action.PasteFrom "Clipboard", pane)
 end)
 
 return {
