@@ -10,6 +10,7 @@ local inital_cols
 
 if string.find(wezterm.target_triple, "windows") then
   default_prog = {"wsl.exe"}; 
+  default_cwd = "~";
   tab_font_size = 9.0;
   font_size = 10.5;
   initial_rows = 43;
@@ -48,8 +49,10 @@ local keys = {
   { key="RightArrow", mods="ALT", action={SendKey={key="RightArrow", mods="CTRL"}} },
 
   --- ctrl + jk keyboard navigation 
+  { key="k", mods="CTRL", action={SendKey={key="UpArrow"}} },
   { key="k", mods="ALT", action={SendKey={key="UpArrow"}} },
   { key="k", mods="CMD", action={SendKey={key="UpArrow"}} },
+  { key="j", mods="CTRL", action={SendKey={key="DownArrow"}} },
   { key="j", mods="ALT", action={SendKey={key="DownArrow"}} },
   { key="j", mods="CMD", action={SendKey={key="DownArrow"}} },
 
@@ -107,17 +110,16 @@ for i = 1, 9 do
   table.insert(keys, { key=tostring(i), mods="CTRL", action=wezterm.action{ActivateTab=i-1} });
 end
 
--- Delegate close confirmation to some apps such as VIM, etc.
-wezterm.on("CloseCurrentTab", function(window, pane)
-  function is_vim()
-    local current_process = pane:get_title():upper()
-    return 
-      current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
-      current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
-      current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
-  end
+function is_vim(pane)
+  local current_process = pane:get_title():upper()
+  return 
+    current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
+    current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
+    current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
+end
 
-  if is_vim() then
+wezterm.on("CloseCurrentTab", function(window, pane)
+  if is_vim(pane) then
     window:perform_action(wezterm.action{ SendKey={key="Z", mods="CTRL"} }, pane)
   else
     window:perform_action(wezterm.action{ CloseCurrentTab={confirm=false} }, pane)
@@ -125,15 +127,7 @@ wezterm.on("CloseCurrentTab", function(window, pane)
 end)
 
 wezterm.on("ClipboardCopy", function(window, pane)
-  function is_vim()
-    local current_process = pane:get_title():upper()
-    return 
-      current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
-      current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
-      current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
-  end
-
-  if is_vim() then
+  if is_vim(pane) then
     window:perform_action(wezterm.action{ SendKey={key="c", mods="CTRL"} }, pane)
   else
     window:perform_action(wezterm.action.CopyTo "ClipboardAndPrimarySelection", pane)
@@ -141,15 +135,7 @@ wezterm.on("ClipboardCopy", function(window, pane)
 end)
 
 wezterm.on("ClipboardPaste", function(window, pane)
-  function is_vim()
-    local current_process = pane:get_title():upper()
-    return 
-      current_process:sub(-#"NVIM") == "NVIM" or current_process:sub(1, #"NVIM") == "NVIM" or 
-      current_process:sub(-#"VIM") == "VIM" or current_process:sub(1, #"VIM") == "VIM" or 
-      current_process:sub(-#"VI") == "VI" or current_process:sub(1, #"VI") == "VI"
-  end
-
-  if is_vim() then
+  if is_vim(pane) then
     window:perform_action(wezterm.action{ SendKey={key="v", mods="CTRL"} }, pane)
   else
     window:perform_action(wezterm.action.PasteFrom "Clipboard", pane)
@@ -160,6 +146,7 @@ return {
   -- General
   default_prog = default_prog,
   exit_behavior = "Close",
+  default_cwd = default_cwd,
 
   -- Key Bindings
   keys = keys,  
