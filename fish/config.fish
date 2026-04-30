@@ -1,3 +1,6 @@
+### Environment
+export VIMINIT='source $HOME/.config/vim/vimrc'
+
 ### Prompt
 set fish_greeting
 
