@@ -16,7 +16,7 @@ alias sd "cd (find * -type d | fzf)"
 
 ### Keybinding 
 bind \t forward-bigword
-bind -k nul forward-bigword 
+bind \x00 forward-bigword
 fish_vi_key_bindings
 
 ### Silver Searcher
