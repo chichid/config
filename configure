@@ -1,12 +1,20 @@
-# Symbolic links
+#!/bin/bash
+if ! curl -I --fail --silent --max-time 5 https://google.com > /dev/null; then
+  echo "No internet connectivity or proxy issue"
+  exit 1
+fi
+
+## Symbolic links
 echo "Configuring symbolic links..."
 ln -s $HOME/.config/vim/vimrc $HOME/.vimrc
 
 # Git aliases
 echo "Configuring git aliases..."
 if git config --global --get-all include.path | grep -Fxq "$HOME/.config/git/aliases"; then
-  echo "Aliases file already included in .gitconfig"
+  echo " Aliases file already included in .gitconfig"
 else
   git config --global --add include.path "$HOME/.config/git/aliases"
-  echo "Added aliases global git config"
+  echo " Added aliases global git config"
 fi
+
+echo "DONE!"
