@@ -1,0 +1,12 @@
+# Symbolic links
+echo "Configuring symbolic links..."
+ln -s $HOME/.config/vim/vimrc $HOME/.vimrc
+
+# Git aliases
+echo "Configuring git aliases..."
+if git config --global --get-all include.path | grep -Fxq "$HOME/.config/git/aliases"; then
+  echo "Aliases file already included in .gitconfig"
+else
+  git config --global --add include.path "$HOME/.config/git/aliases"
+  echo "Added aliases global git config"
+fi
