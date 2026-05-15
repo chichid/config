@@ -75,7 +75,6 @@ local keys = {
   -- Copy/Paste 
   { key="c", mods="ALT", action={EmitEvent = "ClipboardCopy"} },
   { key="c", mods="CMD", action={EmitEvent = "ClipboardCopy"} },
-  { key="c", mods="CTRL", action={EmitEvent = "ClipboardCopy"} },
   { key="v", mods="ALT", action={EmitEvent = "ClipboardPaste"} },
   { key="v", mods="CMD", action={EmitEvent = "ClipboardPaste"} },
   { key="v", mods="CTRL", action={EmitEvent = "ClipboardPaste"} },
