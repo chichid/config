@@ -16,6 +16,7 @@ endfunction
 function SetOptions()
   set ignorecase
   set nocompatible
+  set regexpengine=2
   set novisualbell
   set backspace=indent,eol,start
   set whichwrap+=<,>,h,l,[,]
